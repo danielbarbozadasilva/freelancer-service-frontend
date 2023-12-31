@@ -4,7 +4,7 @@ import img from '../../../../assets/img/work.jpg'
 export const settings = {
   dots: true,
   infinite: true,
-  slidesToShow: 3,
+  slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 2000,
@@ -42,7 +42,7 @@ export const SCard = styled.div`
   position: relative;
   background-color: #fff;
   box-shadow: -1px 1px 0 #dcdcdc;
-  height: 480px;
+  height: 380px;
   width: 310px;
   text-align: center;
   margin: 20px auto;

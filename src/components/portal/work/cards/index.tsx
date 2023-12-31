@@ -1,23 +1,24 @@
 import { Card } from 'react-bootstrap'
 import { SCardImg, SCard, SButton } from './styled'
+import { useNavigate } from 'react-router-dom'
 
-const CardCategory = (props) => {
-  const { name, description, bvmf, current_price, quantity, image } = props.item
+interface data {
+  item:any
+}
+
+const CardCategory: React.FC<data> = (props: any) => {
+  const { name, description, picture } = props.item
   return (
     <div>
       <SCard>
-        {image?.length > 0 ? <SCardImg src={image} /> : ''}
+        {picture?.length > 0 ? <SCardImg src={picture} /> : ''}
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>Descrição: {description}</Card.Text>
-          <Card.Text>BVMF: {bvmf}</Card.Text>
-          <Card.Text>Preço: {current_price}</Card.Text>
-          <Card.Text>Quantidade: {quantity}</Card.Text>
-          <SButton onClick={() => navigate(`/signin`)}>
+          {/* <SButton onClick={() => navigate(`/signin`)}>
             Adiquirir
-          </SButton>
+          </SButton> */}
         </Card.Body>
-      </SCard>
+      </SCard> 
     </div>
   )
 }

@@ -3,11 +3,8 @@ import { toast } from 'react-toastify'
 
 export const listAllCategoryAction = async () => {
   try {
-    const result = await listAllCategory()
-    if (result.data) {
-      const { data } = result.data
-      return data
-    }
+    const result = await listAllCategory()    
+    return result.data
   } catch (error) {}
 }
 

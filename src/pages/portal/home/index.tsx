@@ -42,11 +42,11 @@ const Home: React.FC = () => {
     })
   }, [dispatch])
 
-  const CategoryList = (category: any) => {
-    return category.map((item: any, i: any) => {
+  const CategoryList: React.FC<any> = (category) => {
+    return category?.map((item: any, i: any) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>
-          <CardCategory item={{ ...item }} />
+          <CardCategory item={item} />
         </Col>
       )
     })
