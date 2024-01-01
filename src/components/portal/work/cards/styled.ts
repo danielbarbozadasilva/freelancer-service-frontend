@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import img from '../../../../assets/img/work.jpg'
+const img = require('../../../../assets/img/work.jpg')
 
 export const settings = {
   dots: true,

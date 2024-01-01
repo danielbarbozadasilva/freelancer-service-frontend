@@ -19,11 +19,11 @@ import {
   settings
 } from '../../../components/portal/work/cards/styled'
 import { listAllCategoryAction } from '../../../store/category/category.action'
-import Image from '../../../assets/img/work.jpg'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useNavigate } from 'react-router-dom'
 import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
+const Image = require('../../../assets/img/work.jpg')
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
