@@ -26,7 +26,14 @@ import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import Featured from '../../../components/portal/featured'
 import ProjectCard from '../../../components/portal/work/cards/projects'
+import { IndexType } from 'typescript'
 const Image = require('../../../assets/img/work.jpg')
+
+interface ICategory {
+  name: string
+  description: string
+  picture: string
+}
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -46,7 +53,7 @@ const Home: React.FC = () => {
   }, [dispatch])
 
   const CategoryList: React.FC<any> = (category) => {
-    return category?.map((item: any, i: any) => {
+    return category?.map((item: ICategory, i: number) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>
           <CardCategory item={item} />

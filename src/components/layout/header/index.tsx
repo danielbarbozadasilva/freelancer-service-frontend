@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './styled.scss'
-import { useAppSelector } from '../../../hooks'
 import { removeToken } from '../../../config/auth'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { finishLoadingCategory, loadingCategory, listAllCategory } from '../../../store/category/category.reducer'
+import { listAllCategoryAction } from '../../../store/category/category.action'
 const noAvatar = require('../../../assets/img/noavatar.jpg')
 
 interface IUser {
@@ -13,11 +15,31 @@ interface IUser {
   picture: string
 }
 
+interface ICategory {
+  _id?: string
+  name: string
+  description: string
+  picture: string
+}
+
 function Navbar() {
   const user: IUser = useAppSelector((state) => state.auth.user)
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const category = useAppSelector((state) => state.category.all)
+ 
+  useEffect(() => {
+    dispatch(loadingCategory())
+    listAllCategoryAction().then((result) => {
+      if (result) {
+        dispatch(listAllCategory(result))
+      }
+      dispatch(finishLoadingCategory())
+    })
+  }, [dispatch])
 
   const { pathname } = useLocation()
 
@@ -47,10 +69,6 @@ function Navbar() {
           <span className="dot">.</span>
         </div>
         <div className="links">
-          <span>Fiverr Business</span>
-          <span>Explore</span>
-          <span>English</span>
-          {!user?.isSeller && <span>Become a Seller</span>}
           {user ? (
             <div className="user" onClick={() => setOpen(!open)}>
               <img src={user.picture || noAvatar} alt="" />
@@ -60,18 +78,18 @@ function Navbar() {
                   {user.isSeller && (
                     <>
                       <Link className="link" to="/mygigs">
-                        Gigs
+                        Serviço
                       </Link>
                       <Link className="link" to="/add">
-                        Add New Gig
+                        Novo Serviço
                       </Link>
                     </>
                   )}
                   <Link className="link" to="/orders">
-                    Orders
+                    Pedidos
                   </Link>
                   <Link className="link" to="/messages">
-                    Messages
+                    Mensagens
                   </Link>
                   <Link className="link" to="/" onClick={handleLogout}>
                     Logout
@@ -82,10 +100,10 @@ function Navbar() {
           ) : (
             <>
               <Link to="/SignIn" className="link">
-                Sign in
+                Login
               </Link>
               <Link className="link" to="/SignUp">
-                <button>Join</button>
+                <button>Cadastrar</button>
               </Link>
             </>
           )}
@@ -95,33 +113,13 @@ function Navbar() {
         <>
           <hr />
           <div className="menu">
-            <Link className="link menuLink" to="/">
-              Graphics & Design
-            </Link>
-            <Link className="link menuLink" to="/">
-              Video & Animation
-            </Link>
-            <Link className="link menuLink" to="/">
-              Writing & Translation
-            </Link>
-            <Link className="link menuLink" to="/">
-              AI Services
-            </Link>
-            <Link className="link menuLink" to="/">
-              Digital Marketing
-            </Link>
-            <Link className="link menuLink" to="/">
-              Music & Audio
-            </Link>
-            <Link className="link menuLink" to="/">
-              Programming & Tech
-            </Link>
-            <Link className="link menuLink" to="/">
-              Business
-            </Link>
-            <Link className="link menuLink" to="/">
-              Lifestyle
-            </Link>
+            {category.length && category.length <= 7 ? category.map((item: ICategory)=>(
+              <>
+                <Link className="link menuLink" to="/">
+                  {item.name}
+                </Link>
+              </>
+            )): <></>}
           </div>
           <hr />
         </>
