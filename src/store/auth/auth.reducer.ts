@@ -6,7 +6,7 @@ export const slice = createSlice({
   initialState: {
     loading: false,
     token: '',
-    user: {},
+    user: getUser(),
     clientid: '',
     userid: '',
     error: false,

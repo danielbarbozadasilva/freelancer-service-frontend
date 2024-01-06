@@ -15,6 +15,13 @@ import Error500 from './pages/error/500';
 import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
+import MyGigs from './pages/myGigs/index';
+import Add from './pages/add';
+import Orders from './pages/orders/index';
+import Messages from './pages/messages/index';
+import Message from './pages/message';
+import Gig from './pages/gig';
+
 
 export const Menu = [
   {
@@ -61,6 +68,12 @@ const MainRoutes = () => {
           <Route path="Error404" element={<Error404 title="" />} />
           <Route path="Error403" element={<Error403 title="" />} />
           <Route path="Error500" element={<Error500 title="" />} />
+          <Route path="mygigs" element={<MyGigs />} />
+          <Route path="orders" element={<Orders/>} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="message/:id" element={<Message />} />
+          <Route path="add" element={<Add />} />
+          <Route path="gig/:id" element={<Gig />} />
         </Route>
         <Route path="/" element={<PanelLayout />}>
           {rotasAutorizadas.map(({ component: Component, route, title }, i) => (

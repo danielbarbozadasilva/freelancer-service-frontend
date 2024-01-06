@@ -32,17 +32,15 @@ export const settings = {
 
 export const ContainerAssets = styled.div`
   font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
-  width: 85%;
+  width: 60%;
   margin: 60px auto;
 `
 
 export const SCard = styled.div`
   border: 1px solid #dcdcdc;
-  padding: 7px 7px 45px;
   position: relative;
   background-color: #fff;
   box-shadow: -1px 1px 0 #dcdcdc;
-  height: 380px;
   width: 310px;
   text-align: center;
   margin: 20px auto;
@@ -61,34 +59,20 @@ export const SContainer = styled.div`
 `
 
 export const SCardImg = styled.img`
-  width: 293px;
-  height: 150px;
-  object-fit: cover;
-`
+  width: 100%;
+  height: auto;
+  display: block;
+`;
 
-export const SButton = styled.button`
+export const SCardText = styled.div`
   position: absolute;
-  bottom: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: #fff;
-  background-color: #c79c60;
-  line-height: 38px;
-  text-transform: uppercase;
-  padding: 0 15px;
-  border: none;
-  font-weight: 500;
-  font-size: 12px;
-  display: inline-flex;
-  align-items: center;
-
-  :hover {
-    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.253) !important;
-    transition: 1s;
-    opacity: 0.5;
-  }
-`
+  top: 90px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff; 
+  padding: 10px; 
+`;
 
 export const StyleImg = styled.img`
   background-position: cover;
@@ -170,6 +154,7 @@ export const TextTitle = styled.div`
 `
 
 export const STextInvest = styled.div`
+  margin: 80px 0px;
   text-align: center;
   @media screen and (max-width: 420px) {
     margin: 30px 15px;

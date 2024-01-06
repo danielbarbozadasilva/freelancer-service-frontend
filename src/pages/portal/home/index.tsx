@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Loading from '../../../components/loading/page/index'
 import { Col } from 'react-bootstrap'
-import CardCategory from '../../../components/portal/work/cards/index'
+import CardCategory from '../../../components/portal/work/cards/category/index'
 import CardAbout from '../../../components/portal/work/cards/about/index'
 import {
   ContainerImage,
@@ -21,8 +21,11 @@ import {
 import { listAllCategoryAction } from '../../../store/category/category.action'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useNavigate } from 'react-router-dom'
+
 import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
+import Featured from '../../../components/portal/featured'
+import ProjectCard from '../../../components/portal/work/cards/projects'
 const Image = require('../../../assets/img/work.jpg')
 
 const Home: React.FC = () => {
@@ -58,11 +61,11 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <ContainerImage>
+      {/* <ContainerImage>
         <StyleImg src={Image} />
-      </ContainerImage>
-      
-      <ContainerTitle>
+      </ContainerImage> */}
+      <Featured />
+      {/* <ContainerTitle>
         <TextTitle>
           <h1>
             <strong>Acesso instantâneo a soluções web...</strong>
@@ -73,23 +76,24 @@ const Home: React.FC = () => {
         <SButtonTitle onClick={() => navigate(`/signup`)}>
           ABRA SUA CONTA
         </SButtonTitle>
-      </ContainerTitle>
+      </ContainerTitle> */}
 
       <STextInvest>
         <h5>+ de 1000 profissionais</h5>
         <h1>
           <strong>Seu website ou sistema com a sua cara.</strong>
         </h1>
-        <h4>Encontre o melhor profissional freelancer para desenhar a sua solução.</h4>
+        <br />
+        <h4>Encontre profissionais talentosos para...</h4>
       </STextInvest>
-
       <ContainerAssets>
         {!loading && category?.length === 0 ? (
-          <h6>Não há Financiamentos disponiveis</h6>
+          <h6>Não há categorias disponiveis</h6>
         ) : (
           <Slider {...settings}>{CategoryList(category)}</Slider>
         )}
       </ContainerAssets>
+
 
       <ContainerFinancial>
         <ContainerText>
@@ -102,17 +106,23 @@ const Home: React.FC = () => {
           </TextInvestiment>
         </ContainerText>
       </ContainerFinancial>
+      
+      {/* <Slide slidesToShow={4} arrowsScroll={4}>
+        {projects.map((card) => (
+          <ProjectCard key={card.id} card={card} />
+        ))}
+      </Slide> */}
 
       <ContainerResources>
         <STextInvest>
           <h1>
             <strong>Você é um freelancer? Junte-se a nós!</strong>
           </h1>
-          <h4>Cadastre-se.</h4>
-          <CardAbout />
+          <br/>
           <SButtonAbout onClick={() => navigate(`/signup`)}>
             ABRA SUA CONTA
           </SButtonAbout>
+          <CardAbout />
         </STextInvest>
       </ContainerResources>
     </>
