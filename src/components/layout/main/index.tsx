@@ -1,19 +1,23 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Footer from '../footer'
-import Header from '../header'
-import { Content } from './styled'
+import React, { ReactNode } from 'react';
+import Header from '../header/index';
+import Footer from '../footer/index';
+import '../../../assets/css/style.css';
+import { Main } from './styled';
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = (props) => {
   return (
     <>
       <Header />
-      <Content>
-        <Outlet />
-      </Content>
+      <Main>
+        {props.children}
+      </Main>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

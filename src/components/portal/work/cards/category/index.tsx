@@ -1,26 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./styled.scss";
+import React from 'react';
+import { Card } from 'react-bootstrap'
+import { SCardImg, SCard, SCardTitle } from './styled'
+import { useNavigate } from 'react-router-dom'
+import { CatCardProps } from './types';
 
-interface CatCardProps {
-  item:{
-    name: string;
-    description: string;
-    picture: string;
-   }
-}
-
-const CatCard: React.FC<CatCardProps> = ({ item }) => {
-
+const CardCategory: React.FC<CatCardProps> = ({ item }) => {
+  const { id, name, description, picture } = item
+  const navigate = useNavigate()
   return (
-    <Link to="/gigs?cat=design">
-      <div className="catCard">
-        <img src={item.picture} alt="" />
-        <span className="desc">{item.description}</span>
-        <span className="title">{item.name}</span>
-      </div>
-    </Link>
-  );
-};
-
-export default CatCard;
+    <div>
+      <SCard onClick={() => navigate(`/category/${id}`)}>
+        {picture ? <SCardImg src={picture} /> : ''}
+        <Card.Body>
+          <SCardTitle>
+            <strong>{name}</strong>
+          </SCardTitle>
+        </Card.Body>
+      </SCard>
+    </div>
+  )
+}
+export default CardCategory

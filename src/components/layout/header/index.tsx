@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './styled.scss'
 import { removeToken } from '../../../config/auth'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { finishLoadingCategory, loadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import { listAllCategoryAction } from '../../../store/category/category.action'
+import { ICategory, IUser } from './types'
 const noAvatar = require('../../../assets/img/noavatar.jpg')
-
-interface IUser {
-  id: string
-  username: string
-  email: string
-  isSeller: boolean
-  picture: string
-}
-
-interface ICategory {
-  _id?: string
-  name: string
-  description: string
-  picture: string
-}
 
 function Navbar() {
   const user: IUser = useAppSelector((state) => state.auth.user)
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const category = useAppSelector((state) => state.category.all)
@@ -41,8 +26,6 @@ function Navbar() {
     })
   }, [dispatch])
 
-  const { pathname } = useLocation()
-
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false)
   }
@@ -56,15 +39,14 @@ function Navbar() {
 
   const handleLogout = () => {
     removeToken()
-    navigate(0)
   }
 
   return (
-    <div className={active || pathname !== '/' ? 'navbar active' : 'navbar'}>
+    <div className={active? 'navbar active' : 'navbar'}>
       <div className="container">
         <div className="logo">
           <Link className="link" to="/">
-            <span className="text">CodeDev</span>
+            <span className="text">Freelancer</span>
           </Link>
           <span className="dot">.</span>
         </div>
@@ -77,7 +59,7 @@ function Navbar() {
                 <div className="options">
                   {user.isSeller && (
                     <>
-                      <Link className="link" to="/mygigs">
+                      <Link className="link" to="/myproducts">
                         Serviço
                       </Link>
                       <Link className="link" to="/add">
@@ -99,7 +81,7 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/SignIn" className="link">
+              <Link to="/signin" className="link">
                 Login
               </Link>
               <Link className="link" to="/SignUp">
@@ -109,7 +91,7 @@ function Navbar() {
           )}
         </div>
       </div>
-      {(active || pathname !== '/') && (
+      {active && (
         <>
           <hr />
           <div className="menu">

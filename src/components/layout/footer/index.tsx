@@ -43,8 +43,8 @@ function Footer() {
             <h2>Support</h2>
             <span>Help & Support</span>
             <span>Trust & Safety</span>
-            <span>Selling on CodeDev</span>
-            <span>Buying on CodeDev</span>
+            <span>Selling on Freelancer</span>
+            <span>Buying on Freelancer</span>
           </div>
           <div className="item">
             <h2>Community</h2>
@@ -62,14 +62,14 @@ function Footer() {
           </div>
           <div className="item">
             <h2>More From Fiverr</h2>
-            <span>CodeDev Business</span>
-            <span>CodeDev Pro</span>
-            <span>CodeDev Logo Maker</span>
-            <span>CodeDev Guides</span>
+            <span>Freelancer Business</span>
+            <span>Freelancer Pro</span>
+            <span>Freelancer Logo Maker</span>
+            <span>Freelancer Guides</span>
             <span>Get Inspired</span>
-            <span>CodeDev Select</span>
+            <span>Freelancer Select</span>
             <span>ClearVoice</span>
-            <span>CodeDev Workspace</span>
+            <span>Freelancer Workspace</span>
             <span>Learn</span>
             <span>Working Not Working</span>
           </div>
@@ -77,8 +77,8 @@ function Footer() {
         <hr />
         <div className="bottom">
           <div className="left">
-            <h2>CodeDev</h2>
-            <span>© CodeDev International Ltd. 2024</span>
+            <h2>Freelancer</h2>
+            <span>© Freelancer International Ltd. 2024</span>
           </div>
           <div className="right">
             <div className="social">

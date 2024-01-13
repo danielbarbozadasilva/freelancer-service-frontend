@@ -1,165 +1,167 @@
-import React from 'react'
-import clsx from 'clsx'
-import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Drawer from '@material-ui/core/Drawer'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
-import Container from '@material-ui/core/Container'
-import Hidden from '@mui/material/Hidden';
-import { logoutAction } from '../../../store/auth/auth.action'
-import {
-  Menu as MenuIcon,
-  MenuOpen as MenuOpenIcon,
-  AccountCircle as AccountCircleIcon,
-  ChevronLeft as ChevronLeftIcon,
-  PowerSettingsNew
-} from '@mui/icons-material'
-import ListMenu from './item-panel'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button } from '@material-ui/core'
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Container from '@material-ui/core/Container';
+import { Hidden } from '@mui/material';
+import { Button } from '@material-ui/core';
+import { Menu as MenuIcon, MenuOpen as MenuOpenIcon, AccountCircle as AccountCircleIcon, ChevronLeft as ChevronLeftIcon, PowerSettingsNew } from '@mui/icons-material';
+import ListMenu from './item-panel';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { logoutAction } from '../../../store/auth/auth.action';
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from '../../../store/auth/auth.reducer';
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
-export default function Dashboard(props: any) {
-  // const { name, email } = useSelector((state) => state.auth.user)
-  const dispatch = useDispatch()
-
-  const name = 'ddddddddddddddddd'
-  const email = 'dddd@gmail.com'
-
-  const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
     root: {
-      display: 'flex'
+      display: 'flex',
     },
     toolbar: {
       paddingRight: 24,
-      color: '#aab4c1'
+      backgroundColor: '#4E6062',
+      color: '#fff',
     },
     toolbarText: {
       display: 'flex',
       flex: 1,
       alignItems: 'center',
       padding: '0 8px',
-      ...theme.mixins.toolbar
+      ...theme.mixins.toolbar,
     },
     toolbarIcon: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      padding: '0'
+      padding: '0',
     },
     appBar: {
-      backgroundColor: '#fff',
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      })
+        duration: theme.transitions.duration.leavingScreen,
+      }),
     },
     appBarShift: {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen
+        duration: theme.transitions.duration.enteringScreen,
       }),
       [theme.breakpoints.down('xs')]: {
-        width: 0
+        width: 0,
       },
-      overflow: 'hidden'
+      overflow: 'hidden',
     },
     menuButton: {
-      marginRight: 36
+      marginRight: 36,
     },
     menuButtonHidden: {
-      display: 'none'
+      display: 'none',
     },
     title: {
-      flexGrow: 1
+      flexGrow: 1,
+    },
+    details: {
+      paddingTop: theme.spacing(1),
     },
     drawerPaper: {
-      backgroundColor: '#4f5d73',
       position: 'relative',
       whiteSpace: 'nowrap',
       width: drawerWidth,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen
-      })
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     },
     drawerPaperClose: {
       overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      width: 0
+      width: 0,
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
       height: '100vh',
-      overflow: 'auto'
+      overflow: 'auto',
     },
     container: {
       paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4)
+      paddingBottom: theme.spacing(4),
     },
     paper: {
       padding: theme.spacing(2),
       display: 'flex',
       overflow: 'auto',
-      flexDirection: 'column'
+      flexDirection: 'column',
     },
     fixedHeight: {
-      height: 240
+      height: 240,
     },
     depositContext: {
-      flex: 1
+      flex: 1,
     },
     user: {
       padding: theme.spacing(1),
       display: 'flex',
-      alignItems: 'center'
-    },
-    userInfo: {
-      color: '#9da5b1'
+      alignItems: 'center',
     },
     userIcon: {
-      marginLeft: `calc(100% - 27%)`,
+      marginLeft: `calc(100% - 24%)`,
       margin: theme.spacing(2),
-      color: '#9da5b1',
+      color: '#fff',
       '@media (max-width: 1900px)': {
-        marginLeft: `calc(100% - 30%)`
+        marginLeft: `calc(100% - 30%)`,
       },
       '@media (max-width: 1500px)': {
-        marginLeft: '60%'
+        marginLeft: '60%',
       },
       '@media (max-width: 1330px)': {
-        marginLeft: '55%'
+        marginLeft: '55%',
       },
       '@media (max-width: 1090px)': {
-        marginLeft: '0%'
-      }
-    }
-  }))
+        marginLeft: '0%',
+      },
+    },
+  })
+);
 
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(true)
+interface DashboardProps {
+  children: React.ReactNode;
+}
+
+const Dashboard: React.FC<DashboardProps> = (props) => {
+  const { username, email, permissions } = useAppSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+
+  const classes = useStyles();
+  const [open, setOpen] = useState(true);
+
   const handleDrawerOpen = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   const handleDrawerClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   function handleLogout() {
-    // dispatch(logoutAction())
+    logoutAction()
+    dispatch(logoutUser())
+    navigate('/')
   }
 
   return (
@@ -181,20 +183,19 @@ export default function Dashboard(props: any) {
           </IconButton>
 
           <AccountCircleIcon className={classes.userIcon} />
-          <div className={classes.userInfo}>
-            Nome: {name}
-            <br />
-            E-mail: {email}
+          <div className={classes.details}>
+            <h6> Username: {username}</h6>
+            <h6> E-mail: {email}</h6>
           </div>
           <Button onClick={handleLogout}>
-            <PowerSettingsNew className={classes.userInfo} />
+            <PowerSettingsNew className={classes.userIcon} />
           </Button>
         </Toolbar>
       </AppBar>
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
       >
@@ -222,5 +223,7 @@ export default function Dashboard(props: any) {
         </Container>
       </main>
     </div>
-  )
-}
+  );
+};
+
+export default Dashboard;

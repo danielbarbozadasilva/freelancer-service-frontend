@@ -1,37 +1,44 @@
-import React from 'react'
-import ListItem from '@material-ui/core/ListItem'
-import { Link } from '@reach/router'
-import { useSelector } from 'react-redux'
-import { Menu } from '../../../routers'
-import {SListItemIcon, SListItemText} from './styled'
+import React, { useState } from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Link, RouteComponentProps } from '@reach/router';
+import { Menu } from '../../../routers';
+import { useAppSelector } from '../../../hooks';
 
-const ListMenu = () => {  
-  // const { permissions }  = useSelector((state) => state.auth.user)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+interface ListMenuProps extends RouteComponentProps {}
 
-  const handleListItemClick = (event:any, index:any) => {
-    setSelectedIndex(index)
-  }
+const ListMenu: React.FC<ListMenuProps> = () => {
+  const typeUser = useAppSelector((state) => state.auth.user.permissions);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const authorizedRoutes = Menu
+  const handleListItemClick = (event: React.MouseEvent, index: number) => {
+    setSelectedIndex(index);
+  };
 
+  const authorizedRoutes = Menu.filter((route) => {
+    if(typeUser?.lenght){
+      route.authorization.includes(typeUser[0])
+    }
+  })
+  
   return (
     <div>
-     {authorizedRoutes.map(({ title, route, icon }, i) => (
+      {authorizedRoutes.map(({ title, route, icon }, i) => (
         <ListItem
           button
           component={Link}
-          to={'/private' + route}
+          to={route}
           key={i}
           selected={selectedIndex === i}
           onClick={(event) => handleListItemClick(event, i)}
         >
-          <SListItemIcon>{icon}</SListItemIcon>
-          <SListItemText primary={title} />
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={title} />
         </ListItem>
-      ))} 
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default ListMenu
+export default ListMenu;

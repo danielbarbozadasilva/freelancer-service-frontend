@@ -1,9 +1,9 @@
-import { listAllCategory, createCategory } from '../../services/category.service'
+import { listAllCategoryService, createCategoryService } from '../../services/category.service'
 import { toast } from 'react-toastify'
 
 export const listAllCategoryAction = async () => {
   try {
-    const result = await listAllCategory()    
+    const result = await listAllCategoryService()    
     return result.data
   } catch (error) {}
 }
@@ -15,7 +15,7 @@ export const createCategoryAction = async (data: object) => {
         'Content-Type': 'multipart/form-data'
       }
     }
-    await createCategory(data, config)
+    await createCategoryService(data, config)
     toast.success('Categoria criada com sucesso!')
     return true
   } catch (error: any) {

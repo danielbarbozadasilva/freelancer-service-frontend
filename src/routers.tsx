@@ -1,29 +1,38 @@
-// Import necessary components and functions
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Dashboard as DashboardIcon } from '@material-ui/icons';
 import { AccountBox, Group } from '@mui/icons-material';
 import PanelLayout from './components/layout/panel/layout-panel';
 import Profile from './pages/private/client/profile/index';
 import Category from './pages/private/admin/category/index';
 import Client from './pages/private/admin/client/index';
-import Home from './pages/portal/home'
+import Home from './pages/portal/home';
 import Error403 from './pages/error/403';
 import Error404 from './pages/error/404';
 import Error500 from './pages/error/500';
 import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
-import MyGigs from './pages/myGigs/index';
-import Add from './pages/add';
-import Orders from './pages/orders/index';
-import Messages from './pages/messages/index';
-import Message from './pages/message';
-import Gig from './pages/gig';
+import MyProducts from './pages/portal/myproducts/index';
+import AddProduct from './pages/portal/addProduct';
+import Orders from './pages/portal/orders/index';
+import Messages from './pages/portal/messages/index';
+import Message from './components/portal/message/index';
+import Product from './pages/portal/product/index';
+import { useAppSelector } from './hooks';
+import { isAuthenticated } from './config/auth';
 
+interface MenuItem {
+  title: string;
+  icon: JSX.Element;
+  route: string;
+  visibleMenu: boolean;
+  enabled: boolean;
+  component: React.ComponentType<{ title: string }>;
+  authorization: string[];
+}
 
-export const Menu = [
+export const Menu: MenuItem[] = [
   {
     title: 'Perfil',
     icon: <AccountBox />,
@@ -31,7 +40,7 @@ export const Menu = [
     visibleMenu: true,
     enabled: true,
     component: Profile,
-    authorization: ['client']
+    authorization: ['admin'],
   },
   {
     title: 'Categorias',
@@ -40,7 +49,7 @@ export const Menu = [
     visibleMenu: true,
     enabled: true,
     component: Category,
-    authorization: ['administrator']
+    authorization: ['admin'],
   },
   {
     title: 'Clientes',
@@ -49,38 +58,51 @@ export const Menu = [
     visibleMenu: true,
     enabled: true,
     component: Client,
-    authorization: ['administrator']
-  }
-]
+    authorization: ['admin'],
+  },
+];
 
-const MainRoutes = () => {
-  const isAuthenticated = true;
-  const typeUser = ''; 
- 
-  const rotasAutorizadas = Menu;
+const MainRoutes: React.FC = () => {
+  const typeUser = useAppSelector((state) => state.auth.user.permissions)
+  const authorizedRoutes = typeUser?.length? Menu.filter((route) => route.authorization.includes(typeUser[0])) : [];
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="SignIn" element={isAuthenticated ? <SignIn /> : <Error403 title="Ocorreu um erro" />} />
-          <Route path="SignUp" element={<SignUp />} />
-          <Route path="Error404" element={<Error404 title="" />} />
-          <Route path="Error403" element={<Error403 title="" />} />
-          <Route path="Error500" element={<Error500 title="" />} />
-          <Route path="mygigs" element={<MyGigs />} />
-          <Route path="orders" element={<Orders/>} />
-          <Route path="messages" element={<Messages />} />
-          <Route path="message/:id" element={<Message />} />
-          <Route path="add" element={<Add />} />
-          <Route path="gig/:id" element={<Gig />} />
-        </Route>
-        <Route path="/" element={<PanelLayout />}>
-          {rotasAutorizadas.map(({ component: Component, route, title }, i) => (
-            <Route key={i} path={route} element={<Component title={title} />} />
-          ))}
-          <Route path="*" element={<Error404 title="Ocorreu um erro" />} />
-        </Route>
+        <Route
+          path="/*"
+          element={
+            <Layout>
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="signin" element={<SignIn />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="error404" element={<Error404 title="Erro 404" />} />
+                <Route path="error403" element={<Error403 title="Erro 403" />} />
+                <Route path="error500" element={<Error500 title="Erro 500" />} />
+                <Route path="myproducts" element={<MyProducts />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="message/:id" element={<Message />} />
+                <Route path="add" element={<AddProduct />} />
+                <Route path="product/:id" element={<Product />} />
+              </Routes>
+            </Layout>
+          }
+        />
+        <Route
+          path="/dashboard/*"
+          element={
+            <PanelLayout>
+              <Routes>
+                {isAuthenticated() && authorizedRoutes.map(({ component: Component, route, title }, i) => (
+                  <Route key={i} path={route} element={<Component title={title} />} />
+                ))}
+                <Route path="*" element={<Error404 title="Ocorreu um erro" />} />
+              </Routes>
+            </PanelLayout>
+          }
+        />
       </Routes>
     </Router>
   );

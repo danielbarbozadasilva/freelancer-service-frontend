@@ -26,10 +26,10 @@ import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import Featured from '../../../components/portal/featured'
 import ProjectCard from '../../../components/portal/work/cards/projects'
-import { IndexType } from 'typescript'
 const Image = require('../../../assets/img/work.jpg')
 
 interface ICategory {
+  id: string
   name: string
   description: string
   picture: string
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
             <h1>
               Os melhores <strong>profissionais</strong>
               <br />
-              a um clique de distância
+              a um clique de distância!
             </h1>
           </TextInvestiment>
         </ContainerText>
@@ -123,7 +123,7 @@ const Home: React.FC = () => {
       <ContainerResources>
         <STextInvest>
           <h1>
-            <strong>Você é um freelancer? Junte-se a nós!</strong>
+            <strong>Ainda não é um freelancer? Junte-se a nós!</strong>
           </h1>
           <br/>
           <SButtonAbout onClick={() => navigate(`/signup`)}>

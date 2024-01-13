@@ -33,6 +33,7 @@ const Profile = (props: any) => {
     <>
       <Helmet title={props.title} />
       <Title title="Profile" actions={actions} />
+      <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti illum voluptate, eveniet sunt rerum error culpa voluptates fugit ut provident sed ad, dignissimos incidunt libero. Quidem accusamus maiores asperiores. Itaque!</h1>
       {/* <ProfileForm submit={submitForm} /> */}
     </>
   )
