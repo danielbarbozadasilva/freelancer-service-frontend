@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../../hooks";
 import { finishLoadingMessage, listMessage, loadingMessage, createMessage } from "../../../store/message/message.reducer";
 import { listByIdMessageAction, createMessageAction } from "../../../store/message/message.action";
 import FormMessage from '../../../components/portal/message'
+import { IMessage } from './types';
 
 const Message: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -20,11 +21,20 @@ const Message: React.FC = () => {
     })
   }, [dispatch])
 
+  const submitForm = async (form: IMessage) => {
+    dispatch(loadingMessage())
+    await createMessageAction(form).then((result) => {
+      if (result) {
+        dispatch(createMessage(result))
+      }
+      dispatch(finishLoadingMessage())
+    })
+  }
   
   return (
     <>
-      <Helmet title="Cadastrar" />
-      <FormMessage />
+      <Helmet title="Mensagem" />
+      <FormMessage submit={submitForm} />
     </>
   )
 }

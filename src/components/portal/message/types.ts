@@ -12,7 +12,10 @@ export type PageType = {
 
 export interface IMessage {
   _id: string
+  conversationId?: string
   userId: string
   description: string
+  createdAt?: string
+  updatedAt?: string
 }
   

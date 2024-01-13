@@ -1,41 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IConversation, IMessage, IUser, PageType } from "./types";
+import { useAppSelector } from "../../../hooks";
+import { IConversation, IUser, PageType } from "./types";
 import "./styled.scss";
-import { createMessage, finishLoadingMessage, loadingMessage } from "../../../store/message/message.reducer";
-import { createMessageAction } from "../../../store/message/message.action";
 import moment from "moment";
 
 const FormMessages: React.FC<PageType> = ({ submit }) => {
   const conversation: IConversation[] = useAppSelector((state) => state.conversation.all)
   const user: IUser = useAppSelector((state) => state.auth.user)
   const loading = useAppSelector((state) => state.conversation.loading)
-  const [form, setForm] = useState({} as IMessage)
-  const dispatch = useAppDispatch()
 
-  const handleChange = ({ target }: any) => {
-    const { value, name } = target
-    setForm({
-      ...form,
-      userId: user.id,
-      conversationId: ,
-      [name]: value
-    })
-  }
+  const handleRead = (id: string) => {
+    submit(id)
+  };
 
-  const submitForm = (e: any) => {
-    e.preventDefault();
-
-    dispatch(loadingMessage())
-    createMessageAction(form).then((result) => {
-      if (result) {
-        dispatch(createMessage())
-      }
-      dispatch(finishLoadingMessage())
-    })
-  }
- 
   return (
     <div className="messages">
       {loading ? (

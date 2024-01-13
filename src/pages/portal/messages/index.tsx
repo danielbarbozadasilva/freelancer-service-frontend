@@ -5,12 +5,11 @@ import { finishLoadingConversation, listConversation, loadingConversation } from
 import { listAllConversationAction } from "../../../store/conversation/conversation.action";
 import { Helmet } from "react-helmet";
 import FormMessages from "../../../components/portal/messages";
-import "./Messages.scss";
 
 const Messages: React.FC = () => {
+  const user: IUser = useAppSelector((state) => state.auth.user)
   const dispatch = useAppDispatch()
 
-  const user: IUser = useAppSelector((state) => state.auth.user)
   const data: IDataSend = {
     isSeller: user.isSeller,
     userId: user.id
@@ -26,24 +25,9 @@ const Messages: React.FC = () => {
     })
   }, [dispatch])
 
- 
-
-  const mutation = useMutation({
-    mutationFn: (id) => {
-      return newRequest.put(`/conversations/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["conversations"]);
-    },
-  });
-
-  const handleRead = (id) => {
-    mutation.mutate(id);
-  };
-
   return (
     <>
-    <Helmet title="Cadastrar" />
+    <Helmet title="Mensagens" />
     <FormMessages />
   </>
   );
