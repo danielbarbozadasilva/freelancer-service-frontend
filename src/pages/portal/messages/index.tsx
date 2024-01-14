@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IUser, IConversation, IDataSend } from "./types";
-import { finishLoadingConversation, listConversation, loadingConversation } from "../../../store/conversation/conversation.reducer";
-import { listAllConversationAction } from "../../../store/conversation/conversation.action";
+import { IUser, IDataSend } from "./types";
+import { finishLoadingConversation, listConversation, loadingConversation, updateConversation } from "../../../store/conversation/conversation.reducer";
+import { listAllConversationAction, updateConversationAction } from "../../../store/conversation/conversation.action";
 import { Helmet } from "react-helmet";
 import FormMessages from "../../../components/portal/messages";
 
@@ -25,11 +25,19 @@ const Messages: React.FC = () => {
     })
   }, [dispatch])
 
+  const handleSubmit = async (id: string, data: object)=>{
+    dispatch(loadingConversation())
+    await updateConversationAction(id, data).then(() => {
+      dispatch(updateConversation())
+      dispatch(finishLoadingConversation())
+    })
+  }
+
   return (
     <>
-    <Helmet title="Mensagens" />
-    <FormMessages />
-  </>
+      <Helmet title="Mensagens" />
+      <FormMessages submit={handleSubmit}/>
+    </>
   );
 };
 

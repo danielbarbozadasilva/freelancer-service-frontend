@@ -10,9 +10,9 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
   const user: IUser = useAppSelector((state) => state.auth.user)
   const loading = useAppSelector((state) => state.conversation.loading)
 
-  const handleRead = (id: string) => {
-    submit(id)
-  };
+  const handleRead = (id: string, isSeller: boolean) => {
+    submit(id, { isSeller })
+  }
 
   return (
     <div className="messages">
@@ -48,7 +48,7 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
                 <td>
                   {((user.isSeller && !item.readBySeller) ||
                     (!user.isSeller && !item.readByBuyer)) && (
-                    <button onClick={() => handleRead(item.id)}>
+                    <button onClick={() => handleRead(item.id, user.isSeller)}>
                       Marcar como lido
                     </button>
                   )}
