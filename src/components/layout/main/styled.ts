@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Content = styled.div`
+export const Main = styled.div`
   font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
   font-size: 0.95rem;
   line-height: 1.5;

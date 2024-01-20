@@ -6,7 +6,7 @@ export const slice = createSlice({
   initialState: {
     loading: false,
     token: '',
-    user: {},
+    user: getUser(),
     clientid: '',
     userid: '',
     error: false,
@@ -23,8 +23,8 @@ export const slice = createSlice({
       return {
         ...state,
         registered: true,
-        token: payload.token,
-        user: payload.data,
+        token: payload?.token,
+        user: payload?.data,
         loading: false
       }
     },

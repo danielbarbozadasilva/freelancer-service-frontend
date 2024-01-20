@@ -1,69 +1,114 @@
-import React from 'react'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { SNavbar, SLink, SNavbarLogo, SNavDropdown } from './styled'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { isAuthenticated, getUser } from '../../../config/auth'
-import { logoutAction } from '../../../store/auth/auth.action'
-import { useAppSelector, useAppDispatch } from '../../../hooks'
-import { logoutUser, loadingUser } from '../../../store/auth/auth.reducer'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import './styled.scss'
+import { removeToken } from '../../../config/auth'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { finishLoadingCategory, loadingCategory, listAllCategory } from '../../../store/category/category.reducer'
+import { listAllCategoryAction } from '../../../store/category/category.action'
+import { ICategory, IUser } from './types'
+import { navigate } from '@reach/router'
+const noAvatar = require('../../../assets/img/noavatar.jpg')
 
-const Header: React.FC = () => {
-  const { name, email } = getUser()
+const Header: React.FC = () => { 
+  const user: IUser = useAppSelector((state) => state.auth.user)
+  const category = useAppSelector((state) => state.category.all)
+  const [active, setActive] = useState(false)
+  const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
 
-  const createLogout = ()=>{
-    dispatch(loadingUser())
-    logoutAction()
-    dispatch(logoutUser())
-    navigate("/signin")
+ 
+  useEffect(() => {
+    dispatch(loadingCategory())
+    listAllCategoryAction().then((result) => {
+      if (result) {
+        dispatch(listAllCategory(result))
+      }
+      dispatch(finishLoadingCategory())
+    })
+  }, [dispatch])
+
+  const isActive = () => {
+    window.scrollY > 0 ? setActive(true) : setActive(false)
   }
-  
-  return (
-    <>
-      <SNavbar bg="light" expand="lg">
-        <Link to="/" id="logoMain">
-          Freelancer
-        </Link>
 
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Container>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="justify-content-end flex-grow-1 pe-3">
-              {isAuthenticated()
-                ? (
-                  <>
-                    <SNavDropdown title={email}>
-                      <NavDropdown.Item href="/private/profile">
-                        Perfil
-                      </NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item onClick={() => createLogout()}>
-                        Sair
-                      </NavDropdown.Item>
-                    </SNavDropdown>
-                  </>
-                  )
-                : (
-                  <>
-                    <SNavDropdown
-                      title="Minha conta"
-                      id="navbarScrollingDropdown"
-                    >
-                      <NavDropdown.Item href="/signin">Logar</NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="/signup">
-                        Criar conta
-                      </NavDropdown.Item>
-                    </SNavDropdown>
-                  </>
+  useEffect(() => {
+    window.addEventListener("scroll", isActive);
+    return () => {
+      window.removeEventListener("scroll", isActive);
+    };
+  }, [])
+
+  const handleLogout = () => {
+    removeToken()
+    navigate(0)
+  }
+
+  return (
+    <div className={active? 'navbar active' : 'navbar'}>
+      <div className="container">
+        <div className="logo">
+          <Link className="link" to="/">
+            <span className="text">Freelancer</span>
+          </Link>
+          <span className="dot">.</span>
+        </div>
+        <div className="links">
+          {user ? (
+            <div className="user" onClick={() => setOpen(!open)}>
+              <img src={user.picture || noAvatar} alt="" />
+              <span>{user?.username}</span>
+              {open && (
+                <div className="options">
+                  {user.isSeller && (
+                    <>
+                      <Link className="link" to="/myproducts">
+                        Serviço
+                      </Link>
+                      <Link className="link" to="/add">
+                        Novo Serviço
+                      </Link>
+                    </>
                   )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </SNavbar>
-    </>
+                  <Link className="link" to="/orders">
+                    Pedidos
+                  </Link>
+                  <Link className="link" to="/messages">
+                    Mensagens
+                  </Link>
+                  <Link className="link" to="/" onClick={handleLogout}>
+                    Logout
+                  </Link>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link to="/signin" className="link">
+                Login
+              </Link>
+              <Link className="link" to="/SignUp">
+                <button>Cadastrar</button>
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+      {active && (
+        <>
+          <hr />
+          <div className="menu">
+            {category.length && category.length <= 7 ? category.map((item: ICategory)=>(
+              <>
+                <Link className="link menuLink" to="/">
+                  {item.name}
+                </Link>
+              </>
+            )): <></>}
+          </div>
+          <hr />
+        </>
+      )}
+    </div>
   )
 }
 
