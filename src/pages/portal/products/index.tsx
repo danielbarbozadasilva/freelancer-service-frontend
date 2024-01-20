@@ -1,96 +1,95 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./styled.scss";
-import ProductCard from "../../../components/portal/work/cards/productCard/index";
-import { loadingProduct, finishLoadingProduct, listAllProduct } from "../../../store/product/product.reducer";
-import { listAllProductsAction } from "../../../store/product/product.action";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react'
+import ProductCard from '../../../components/portal/work/cards/productCard/index'
+import {
+  loadingProduct,
+  finishLoadingProduct,
+  listAllProduct
+} from '../../../store/product/product.reducer'
+import { listAllProductsAction } from '../../../store/product/product.action'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Filters, PageTitle, Product } from './types'
+import Loading from '../../../components/loading/page'
+import { ContainerCards, STextFormated, SContainerFilter, TitleService } from './styled'
+import { Col } from 'react-bootstrap'
+import FilterProduct from '../../../components/portal/filter'
+import PaginationSelector from '../../../components/paginate/selector/index.tsx'
+import PaginationComponent from '../../../components/paginate/index'
+import { Helmet } from 'react-helmet'
 
-interface Product {
-  _id?: string;
-  userId?: string;
-  title: string
-  description: string
-  category: string
-  price: number
-  promotion: number
-  images: string[]
-  deliveryTime: number
-  features: string[]
-  sales: number
-  rating?: string
-  likes?: string
-}
-
-function Products() {
-  const [sort, setSort] = useState<"sales" | "createdAt">("sales");
-  const [open, setOpen] = useState(false);
-  const minRef = useRef<HTMLInputElement>(null);
-  const maxRef = useRef<HTMLInputElement>(null);
+const CategoryProducts: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { id } = useParams()
 
-  const product = useAppSelector((state) => state.product.all)
+  const product: Product[] = useAppSelector((state) => state.product.all)
   const loading = useAppSelector((state) => state.product.loading)
+  const [itensPerPage, setItensPerPage] = React.useState(5)
+  const [currentPage, setCurrentPage] = React.useState(0)
 
   useEffect(() => {
     dispatch(loadingProduct())
-    listAllProductsAction().then((result) => {
+    const filters: Filters = {
+      category: String(id),
+      offset: currentPage,
+      limit: itensPerPage,
+      search: ''
+    }
+    listAllProductsAction(filters).then((result) => {
       if (result) {
         dispatch(listAllProduct(result))
       }
       dispatch(finishLoadingProduct())
+    })  
+  }, [itensPerPage, currentPage])
+
+
+  if (loading) {
+    return <Loading />
+  }
+  
+  const pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
+
+  const ProductList = (product: Product[]) => {
+    return product.map((item: Product, i: number) => {
+      return (
+        <Col md="6" xl="4" sm="12" xs="12" key={i}>
+          <ProductCard item={{ ...item }} />
+        </Col>
+      )
     })
-  }, [dispatch])
-
-  const reSort = (type: "sales" | "createdAt"): void => {
-    setSort(type);
-    setOpen(false);
-  };
-
-  const apply = (): void => {
-    if (minRef.current && maxRef.current) {
-      console.log(minRef.current.value);
-      console.log(maxRef.current.value);
-    }
-  };
+  }
 
   return (
-    <div className="products">
+    <>
+     <Helmet title={title} />
       <div className="container">
-        <h1>Serviços</h1>
-        <p>Explore as fronteiras da arte e da tecnologia</p>
-        <div className="menu">
-          <div className="left">
-            <span>Preço: </span>
-            <input ref={minRef} type="number" placeholder="min" />
-            <input ref={maxRef} type="number" placeholder="max" />
-            <button onClick={apply}>Aplicar</button>
-          </div>
-          <div className="right">
-            <span className="sortBy">Ordenar por: </span>
-            <span className="sortType">{sort === "sales" ? "Best Selling" : "Newest"}</span>
-            <img src="./img/down.png" alt="" onClick={() => setOpen(!open)} />
-            {open && (
-              <div className="rightMenu">
-                {sort === "sales" ? (
-                  <span onClick={() => reSort("createdAt")}>Newest</span>
-                ) : (
-                  <span onClick={() => reSort("sales")}>Best Selling</span>
-                )}
-                <span onClick={() => reSort("sales")}>Popular</span>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="cards">
-          {product.map((product: Product, index) => (
-            <ProductCard key={index} item={product} />
-          ))}
-        </div>
+        <TitleService>Serviços</TitleService>
+        <SContainerFilter>
+          <FilterProduct />
+        </SContainerFilter>
+        <ContainerCards>
+          {!loading && product?.length === 0 ? (
+            <STextFormated>
+              <h6>Não há serviços disponiveis</h6>
+            </STextFormated>
+          ) : (
+            ProductList(product)
+          )}
+        </ContainerCards>
+         <PaginationSelector
+          itensPerPage={itensPerPage}
+          setItensPerPage={setItensPerPage}
+        /> 
+        <PaginationComponent
+          pages={pages}
+          currentPage={currentPage}
+          itensPerPage={itensPerPage}
+          setCurrentPage={setCurrentPage}
+        /> 
       </div>
-    </div>
-  );
+    </>
+  )
 }
 
-export default Products;
+export default CategoryProducts

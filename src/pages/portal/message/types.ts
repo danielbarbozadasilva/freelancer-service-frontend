@@ -3,3 +3,8 @@ export type IMessage = {
     userId: string
     description: string
 }
+
+export type PageTitle = {
+    title: string
+}
+  

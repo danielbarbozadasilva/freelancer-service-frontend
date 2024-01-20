@@ -1,53 +1,45 @@
-import React from "react";
-import "./styled.scss";
-import { Link } from "react-router-dom";
-
-interface ProductCardProps {
-  item: {
-    _id?: string;
-    userId?: string;
-    title: string
-    description: string
-    category: string
-    price: number
-    promotion: number
-    images: string[]
-    deliveryTime: number
-    features: string[]
-    sales: number
-    rating?: string
-    likes?: string
-  };
-}
+import { Card } from 'react-bootstrap'
+import {
+  SCardImg,
+  SCard,
+  SButton,
+  SCardTitle,
+  SCardDescription,
+  SCardFeatures,
+  SCardPrice,
+  SCardInstallments
+} from './styled'
+import { navigate } from '@reach/router'
+import { formatPriceBr } from '../../../../../util/helpers/format'
+import { ProductCardProps } from './types'
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  return (<></>
-    // <Link to={`/product/${item.id}`} className="link">
-    //   <div className="productCard">
-    //     <img src={item.images} alt="" />
-    //     <div className="info">
-    //       <div className="user">
-    //         <span>{item.username}</span>
-    //       </div>
-    //       <p>{item.desc}</p>
-    //       <div className="star">
-    //         <img src="./img/star.png" alt="" />
-    //         <span>{item.star}</span>
-    //       </div>
-    //     </div>
-    //     <hr />
-    //     <div className="detail">
-    //       <img src="./img/heart.png" alt="" />
-    //       <div className="price">
-    //         <span>STARTING AT</span>
-    //         <h2>
-    //           R$ {item.price}
-    //         </h2>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </Link>
-  );
-};
+  return (
+    <SCard>
+      {item.data.images?.length > 0 ? <SCardImg src={item.data.images} /> : ''}
+      <Card.Body>
+        <SCardTitle>
+        <strong>{item.data.title}</strong>
+        </SCardTitle>
+        <SCardDescription>
+          {item.data.description}        
+        </SCardDescription>
+        <br />
+        <SCardFeatures>
+          {`# ${item.data.features?.join(', #')}`}
+        </SCardFeatures>
+        <SCardPrice>
+          <strong>Preço:</strong> {formatPriceBr(item.data.price)}
+        </SCardPrice>
+        <SCardInstallments>
+          ou 6x de {formatPriceBr(item.data.price / 6)} sem juros
+        </SCardInstallments>
+        <SButton onClick={() => navigate(`/product/${item.data._id}`)}>
+          Solicitar
+        </SButton>
+      </Card.Body>
+    </SCard>
+  )
+}
 
-export default ProductCard;
+export default ProductCard

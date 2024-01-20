@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IUser, IDataSend } from "./types";
+import { IUser, IDataSend, PageTitle } from "./types";
 import { finishLoadingConversation, listConversation, loadingConversation, updateConversation } from "../../../store/conversation/conversation.reducer";
 import { listAllConversationAction, updateConversationAction } from "../../../store/conversation/conversation.action";
 import { Helmet } from "react-helmet";
 import FormMessages from "../../../components/portal/messages";
 
-const Messages: React.FC = () => {
+const Messages: React.FC<PageTitle> = ({ title }) => {  
   const user: IUser = useAppSelector((state) => state.auth.user)
   const dispatch = useAppDispatch()
 
@@ -31,11 +31,18 @@ const Messages: React.FC = () => {
       dispatch(updateConversation())
       dispatch(finishLoadingConversation())
     })
+    dispatch(loadingConversation())
+    await listAllConversationAction(data).then((result) => {
+      if (result) {
+        dispatch(listConversation(result))
+      }
+      dispatch(finishLoadingConversation())
+    })
   }
 
   return (
     <>
-      <Helmet title="Mensagens" />
+      <Helmet title={title} />
       <FormMessages submit={handleSubmit}/>
     </>
   );

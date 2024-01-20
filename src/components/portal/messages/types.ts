@@ -17,6 +17,7 @@ export interface IMessage {
 }
 
 export type IConversation = {
+  _id: string
   id: string
   sellerId: string
   buyerId: string

@@ -13,12 +13,13 @@ import Error500 from './pages/error/500';
 import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
-import MyProducts from './pages/portal/myproducts/index';
-import AddProduct from './pages/portal/addProduct';
-import Orders from './pages/portal/orders/index';
+import MyProductsPage from './pages/portal/myproducts/index';
+import AddProductPage from './pages/portal/addProduct';
+import OrdersPage from './pages/portal/orders/index';
 import Messages from './pages/portal/messages/index';
-import Message from './components/portal/message/index';
-import Product from './pages/portal/product/index';
+import Message from './pages/portal/message/index';
+import ProductPage from './pages/portal/product/index';
+import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
 
@@ -74,18 +75,19 @@ const MainRoutes: React.FC = () => {
           element={
             <Layout>
               <Routes>
-                <Route index element={<Home />} />
-                <Route path="signin" element={<SignIn />} />
-                <Route path="signup" element={<SignUp />} />
+                <Route index element={<Home title="Home" />} />
+                <Route path="signin" element={<SignIn title="Login" />} />
+                <Route path="signup" element={<SignUp title="Cadastrar" />} />
                 <Route path="error404" element={<Error404 title="Erro 404" />} />
                 <Route path="error403" element={<Error403 title="Erro 403" />} />
                 <Route path="error500" element={<Error500 title="Erro 500" />} />
-                <Route path="myproducts" element={<MyProducts />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="messages" element={<Messages />} />
-                <Route path="message/:id" element={<Message />} />
-                <Route path="add" element={<AddProduct />} />
-                <Route path="product/:id" element={<Product />} />
+                <Route path="myproducts" element={<MyProductsPage title="Produtos" />} />
+                <Route path="orders" element={<OrdersPage title="Pedidos" />} />
+                <Route path="messages" element={<Messages title="Mensagens" />} />
+                <Route path="message/:id" element={<Message title="Mensagens" />} />
+                <Route path="add" element={<AddProductPage title="Cadastrar" />} />
+                <Route path="product/:id" element={<ProductPage title="Produtos" />} />
+                <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
               </Routes>
             </Layout>
           }

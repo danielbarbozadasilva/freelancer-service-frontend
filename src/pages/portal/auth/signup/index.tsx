@@ -10,8 +10,9 @@ import {
   loadingUser,
   finishLoadingUser
 } from '../../../../store/auth/auth.reducer'
+import { PageTitle } from './types'
 
-const SignUp: React.FC = () => {
+const SignUp: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -28,7 +29,7 @@ const SignUp: React.FC = () => {
 
   return (
     <>
-      <Helmet title="Cadastrar" />
+      <Helmet title={title} />
       <FormSignUp submit={submitForm} />
     </>
   )

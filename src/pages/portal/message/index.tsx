@@ -5,9 +5,9 @@ import { useAppDispatch } from "../../../hooks";
 import { finishLoadingMessage, listMessage, loadingMessage, createMessage } from "../../../store/message/message.reducer";
 import { listByIdMessageAction, createMessageAction } from "../../../store/message/message.action";
 import FormMessage from '../../../components/portal/message'
-import { IMessage } from './types';
+import { IMessage, PageTitle } from './types';
 
-const Message: React.FC = () => {
+const Message: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
   const { id } = useParams()
 
@@ -29,11 +29,18 @@ const Message: React.FC = () => {
       }
       dispatch(finishLoadingMessage())
     })
+    dispatch(loadingMessage())
+    await listByIdMessageAction(id as string).then((result) => {
+      if (result) {
+        dispatch(listMessage(result))
+      }
+      dispatch(finishLoadingMessage())
+    })
   }
   
   return (
     <>
-      <Helmet title="Mensagem" />
+      <Helmet title={title} />
       <FormMessage submit={submitForm} />
     </>
   )

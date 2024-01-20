@@ -1,9 +1,9 @@
 import { listAllProductsService } from '../../services/product.service'
-import { toast } from 'react-toastify'
+import { Filters } from './types'
 
-export const listAllProductsAction = async () => {
+export const listAllProductsAction = async (filters: Filters) => {
   try {
-    const result = await listAllProductsService()    
-    return result.data
+    const result = await listAllProductsService(filters)  
+    return result.data.data
   } catch (error) {}
 }

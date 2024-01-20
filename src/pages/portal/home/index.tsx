@@ -26,16 +26,11 @@ import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import Featured from '../../../components/portal/featured'
 import ProjectCard from '../../../components/portal/work/cards/projects'
+import { ICategory, PageTitle } from './types'
 const Image = require('../../../assets/img/work.jpg')
 
-interface ICategory {
-  id: string
-  name: string
-  description: string
-  picture: string
-}
 
-const Home: React.FC = () => {
+const Home: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 

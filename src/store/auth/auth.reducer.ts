@@ -23,8 +23,8 @@ export const slice = createSlice({
       return {
         ...state,
         registered: true,
-        token: payload.token,
-        user: payload.data,
+        token: payload?.token,
+        user: payload?.data,
         loading: false
       }
     },

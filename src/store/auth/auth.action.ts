@@ -9,19 +9,20 @@ export const signInAction = async (data: object) => {
     const result = await authService(data)
     if (result?.data) {
       const { data } = result.data
-      saveAuth(data)
-      http.defaults.headers.token = data.token
-      if (data.data.permissions.includes('admin')) {
-        navigate('/dashboard/profile')
-        navigate(0)
-      } else {
-        navigate('/')
-      }
-      toast.success(`Seja Bem-vindo(a)! ${data.data.username}`)
-      return data
+        saveAuth(data)
+        http.defaults.headers.token = data.token
+        if (data.data.permissions.includes('admin')) {
+          navigate('/dashboard/profile')
+          navigate(0)
+        } else {
+          navigate('/')
+          navigate(0)
+        }
+        toast.success(`Seja Bem-vindo(a)! ${data.data.username}`)
+        return data
     }
   } catch (error: any) {
-    toast.error(error?.response?.data?.message)
+    toast.error('E-mail ou senha inválidos!')
   }
 }
 

@@ -14,3 +14,7 @@ export type IDataSend = {
     isSeller: boolean
     userId: string
 }
+
+export type PageTitle = {
+    title: string
+}

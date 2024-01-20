@@ -6,15 +6,16 @@ import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { finishLoadingCategory, loadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import { listAllCategoryAction } from '../../../store/category/category.action'
 import { ICategory, IUser } from './types'
+import { navigate } from '@reach/router'
 const noAvatar = require('../../../assets/img/noavatar.jpg')
 
-function Navbar() {
+const Header: React.FC = () => { 
   const user: IUser = useAppSelector((state) => state.auth.user)
+  const category = useAppSelector((state) => state.category.all)
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
 
-  const category = useAppSelector((state) => state.category.all)
  
   useEffect(() => {
     dispatch(loadingCategory())
@@ -39,6 +40,7 @@ function Navbar() {
 
   const handleLogout = () => {
     removeToken()
+    navigate(0)
   }
 
   return (
@@ -110,4 +112,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Header

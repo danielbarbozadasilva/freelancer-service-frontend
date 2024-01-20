@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppSelector } from "../../../hooks";
-import { IMessage, IUser, PageType } from "./types";
-import "./styled.scss";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../../hooks'
+import { IMessage, IUser, PageType } from './types'
+import './styled.scss'
+import Loading from '../../loading/page'
 
 const FormMessage: React.FC<PageType> = ({ submit }) => {
   const message: IMessage[] = useAppSelector((state) => state.message.all)
@@ -11,10 +12,11 @@ const FormMessage: React.FC<PageType> = ({ submit }) => {
   const [form, setForm] = useState({} as IMessage)
 
   const handleChange = ({ target }: any) => {
+    console.log(user);
     const { value, name } = target
     setForm({
       ...form,
-      userId: message[0].userId,
+      userId: user.id,
       conversationId: message[0].conversationId,
       [name]: value
     })
@@ -24,31 +26,38 @@ const FormMessage: React.FC<PageType> = ({ submit }) => {
     submit(form)
   }
 
+  if (loading) {
+    return <Loading />
+  }
+
   return (
-     <div className="message">
+    <div className="message">
       <div className="container">
         <span className="breadcrumbs">
           <Link to="/messages">Mensagens</Link>
         </span>
-        {loading ? (
-          "Carregando..."
-        ) : (
-          <div className="messages">
-            {message.map((item: IMessage) => (
-              <div className={item.userId === user.id ? "owner item" : "item"} key={item._id}>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="messages">
+          {message.map((item: IMessage, i:number) => (
+            <div
+              className={item.userId === user.id ? 'owner item' : 'item'}
+              key={i}
+            >
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
         <hr />
         <div className="write">
-          <textarea name="description" onChange={handleChange} placeholder="Escreva uma mensagem..." />
+          <textarea
+            name="description"
+            onChange={handleChange}
+            placeholder="Escreva uma mensagem..."
+          />
           <button onClick={submitForm}>Enviar</button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FormMessage;
+export default FormMessage
