@@ -17,7 +17,7 @@ export const slice = createSlice({
     listAllCategory(state, { payload }) {
       return {
         ...state,
-        all: payload.data,
+        all: payload,
         loading: false
       }
     },

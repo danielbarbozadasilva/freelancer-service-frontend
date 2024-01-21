@@ -16,16 +16,31 @@ export interface IMessage {
   description: string
 }
 
-export type IConversation = {
-  _id: string
-  id: string
-  sellerId: string
-  buyerId: string
-  readBySeller: boolean
-  readByBuyer: boolean
-  lastMessage: string
+ export interface User {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  cpf: string;
+  birthDate: Date;
+  picture: string[];
+  country: string;
+  phone?: string;
+  description?: string;
+  permissions: string[];
+  isSeller: boolean;
+}
+
+export interface IConversation {
+  _id: string;
+  id: string;
+  sellerId: User;
+  buyerId: User;
+  readBySeller: boolean;
+  readByBuyer: boolean;
+  lastMessage?: string;
   isSeller: boolean
   userId: string
   to: string
   updatedAt: string
- }
+}

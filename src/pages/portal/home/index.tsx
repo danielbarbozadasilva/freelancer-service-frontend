@@ -29,7 +29,6 @@ import ProjectCard from '../../../components/portal/work/cards/projects'
 import { ICategory, PageTitle } from './types'
 const Image = require('../../../assets/img/work.jpg')
 
-
 const Home: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()

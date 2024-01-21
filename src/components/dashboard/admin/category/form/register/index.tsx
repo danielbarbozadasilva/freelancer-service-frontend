@@ -1,8 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { TextField, Button, Grid, Select, InputLabel } from '@material-ui/core';
-import { SBox, Image, SButton, SPreview, SFormControl } from '../styled';
+import { TextField, Button, Grid } from '@material-ui/core';
+import { SBox, Image, SButton, SPreview } from '../styled';
 import { useSelector } from 'react-redux';
-import { MenuItem } from '@mui/material';
 
 interface FormCategoryRegisterProps {
   submit: (formData: FormData) => void;
@@ -11,14 +10,14 @@ interface FormCategoryRegisterProps {
 const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) => {
   const [preview, setPreview] = useState<File[]>([]);
   const [form, setForm] = useState<Record<string, string | boolean>>({});
-  // const loading = useSelector((state) => state.category.loading);
+  const loading = useSelector((state) => state.category.loading);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | { name: string; value: unknown }>) => {
     const { value, name } = event.target;
-    // setForm({
-    //   ...form,
-    //   [name]: value
-    // });
+    setForm({
+      ...form,
+      [name]: value
+    });
   };
 
   const submitForm = () => {
@@ -38,15 +37,15 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
   const removeImage = () => setPreview([]);
 
   const previewImg = (event: ChangeEvent<HTMLInputElement>) => {
-    const image = event.target.files && event.target.files[0];
-    //setPreview([image]);
+    const picture = event.target.files && event.target.files[0];
+    setPreview([picture]);
   };
 
- // const handleError = () => !!form.name?.length && !!form.code?.length && !!preview?.length;
+ const handleError = () => form.name && form.description && preview?.length;
 
   return (
     <SBox>
-      {/* <form noValidate autoComplete="off">
+     <form noValidate autoComplete="off">
         {preview.length ? (
           <Grid container direction="row">
             <SPreview>
@@ -71,7 +70,7 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
             <input
               accept="image/*"
               type="file"
-              name="image"
+              name="picture"
               hidden
               onChange={previewImg}
               disabled={loading}
@@ -97,26 +96,15 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
           size="small"
           margin="normal"
           id="standard-error-helper-text"
-          label="Código"
-          name="code"
-          value={form.code || ''}
+          label="Descrição"
+          name="description"
+          multiline
+          rows={2}
+          maxRows={4}
+          value={form.description || ''}
           onChange={handleChange}
           disabled={loading}
         />
-
-        <SFormControl>
-          <InputLabel>Disponível</InputLabel>
-          <Select
-            id="availability"
-            name="availability"
-            value={form.availability || ''}
-            label="Disponível"
-            onChange={handleChange}
-          >
-            <MenuItem value="0">Não</MenuItem>
-            <MenuItem value="1">Sim</MenuItem>
-          </Select>
-        </SFormControl>
 
         <SButton
           fullWidth
@@ -126,7 +114,7 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
         >
           Cadastrar
         </SButton>
-      </form> */}
+      </form>
     </SBox>
   );
 };

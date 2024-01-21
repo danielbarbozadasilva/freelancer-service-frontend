@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link, RouteComponentProps } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Menu } from '../../../routers';
 import { useAppSelector } from '../../../hooks';
 
-interface ListMenuProps extends RouteComponentProps {}
 
-const ListMenu: React.FC<ListMenuProps> = () => {
+const ListMenu: React.FC = () => {
   const typeUser = useAppSelector((state) => state.auth.user.permissions);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -16,19 +15,15 @@ const ListMenu: React.FC<ListMenuProps> = () => {
     setSelectedIndex(index);
   };
 
-  const authorizedRoutes = Menu.filter((route) => {
-    if(typeUser?.lenght){
-      route.authorization.includes(typeUser[0])
-    }
-  })
-  
+  const authorizedRoutes = typeUser?.length? Menu.filter((route) => route.authorization.includes(typeUser[0])) : [];
+
   return (
     <div>
       {authorizedRoutes.map(({ title, route, icon }, i) => (
         <ListItem
           button
           component={Link}
-          to={route}
+          to={'/dashboard'+ route}
           key={i}
           selected={selectedIndex === i}
           onClick={(event) => handleListItemClick(event, i)}

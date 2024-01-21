@@ -9,8 +9,8 @@ import { toast } from 'react-toastify'
 
 export const listAllCategoryAction = async () => {
   try {
-    const result = await listAllCategoryService()    
-    return result.data
+    const result = await listAllCategoryService()  
+    return result.data.data
   } catch (error) {}
 }
 

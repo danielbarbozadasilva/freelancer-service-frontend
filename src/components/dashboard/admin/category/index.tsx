@@ -6,8 +6,6 @@ import { FiTrash2, FiEdit } from 'react-icons/fi';
 import { SImg } from './styled';
 import { IconButton, Tooltip } from '@mui/material';
 import { More as MoreIcon } from '@mui/icons-material';
-import { createTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
 import ListProduct from './form/product';
 import { DataListProps, IProductModal } from './form/types';
 
@@ -62,25 +60,6 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const theme = createTheme();
-
-  const useStyles = makeStyles((theme: any) => ({
-    root: {
-      borderLeft: 0,
-      borderRight: 0,
-      borderBottom: 0,
-      '& .cold': {
-        backgroundColor: '#b9d5ff91',
-        color: '#1a3e72',
-      },
-      '& .hot': {
-        backgroundColor: '#ff943975',
-        color: '#1a3e72',
-      },
-    },
-  }));
-
-  const classes = useStyles();
 
   const columns: GridColumns = [
     {
@@ -108,15 +87,15 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       flex: 1,
       disableColumnMenu: true,
     },
-    {
-      field: 'actionsproducts',
-      headerName: 'Produtos',
-      flex: 1,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: actionModalProduct,
-      disableColumnMenu: true,
-    },
+    // {
+    //   field: 'actionsproducts',
+    //   headerName: 'Produtos',
+    //   flex: 1,
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   renderCell: actionModalProduct,
+    //   disableColumnMenu: true,
+    // },
     {
       field: 'actionEdit',
       headerName: 'Editar',
@@ -147,13 +126,6 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
         <DataGrid
           rows={data}
           autoHeight
-          className={classes.root}
-          getCellClassName={(params) => {
-            if (params.field === 'availability') {
-              return params.value === 'Não' ? 'hot' : '';
-            }
-            return '';
-          }}
           columns={columns}
           loading={loading}
           pageSize={10}

@@ -7,9 +7,7 @@ import moment from 'moment'
 import Loading from '../../loading/page'
 
 const FormMessages: React.FC<PageType> = ({ submit }) => {
-  const conversation: IConversation[] = useAppSelector(
-    (state) => state.conversation.all
-  )
+  const conversation: IConversation[] = useAppSelector((state) => state.conversation.all)
   const user: IUser = useAppSelector((state) => state.auth.user)
   const loading = useAppSelector((state) => state.conversation.loading)
 
@@ -29,7 +27,7 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
         </div>
         <table>
           <tr>
-            <th>{user.isSeller ? 'Buyer' : 'Seller'}</th>
+            <th>{user.isSeller ? 'Comprador' : 'Freelancer'}</th>
             <th>Ultimas mensagens</th>
             <th>Data</th>
             <th>Ação</th>
@@ -39,7 +37,7 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
               className={!user.isSeller && !item.readByBuyer ? 'active' : ''}
               key={item.id}
             >
-              <td>{user.isSeller ? item.buyerId : item.sellerId}</td>
+              <td>{user.isSeller ? item.buyerId.username : item.sellerId.username}</td>
               <td>
                 <Link to={`/message/${item._id}`} className="link">
                   {item?.lastMessage?.substring(0, 100)}...
