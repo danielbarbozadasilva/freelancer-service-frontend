@@ -5,6 +5,7 @@ export const slice = createSlice({
   initialState: {
     loading: false,
     all: [],
+    categoryid: []
   },
   reducers: {
     loadingCategory(state) {
@@ -20,7 +21,26 @@ export const slice = createSlice({
         loading: false
       }
     },
+    listByIdCategory(state, { payload }) {
+      return {
+        ...state,
+        categoryid: payload.data,
+        loading: false
+      }
+    },
     createCategory(state) {
+      return {
+        ...state,
+        loading: false
+      }
+    },
+    updateCategory(state) {
+      return {
+        ...state,
+        loading: false
+      }
+    },
+    deleteCategory(state) {
       return {
         ...state,
         loading: false
@@ -28,5 +48,15 @@ export const slice = createSlice({
     }
   }
 })
-export const { loadingCategory, finishLoadingCategory, listAllCategory, createCategory } = slice.actions
+
+export const { 
+  loadingCategory, 
+  finishLoadingCategory, 
+  listAllCategory, 
+  listByIdCategory, 
+  createCategory,
+  updateCategory,
+  deleteCategory
+} = slice.actions
+
 export default slice.reducer
