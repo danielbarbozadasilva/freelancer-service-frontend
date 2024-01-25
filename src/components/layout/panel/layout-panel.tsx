@@ -119,17 +119,17 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
     },
     userIcon: {
-      marginLeft: `calc(100% - 24%)`,
+      marginLeft: `calc(100% - 30%)`,
       margin: theme.spacing(2),
       color: '#fff',
       '@media (max-width: 1900px)': {
-        marginLeft: `calc(100% - 30%)`,
+        marginLeft: `calc(100% - 35%)`,
       },
-      '@media (max-width: 1500px)': {
-        marginLeft: '60%',
+      '@media (max-width: 1600px)': {
+        marginLeft: `calc(100% - 50%)`,
       },
       '@media (max-width: 1330px)': {
-        marginLeft: '55%',
+        marginLeft: `calc(100% - 60%)`,
       },
       '@media (max-width: 1090px)': {
         marginLeft: '0%',

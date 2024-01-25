@@ -1,31 +1,31 @@
-import React from 'react'
-import { BoxTable } from '../../datalist/styled'
-import Loading from '../../../../components/loading/page/index'
-import { DataGrid } from '@material-ui/data-grid'
-import { FiTrash2, FiEdit } from 'react-icons/fi'
-import { SImg } from './styled'
-import { IconButton, Tooltip } from '@material-ui/core'
-import { More as MoreIcon } from '@material-ui/icons'
-import { createTheme } from '@mui/material/styles'
-import { makeStyles } from '@mui/styles'
+import React, { useState } from 'react';
+import { BoxTable } from '../../datalist/styled';
+import Loading from '../../../../components/loading/page/index';
+import { DataGrid, GridColumns, GridCellParams } from '@mui/x-data-grid';
+import { FiTrash2, FiEdit } from 'react-icons/fi';
+import { SImg } from './styled';
+import { IconButton, Tooltip } from '@mui/material';
+import { More as MoreIcon } from '@mui/icons-material';
+import ListProduct from './form/product';
+import { DataListProps, IProductModal } from './form/types';
 
-const DataList = (data: any, modal: any, loading: boolean) => {
-  const [modalProduct, setModalProduct] = React.useState({})
+const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
+  const [modalProduct, setModalProduct] = useState<IProductModal>();
 
-  const thumb = (formattedValue: string) => {
-    return <SImg src={formattedValue} />
-  }
+  const thumb = (params: GridCellParams) => {
+    return <SImg src={params.value as string} />;
+  };
 
   function openProduct(row: object) {
-    setModalProduct({ open: true, data: row })
+    setModalProduct({ open: true, data: row });
   }
 
-  const actionModalProduct = (row: any) => {
-    const result = row.product
+  const actionModalProduct = (params: GridCellParams) => {
+    const result = params.row.product;
 
     return (
       <>
-        <Tooltip title="Listar produtos">
+        <Tooltip title="Serviços">
           <span>
             <IconButton
               onClick={() => openProduct(result)}
@@ -37,8 +37,8 @@ const DataList = (data: any, modal: any, loading: boolean) => {
           </span>
         </Tooltip>
       </>
-    )
-  }
+    );
+  };
 
   const actionEdit = (id: string, row: object) => {
     return (
@@ -47,8 +47,8 @@ const DataList = (data: any, modal: any, loading: boolean) => {
           <FiEdit />
         </IconButton>
       </>
-    )
-  }
+    );
+  };
 
   const actionRemove = (id: string, row: object) => {
     return (
@@ -57,45 +57,19 @@ const DataList = (data: any, modal: any, loading: boolean) => {
           <FiTrash2 />
         </IconButton>
       </>
-    )
-  }
+    );
+  };
 
-  const theme = createTheme()
 
-  const styles = makeStyles((theme:any) => ({
-    root: {
-      borderLeft: 0,
-      borderRight: 0,
-      borderBottom: 0,
-      '& .cold': {
-        backgroundColor: '#b9d5ff91',
-        color: '#1a3e72'
-      },
-      '& .hot': {
-        backgroundColor: '#ff943975',
-        color: '#1a3e72'
-      }
-    }
-  }))
-  const classes = styles()
-
-  const columns = [
+  const columns: GridColumns = [
     {
-      field: 'photo',
+      field: 'picture',
       headerName: 'Imagem',
       renderCell: thumb,
       align: 'center',
       flex: 1,
       headerAlign: 'center',
-      disableColumnMenu: true
-    },
-    {
-      field: 'code',
-      headerName: 'Código',
-      align: 'center',
-      headerAlign: 'center',
-      flex: 1,
-      disableColumnMenu: true
+      disableColumnMenu: true,
     },
     {
       field: 'name',
@@ -103,24 +77,24 @@ const DataList = (data: any, modal: any, loading: boolean) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true
+      disableColumnMenu: true,
     },
     {
-      field: 'availability',
-      headerName: 'Disponível',
+      field: 'description',
+      headerName: 'Descrição',
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true
+      disableColumnMenu: true,
     },
     {
       field: 'actionsproducts',
-      headerName: 'Produtos',
+      headerName: 'Serviços',
       flex: 1,
       align: 'center',
       headerAlign: 'center',
       renderCell: actionModalProduct,
-      disableColumnMenu: true
+      disableColumnMenu: true,
     },
     {
       field: 'actionEdit',
@@ -129,47 +103,41 @@ const DataList = (data: any, modal: any, loading: boolean) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
-      disableColumnMenu: true
+      disableColumnMenu: true,
     },
     {
       field: 'actionRemove',
       headerName: 'Excluir',
-      renderCell: actionRemove,
+      renderCell: actionRemove as any,
       flex: 1,
       align: 'center',
       headerAlign: 'center',
-      disableColumnMenu: true
-    }
-  ]
+      disableColumnMenu: true,
+    },
+  ];
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
     <>
-      {/* <BoxTable>
+      <BoxTable>
         <DataGrid
           rows={data}
           autoHeight
-          className={classes.root}
-          getCellClassName={(params) => {
-            if (params.field === 'availability') {
-              return params.value === 'Não' ? 'hot' : ''
-            }
-            return ''
-          }}
           columns={columns}
           loading={loading}
           pageSize={10}
         />
       </BoxTable>
       <ListProduct
-        open={modalProduct.open || false}
-        products={modalProduct.data}
-        close={() => setModalProduct({ ...modalProduct, open: false })}
-      /> */}
+        open={modalProduct?.open || false}
+        products={modalProduct?.data}
+        close={() => setModalProduct({ ...modalProduct, open: false } as IProductModal)}
+      />
     </>
-  )
-}
-export default DataList
+  );
+};
+
+export default DataList;

@@ -43,6 +43,7 @@ const Client = (props:any) => {
   //     </SearchContainer>
   //   </StyleContainer>
   // )
+  const actions = () => null
 
   return (
     <>
@@ -63,6 +64,12 @@ const Client = (props:any) => {
           <Remove open={!!modal} close={closeModal} remove={submitForm} />
         </>
       </DialogModal> */}
+      
+      <Helmet title={props.title} />
+      <Title title="Cliente" actions={actions} />
+      <h1>1111Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti illum voluptate, eveniet sunt rerum error culpa voluptates fugit ut provident sed ad, dignissimos incidunt libero. Quidem accusamus maiores asperiores. Itaque!</h1>
+      {/* <ProfileForm submit={submitForm} /> */}
+    
     </>
   )
 }
