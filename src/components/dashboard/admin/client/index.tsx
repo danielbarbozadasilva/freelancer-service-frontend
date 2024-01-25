@@ -6,7 +6,7 @@ import { FiTrash2, FiEdit } from 'react-icons/fi';
 import { IconButton, Tooltip } from '@mui/material';
 import { More as MoreIcon } from '@mui/icons-material';
 import { SImg } from './styled';
-import ListOrders from './form/list/index';
+import ListOrders from './form/orders/index';
 import { DataListProps, IClientModal } from './form/types';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs'
 import { useAppDispatch } from '../../../../hooks';
