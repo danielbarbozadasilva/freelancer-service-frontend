@@ -5,7 +5,7 @@ export const slice = createSlice({
   initialState: {
     loading: false,
     all: [],
-    categoryid: []
+    categoryid: {}
   },
   reducers: {
     loadingCategory(state) {

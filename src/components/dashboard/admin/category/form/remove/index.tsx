@@ -5,12 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
-interface RemoveProps {
-  open: boolean;
-  remove: () => void;
-  close: () => void;
-}
+import { RemoveProps } from './types';
 
 const Remove: React.FC<RemoveProps> = ({ open, remove, close }) => {
   return (
@@ -25,7 +20,7 @@ const Remove: React.FC<RemoveProps> = ({ open, remove, close }) => {
         <DialogTitle id="alert-dialog-title">Excluir Categoria</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tem certeza de que deseja excluir a categoria selecionada e seus respectivos produtos?
+            Tem certeza de que deseja excluir a categoria selecionada e seus respectivos itens?
             <br /> Esta ação não poderá ser desfeita!
           </DialogContentText>
         </DialogContent>

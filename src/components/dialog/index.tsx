@@ -1,12 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Button, DialogTitle, Dialog, DialogActions } from '@material-ui/core';
-
-interface DialogModalProps {
-  open: boolean;
-  close: () => void;
-  title?: string;
-  children?: ReactNode;
-}
+import { DialogModalProps } from './types';
 
 const DialogModal: React.FC<DialogModalProps> = ({ open, close, title, children }) => (
   <Dialog

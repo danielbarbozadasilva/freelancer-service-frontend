@@ -25,7 +25,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
 
     return (
       <>
-        <Tooltip title="Listar categorias">
+        <Tooltip title="Serviços">
           <span>
             <IconButton
               onClick={() => openProduct(result)}
@@ -87,15 +87,15 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       flex: 1,
       disableColumnMenu: true,
     },
-    // {
-    //   field: 'actionsproducts',
-    //   headerName: 'Produtos',
-    //   flex: 1,
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   renderCell: actionModalProduct,
-    //   disableColumnMenu: true,
-    // },
+    {
+      field: 'actionsproducts',
+      headerName: 'Serviços',
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: actionModalProduct,
+      disableColumnMenu: true,
+    },
     {
       field: 'actionEdit',
       headerName: 'Editar',

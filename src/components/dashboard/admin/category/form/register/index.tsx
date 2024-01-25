@@ -1,18 +1,15 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { SBox, Image, SButton, SPreview } from '../styled';
-import { useSelector } from 'react-redux';
-
-interface FormCategoryRegisterProps {
-  submit: (formData: FormData) => void;
-}
+import { useAppSelector } from '../../../../../../hooks';
+import { FormCategoryRegisterProps } from './types';
 
 const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) => {
   const [preview, setPreview] = useState<File[]>([]);
   const [form, setForm] = useState<Record<string, string | boolean>>({});
-  const loading = useSelector((state) => state.category.loading);
+  const loading = useAppSelector((state) => state.category.loading)
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | { name: string; value: unknown }>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setForm({
       ...form,
@@ -24,13 +21,12 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
     const formData = new FormData();
     formData.append('files', preview[0]);
 
-    const newForm = {
-      name: form.name as string,
-      code: form.code as string,
-      availability: form.availability === '1' ? true : false
+    const newForm: any = {
+      name: form.name,
+      description: form.description,
     };
 
-    //Object.keys(newForm).map((k) => formData.append(k, newForm[k]));
+    Object.keys(newForm).map((k) => formData.append(k, newForm[k]));
     submit(formData);
   };
 

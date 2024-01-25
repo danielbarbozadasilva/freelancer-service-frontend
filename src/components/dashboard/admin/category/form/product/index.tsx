@@ -1,12 +1,13 @@
-import React from 'react'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DataList from '../../../../../dashboard/datagrid/index'
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DataList from '../../../../../dashboard/datagrid/index';
+import { ListProductProps } from './types';
 
-const ListProduct = ({ open, close, products }) => {
+const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
   const columnProduct = [
     {
       field: 'title',
@@ -14,8 +15,8 @@ const ListProduct = ({ open, close, products }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      width: 340,
-      disableColumnMenu: true
+      width: 500,
+      disableColumnMenu: true,
     },
     {
       field: 'price',
@@ -24,9 +25,27 @@ const ListProduct = ({ open, close, products }) => {
       headerAlign: 'center',
       flex: 1,
       width: 340,
-      disableColumnMenu: true
-    }
-  ]
+      disableColumnMenu: true,
+    },
+    {
+      field: 'deliveryTime',
+      headerName: 'Entrega',
+      align: 'center',
+      headerAlign: 'center',
+      flex: 1,
+      width: 340,
+      disableColumnMenu: true,
+    },
+    {
+      field: 'sales',
+      headerName: 'Vendas',
+      align: 'center',
+      headerAlign: 'center',
+      flex: 1,
+      width: 340,
+      disableColumnMenu: true,
+    },
+  ];
 
   return (
     <Dialog
@@ -35,8 +54,8 @@ const ListProduct = ({ open, close, products }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Lista de produtos</DialogTitle>
-      <DialogContent style={{ width: '500px ' }}>
+      <DialogTitle id="alert-dialog-title">Lista de serviços</DialogTitle>
+      <DialogContent style={{ width: '600px' }}>
         <DataList data={products} columns={columnProduct} loading={false} />
       </DialogContent>
       <DialogActions>
@@ -45,7 +64,7 @@ const ListProduct = ({ open, close, products }) => {
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default ListProduct
+export default ListProduct;

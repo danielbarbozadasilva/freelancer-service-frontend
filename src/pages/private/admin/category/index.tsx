@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback, useState } from 'react'
-import { Button, Grid } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
 import {
   listAllCategoryAction,
   listCategoryByIdAction,
@@ -22,7 +21,8 @@ import {
   finishLoadingCategory,
   listAllCategory,
   loadingCategory,
-  updateCategory
+  updateCategory,
+  listByIdCategory
 } from '../../../../store/category/category.reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { CategoryProps, IModal } from './types'
@@ -34,7 +34,7 @@ const Category: React.FC<CategoryProps> = (props) => {
   const categoryById = useAppSelector((state) => state.category.categoryid)
   const loading = useAppSelector((state) => state.category.loading)
 
-  useEffect(() => {
+  const callCategories = useCallback(() => {
     dispatch(loadingCategory())
     listAllCategoryAction().then((result) => {
       if (result) {
@@ -44,10 +44,21 @@ const Category: React.FC<CategoryProps> = (props) => {
     })
   }, [dispatch])
 
-  const toggleModal = async (type = 1, id = null) => {
-    if (id) {
-      dispatch(updateCategory(id))
-      setModal({ type, id, status: true })
+  useEffect(() => {
+    callCategories()
+  }, [callCategories])
+
+  const toggleModal = (type = 1, data: any = {}) => {
+    const id = data?.id || null
+    if (id){
+      dispatch(loadingCategory())
+      listCategoryByIdAction(id).then((result) => {
+        if (result) {
+          dispatch(listByIdCategory(result))
+        }
+        dispatch(finishLoadingCategory())
+        setModal({ type, id, status: true })
+      })
     } else {
       setModal({ type, id, status: true })
     }
@@ -82,6 +93,7 @@ const Category: React.FC<CategoryProps> = (props) => {
           dispatch(finishLoadingCategory())
         })
         setModal({ status: false })
+        callCategories()
         return
 
       default:
@@ -121,7 +133,7 @@ const Category: React.FC<CategoryProps> = (props) => {
             <Remove
               open={!!modal}
               close={closeModal}
-              remove={() => submitForm}
+              remove={submitForm as any}
             />
           ) : null}
         </>
