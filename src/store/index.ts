@@ -4,6 +4,7 @@ import CategoryReducer from './category/category.reducer'
 import ProductReducer from './product/product.reducer'
 import messageReducer from './message/message.reducer'
 import conversationReducer from './conversation/conversation.reducer'
+import clientReducer from './client/client.reducer'
 
 const store = configureStore({
   reducer:{
@@ -12,6 +13,7 @@ const store = configureStore({
     product: ProductReducer,
     message: messageReducer,
     conversation: conversationReducer,
+    client: clientReducer,
   }
 })
 

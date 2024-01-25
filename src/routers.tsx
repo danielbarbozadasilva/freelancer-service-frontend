@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Dashboard as DashboardIcon } from '@material-ui/icons';
 import { AccountBox, Group } from '@mui/icons-material';
 import PanelLayout from './components/layout/panel/layout-panel';
-import Profile from './pages/private/client/profile/index';
+import Orders from './pages/private/admin/orders/index';
 import Category from './pages/private/admin/category/index';
 import Client from './pages/private/admin/client/index';
 import Home from './pages/portal/home';
@@ -35,12 +35,21 @@ interface MenuItem {
 
 export const Menu: MenuItem[] = [
   {
-    title: 'Perfil',
-    icon: <AccountBox />,
-    route: '/profile',
+    title: 'Clientes',
+    icon: <Group />,
+    route: '/clients',
     visibleMenu: true,
     enabled: true,
-    component: Profile,
+    component: Client,
+    authorization: ['admin'],
+  },
+  {
+    title: 'Pedidos',
+    icon: <AccountBox />,
+    route: '/orders',
+    visibleMenu: true,
+    enabled: true,
+    component: Orders,
     authorization: ['admin'],
   },
   {
@@ -50,15 +59,6 @@ export const Menu: MenuItem[] = [
     visibleMenu: true,
     enabled: true,
     component: Category,
-    authorization: ['admin'],
-  },
-  {
-    title: 'Clientes',
-    icon: <Group />,
-    route: '/clients',
-    visibleMenu: true,
-    enabled: true,
-    component: Client,
     authorization: ['admin'],
   },
 ];

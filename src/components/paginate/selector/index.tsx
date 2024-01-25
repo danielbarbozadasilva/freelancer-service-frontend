@@ -6,7 +6,6 @@ import { PaginationSelectorProps } from '../types';
 const PaginationSelector: React.FC<PaginationSelectorProps> = ({ itensPerPage, setItensPerPage }) => {
   const handleSelectChange = (e: any) => {
     setItensPerPage(Number(e.target.value));
-    console.log(e.target.value);
   };
 
   return (

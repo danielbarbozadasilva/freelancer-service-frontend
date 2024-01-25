@@ -3,9 +3,9 @@ import { BoxTable } from '../../datalist/styled';
 import Loading from '../../../../components/loading/page/index';
 import { DataGrid, GridColumns, GridCellParams } from '@mui/x-data-grid';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
-import { SImg } from './styled';
 import { IconButton, Tooltip } from '@mui/material';
 import { More as MoreIcon } from '@mui/icons-material';
+import { SImg } from './styled';
 import ListProduct from './form/product';
 import { DataListProps, IProductModal } from './form/types';
 

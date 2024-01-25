@@ -7,13 +7,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import DataList from '../../../../datalist/index';
 
-interface ListAddressProps {
+interface ListOrdersProps {
   open: boolean;
   close: () => void;
   data: any[];
 }
 
-const ListAddress: React.FC<ListAddressProps> = ({ open, close, data }) => {
+const ListOrders: React.FC<ListOrdersProps> = ({ open, close, data }) => {
   const columnAddress = [
     {
       field: 'city',
@@ -72,4 +72,4 @@ const ListAddress: React.FC<ListAddressProps> = ({ open, close, data }) => {
   );
 };
 
-export default ListAddress;
+export default ListOrders;
