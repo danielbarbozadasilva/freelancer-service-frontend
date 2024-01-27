@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 interface Form {
   [key: string]: string | string[];
@@ -17,8 +17,7 @@ export function isNotValid(form: Form, formValidate: FormValidate): boolean {
     'birthDate',
     'country',
     'phone',
-    'description',
-    'password'
+    'description'
   ];
 
   const invalid = (label: string) =>
@@ -31,8 +30,8 @@ export function isNotValid(form: Form, formValidate: FormValidate): boolean {
 }
 
 export function fieldValidate(name: string, value: string): string {
-  let message = '';
-  let regex = '';
+  let message: string = '';
+  let regex;
 
   switch (name) {
     case 'name':

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import ProductCard from '../../../components/portal/work/cards/productCard/index'
+import ProductCard from '../../../components/portal/cards/productCard/index'
 import {
   loadingProduct,
   finishLoadingProduct,
@@ -7,7 +7,7 @@ import {
 } from '../../../store/product/product.reducer'
 import { listAllProductsAction } from '../../../store/product/product.action'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Filters, PageTitle, Product } from './types'
 import Loading from '../../../components/loading/page'
 import { ContainerCards, STextFormated, SContainerFilter, TitleService } from './styled'
@@ -19,7 +19,6 @@ import { Helmet } from 'react-helmet'
 
 const CategoryProducts: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const { id } = useParams()
 
   const product: Product[] = useAppSelector((state) => state.product.all)
@@ -33,7 +32,8 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
       category: String(id),
       offset: currentPage,
       limit: itensPerPage,
-      search: ''
+      search: '',
+      order: ''
     }
     listAllProductsAction(filters).then((result) => {
       if (result) {
@@ -66,7 +66,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
       <div className="container">
         <TitleService>Serviços</TitleService>
         <SContainerFilter>
-          <FilterProduct />
+          <FilterProduct id={id} />
         </SContainerFilter>
         <ContainerCards>
           {!loading && product?.length === 0 ? (

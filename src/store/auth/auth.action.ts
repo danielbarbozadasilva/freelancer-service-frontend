@@ -35,6 +35,8 @@ export const signUpAction = async (data: object) => {
     }
     await registerService(data, config)
     toast.success('Usuário criado com sucesso!')
+    navigate('/signin')
+    navigate(0)
     return true
   } catch (error: any) {
     toast.error(error?.response?.data?.message)

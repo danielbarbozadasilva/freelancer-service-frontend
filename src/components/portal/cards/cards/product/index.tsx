@@ -10,7 +10,7 @@ import {
   SCardInstallments
 } from './styled';
 import { navigate } from '@reach/router';
-import { formatPriceBr } from '../../../../../../util/helpers/format';
+import { formatPriceBr } from '../../../../../util/helpers/format';
 
 interface CardProductProps {
   item: {

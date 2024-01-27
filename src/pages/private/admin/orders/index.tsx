@@ -32,7 +32,7 @@ const Orders = (props: any) => {
   return (
     <>
       <Helmet title={props.title} />
-      <Title title="Orders" actions={actions} />
+      <Title title="Pedidos" actions={actions} />
       <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti illum voluptate, eveniet sunt rerum error culpa voluptates fugit ut provident sed ad, dignissimos incidunt libero. Quidem accusamus maiores asperiores. Itaque!</h1>
       {/* <OrdersForm submit={submitForm} /> */}
     </>

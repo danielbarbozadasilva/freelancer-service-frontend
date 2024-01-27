@@ -1,22 +1,12 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
-import {
-  TextField,
-  Grid,
-  LinearProgress,
-  Select,
-  Container,
-  Button
-} from '@material-ui/core'
+import { TextField, Grid, LinearProgress, Select, Container, Button } from '@material-ui/core'
 import { Submit, SignBox, FormStyle, SInputLabel, SButton } from './styled'
 import moment from 'moment'
 import InputMask from 'react-input-mask'
-import {
-  fieldValidate,
-  isNotValid
-} from '../../../../../../util/validations/form-client'
-import { SBox, Image, SPreview } from '../styled';
+import { fieldValidate, isNotValid } from '../../../../../../util/validations/form-client'
+import { Image, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
-import { FormClientUpdateProps } from './types';
+import { FormClientUpdateProps, IUser } from './types';
 import ufCountryFile from '../../../../../../util/country.json'
 
 const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => {
@@ -24,8 +14,8 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
   const [button, setButton] = useState(false)
   const loading = useAppSelector((state) => state.client.loading)
   const selected = useAppSelector((state) => state.client.clientid)
-  const [form, setForm] = useState<any>({ ...selected })
-  const [formValidate, setFormValidate] = useState<any>({})
+  const [form, setForm] = useState({ ...selected } as IUser)
+  const [formValidate, setFormValidate] = useState({} as IUser)
   const [country, setCountry] = useState([{}])
 
   const handleChange = (props: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +37,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
     const formData = new FormData();
     formData.append('files', preview[0]);
 
-    const newForm: any = {
+    const newForm: IUser = {
       name: form.name,
       username: form.username,
       email: form.email,
@@ -55,9 +45,12 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
       birthDate: form.birthDate,
       country: form.country,
       phone: form.phone,
-      description: form.description
+      description: form.description,
+      password: form.password
     }
-    submit(newForm)
+
+    Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
+    submit(formData)
   }
 
   const removeImage = () => setPreview([]);
@@ -106,7 +99,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
             />
           </Button>
         </Grid>
-        <FormStyle noValidate>
+        <FormStyle>
           <div>
             <SInputLabel>Nome</SInputLabel>
             <TextField
@@ -122,6 +115,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               error={!!formValidate.name}
             />
           </div>
+          
           <div>
             <SInputLabel>Username</SInputLabel>
             <TextField
@@ -137,6 +131,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               error={!!formValidate.username}
             />
           </div>
+
           <div>
             <SInputLabel>E-mail</SInputLabel>
             <TextField
@@ -173,7 +168,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
             <TextField
               fullWidth
               id="standard-error-helper-text"
-              name="birth_date"
+              name="birthDate"
               type="date"
               value={
                 form.birthDate
@@ -236,9 +231,11 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
             <SInputLabel>Descrição</SInputLabel>
             <TextField
               fullWidth
+              multiline
+              rows={3}
               size="small"
               id="standard-error-helper-text"
-              name="name"
+              name="description"
               value={form.description || ''}
               onChange={handleChange}
               helperText={formValidate.description || ''}
@@ -248,7 +245,6 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
             />
           </div>
           
-
           {button ? (
             <div>
               <SInputLabel>Nova senha</SInputLabel>
@@ -256,10 +252,8 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
                 fullWidth
                 size="small"
                 id="standard-error-helper-text"
-                error={!!formValidate.password}
                 name="password"
                 onChange={handleChange}
-                helperText={formValidate.password || ''}
                 disabled={loading}
                 variant="outlined"
               />
@@ -271,7 +265,6 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
             variant="contained"
             fullWidth
             size="small"
-            margin="normal"
             onClick={() => setButton(!button)}
           >
             {button ? 'Ocultar campo' : 'Alterar senha'}
@@ -280,10 +273,13 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
           <Submit>
             {loading ? (
               <Grid container direction="column">
-                <LinearProgress variant="determinate" value={percent} />
+                <LinearProgress variant="determinate" />
               </Grid>
             ) : (
               <SButton
+                variant="contained"
+                fullWidth
+                size="small"
                 type="button"
                 onClick={submitForm}
                 disabled={isNotValid(form, formValidate)}

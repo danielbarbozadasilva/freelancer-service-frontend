@@ -3,14 +3,30 @@ import { listAllProductsAction } from '../../../store/product/product.action';
 import { Select } from '@material-ui/core';
 import { SBox, STitle } from './styled';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Filters, IProductFilter } from './types';
+import { finishLoadingProduct, listAllProduct, listSort, loadingProduct } from '../../../store/product/product.reducer';
 
-const FilterProduct: React.FC = () => {
-  const sort = useAppSelector((state) => state.product.all)
+const FilterProduct: React.FC<IProductFilter> = ({ id }) => {
+  const sort = useAppSelector((state) => state.product.sort)
   const dispatch = useAppDispatch()
 
   const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
     const { value } = event.target;
-    // dispatch(listAllProductsAction(null, null, value as string));
+      dispatch(loadingProduct())
+      const filters: Filters = {
+        category: id,
+        offset: 0,
+        limit: 10,
+        search: '',
+        order: String(value)
+      }
+      listAllProductsAction(filters).then((result) => {
+        if (result) {
+          dispatch(listAllProduct(result))
+          dispatch(listSort(value))
+        }
+        dispatch(finishLoadingProduct())
+      })  
   };
 
   return (

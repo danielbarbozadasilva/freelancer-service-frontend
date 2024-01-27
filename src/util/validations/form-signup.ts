@@ -1,5 +1,5 @@
 import * as moment from 'moment'
-import { TypeSignUp } from '../../components/types'
+import { TypeSignUp } from './types'
 
 export function isNotValid(form: any, formValidate: TypeSignUp) {
   const inputs = [
@@ -10,7 +10,7 @@ export function isNotValid(form: any, formValidate: TypeSignUp) {
     'birthDate',
     'country',
     'phone',
-    'desc',
+    'description',
     'password',
     'confirmPassword'
   ]
@@ -24,8 +24,8 @@ export function isNotValid(form: any, formValidate: TypeSignUp) {
 }
 
 export function fieldValidate(name: any, value: any, form: any) {
-  let message = ''
-  let regex: any = ''
+  let message: string = ''
+  let regex;
 
   switch (name) {
     case 'name':

@@ -12,3 +12,5 @@ export type IUser = {
     description: string
     picture: string
   }
+
+  

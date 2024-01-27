@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import { useAppSelector } from '../../../../hooks'
 import * as moment from 'moment'
 import { Col, Form } from 'react-bootstrap'
+import { Select } from '@material-ui/core'
 import { SFormSignUp, SRow, SFormGroup, STextForm, SButton } from '../styled'
 import Loading from '../../../loading/form/index'
-import {
-  fieldValidate,
-  isNotValid
-} from '../../../../util/validations/form-signup'
+import { fieldValidate, isNotValid } from '../../../../util/validations/form-signup'
 import { formatPhone, formatCPF } from '../../../../util/helpers/format'
 import { PageType, TypeSignUp } from '../../../types'
+import ufCountryFile from '../../../../util/country.json'
 
 const SignUp: React.FC<PageType> = ({ submit }) => {
   const loading = useAppSelector((state) => state.auth.loading)
   const [formValidate, setFormValidate] = useState({} as TypeSignUp)
   const [form, setForm] = useState({} as TypeSignUp)
   const [file, setFile] = useState<string | Blob>('')
+  const [country, setCountry] = useState([{}])
 
-  const handleChange = ({ target }: any) => {
-    const { value, name } = target
+  const handleChange = (props: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = props.target
+    console.log(name);
+    console.log(value);
+    
     const message = fieldValidate(name, value, form)
     setFormValidate({ ...formValidate, [name]: message })
     setForm({
@@ -26,6 +29,11 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
       [name]: value
     })
   }
+
+  useEffect(() => {
+    const localization = ufCountryFile.map(({ nome }) => ({ nome }))
+    setCountry(localization)
+  }, [])
 
   const previewImg = ({ target }: any) => {
     const picture = target.files[0]
@@ -36,7 +44,7 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
     const formData = new FormData()
     formData.append('files', file)
 
-    const newForm: any = {
+    const newForm: TypeSignUp = {
       name: form.name,
       username: form.username,
       email: form.email,
@@ -44,10 +52,12 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
       birthDate: form.birthDate,
       country: form.country,
       phone: form.phone,
-      desc: form.desc,
+      description: form.description,
+      isSeller: form.isSeller,
       password: form.password,
       confirmPassword: form.confirmPassword
     }
+
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
 
     submit(formData)
@@ -152,6 +162,7 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
 
         <SFormGroup as={Col}>
           <Form.Label>*Foto:</Form.Label>
+          <br />
           <input
               accept="image/*"
               type="file"
@@ -168,21 +179,46 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
       <SRow>
         <SFormGroup as={Col}>
           <Form.Label>*País:</Form.Label>
-          <Form.Control
-            disabled={loading}
-            type="country"
-            id="country"
-            value={form.country || ''}
-            onChange={handleChange}
-            name="country"
-            placeholder="Insira o seu país"
-            isInvalid={!!formValidate.country}
-          />
+          <br />
+          <Select
+              native
+              id="standard-error-helper-text"
+              value={form.country || ''}
+              onChange={handleChange}
+              inputProps={{
+                name: 'country',
+                id: 'outlined-native-simple'
+              }}
+            >
+              <option value="selecione">selecione</option>
+              {country?.map(({ nome }, i) => (
+                <option key={i} value={nome}>
+                  {nome}
+                </option>
+              ))}
+            </Select>
           <Form.Control.Feedback type="invalid">
             {formValidate.country || ''}
           </Form.Control.Feedback>
         </SFormGroup>
-
+        <SFormGroup as={Col}>
+          <Form.Label>*Eu sou:</Form.Label>
+          <div>
+          <Select
+              native
+              id="standard-error-helper-text"
+              value={form.isSeller || ''}
+              onChange={handleChange}
+              inputProps={{
+                name: 'isSeller',
+                id: 'outlined-native-simple'
+              }}
+            >
+              <option value={false}>Cliente</option>
+              <option value={true}>Freelancer</option>
+            </Select>
+          </div>
+        </SFormGroup>
         <SFormGroup as={Col}>
           <Form.Label>*Telefone:</Form.Label>
           <Form.Control
@@ -208,15 +244,15 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
             disabled={loading}
             as="textarea" 
             rows={3}            
-            id="desc"
-            value={form.desc || ''}
+            id="description"
+            value={form.description || ''}
             onChange={handleChange}
-            name="desc"
+            name="description"
             placeholder="Insira uma descrição"
-            isInvalid={!!formValidate.desc}
+            isInvalid={!!formValidate.description}
           />
           <Form.Control.Feedback type="invalid">
-            {formValidate.desc || ''}
+            {formValidate.description || ''}
           </Form.Control.Feedback>
         </SFormGroup>
         </SRow>

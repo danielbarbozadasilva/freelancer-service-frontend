@@ -13,12 +13,12 @@ import Error500 from './pages/error/500';
 import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
-import MyProductsPage from './pages/portal/myproducts/index';
+import MyProductsPage from './pages/portal/myProducts/index';
 import AddProductPage from './pages/portal/addProduct';
 import OrdersPage from './pages/portal/orders/index';
 import Messages from './pages/portal/messages/index';
 import Message from './pages/portal/message/index';
-import ProductPage from './pages/portal/product/index';
+import ProductDetails from './pages/portal/productDetails/index';
 import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
@@ -86,7 +86,7 @@ const MainRoutes: React.FC = () => {
                 <Route path="messages" element={<Messages title="Mensagens" />} />
                 <Route path="message/:id" element={<Message title="Mensagens" />} />
                 <Route path="add" element={<AddProductPage title="Cadastrar" />} />
-                <Route path="product/:id" element={<ProductPage title="Produtos" />} />
+                <Route path="product/:id" element={<ProductDetails title="Produtos" />} />
                 <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
               </Routes>
             </Layout>

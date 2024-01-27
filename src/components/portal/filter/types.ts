@@ -6,3 +6,7 @@ export interface Filters {
     search: string
     order: string
   }
+
+export interface IProductFilter{
+  id: string
+}

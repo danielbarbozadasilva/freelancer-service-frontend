@@ -22,6 +22,7 @@ import {
 } from '../../../../store/client/client.reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { ClientProps, IModal } from './types'
+import { navigate } from '@reach/router'
 
 const Client: React.FC<ClientProps> = (props) => {
   const dispatch = useAppDispatch()
@@ -71,12 +72,13 @@ const Client: React.FC<ClientProps> = (props) => {
           dispatch(finishLoadingClient())
         })
         setModal({ status: false })
+        navigate(0)
         return
 
       case 2:
         await removeClientAction(modal.id as string).then(() => {
           dispatch(loadingClient())
-          dispatch(deleteClient(modal.id as any))
+          dispatch(deleteClient())
           dispatch(finishLoadingClient())
         })
         setModal({ status: false })

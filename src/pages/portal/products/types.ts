@@ -62,6 +62,7 @@ export interface Filters {
   offset: number
   limit: number
   search: string
+  order: string
 }
 
 export type PageTitle = {

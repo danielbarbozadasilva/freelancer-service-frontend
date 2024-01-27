@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import Loading from '../../../components/loading/page/index'
 import { Col } from 'react-bootstrap'
-import CardCategory from '../../../components/portal/work/cards/category/index'
-import CardAbout from '../../../components/portal/work/cards/about/index'
+import CardCategory from '../../../components/portal/cards/category/index'
+import CardAbout from '../../../components/portal/cards/about/index'
 import {
   ContainerImage,
   ContainerFinancial,
@@ -17,7 +17,7 @@ import {
   SButtonAbout,
   ContainerAssets,
   settings
-} from '../../../components/portal/work/cards/styled'
+} from '../../../components/portal/cards/styled'
 import { listAllCategoryAction } from '../../../store/category/category.action'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom'
 import Slider from 'react-slick'
 import { loadingCategory, finishLoadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import Featured from '../../../components/portal/featured'
-import ProjectCard from '../../../components/portal/work/cards/projects'
+import ProjectCard from '../../../components/portal/cards/projects'
 import { ICategory, PageTitle } from './types'
 const Image = require('../../../assets/img/work.jpg')
 

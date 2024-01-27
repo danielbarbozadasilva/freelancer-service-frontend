@@ -1,52 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BoxTable } from '../../datalist/styled';
 import Loading from '../../../../components/loading/page/index';
-import { DataGrid, GridColumns, GridCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColumns } from '@mui/x-data-grid';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
 import { IconButton, Tooltip } from '@mui/material';
-import { More as MoreIcon } from '@mui/icons-material';
-import { SImg } from './styled';
-import ListOrders from './form/orders/index';
-import { DataListProps, IClientModal } from './form/types';
+import { DataListProps } from './form/types';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs'
 import { useAppDispatch } from '../../../../hooks';
 import { ActionModalProps } from './types';
+import { updateClientSellerAction } from '../../../../store/client/client.action';
+import { updateClient } from '../../../../store/client/client.reducer';
+import { navigate } from '@reach/router'
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
-  const [modalClient, setModalClient] = useState<IClientModal>();
-  const [modalSeller, setModalSeller] = useState<IClientModal>();
   const dispatch = useAppDispatch()
 
-  const thumb = (params: GridCellParams) => {
-    return <SImg src={params.value as string} />;
-  };
-
-  function openClient(row: object) {
-    setModalClient({ open: true, data: row });
-  }
-
-  const actionModalOrders = (params: GridCellParams) => {
-    const result = params.row.product;
-
-    return (
-      <>
-        <Tooltip title="Serviços">
-          <span>
-            <IconButton
-              onClick={() => openClient(result)}
-              disabled={result.length ? false : true}
-              color="primary"
-            >
-              <MoreIcon />
-            </IconButton>
-          </span>
-        </Tooltip>
-      </>
-    );
-  };
-
   const toggleActive = (id: string, status: boolean) => {
-    // dispatch(setStatusFornecedor(id, status))
+    updateClientSellerAction(id, !status).then(()=>{
+      dispatch(updateClient())
+      navigate(0)
+    })
   }
 
   const actionModal: React.FC<ActionModalProps> = ({ id, row }) => {
@@ -61,7 +34,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionEdit = (id: string, row: object) => {
+  const actionEdit = (id: string) => {
     return (
       <>
         <IconButton onClick={() => modal(1, id)} color="primary" size="small">
@@ -71,7 +44,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionRemove = (id: string, row: object) => {
+  const actionRemove = (id: string) => {
     return (
       <>
         <IconButton onClick={() => modal(2, id)} color="primary" size="small">
@@ -80,7 +53,6 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       </>
     );
   };
-
 
   const columns: GridColumns = [
     {
@@ -131,15 +103,6 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       flex: 1,
       disableColumnMenu: true,
     },
-    // {
-    //   field: 'actionspedidos',
-    //   headerName: 'Pedidos',
-    //   flex: 1,
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   renderCell: actionModalOrders,
-    //   disableColumnMenu: true,
-    // },
     {
       field: 'actionEdit',
       headerName: 'Editar',
@@ -182,11 +145,6 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
           pageSize={10}
         />
       </BoxTable>
-      {/* <ListOrders
-        open={modalClient?.open || false}
-        orders={modalClient?.data}
-        close={() => setmodalClient({ ...modalClient, open: false } as IProductModal)}
-      /> */}
     </>
   );
 };

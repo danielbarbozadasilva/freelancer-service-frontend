@@ -22,14 +22,10 @@ export function formatPriceBr(data: number) : string{
   })
 }
 
-export function formatMoney(data: string) : Number{
+export function formatMoney(data: string) : number{
   return Number(
     data.trim().replace('R$', '').replace('.', '').replace(',', '.')
   )
-}
-
-export function formatPriceField(data: string) : string{
-  return data?.replace('R$', '').replace('.', '').replace(',', '.').trim()
 }
 
 export function formatObjectURL(data: any) {
@@ -39,10 +35,9 @@ export function formatObjectURL(data: any) {
   return URL.createObjectURL(data)
 }
 
-export function getMoney(e: React.ChangeEvent<HTMLInputElement>) {
-  const money = e?.target?.value;
-  const result = money?.replace('R$', '');
-  return formatReal(parseInt(result?.replace(/[\D]+/g, '')) || 0);
+export function getMoney(str: string) {
+  const result = str?.replace('R$', '')
+  return formatReal(parseInt(result?.replace(/[\D]+/g, '')))
 }
 
 export function formatReal(int: Number) : string{
