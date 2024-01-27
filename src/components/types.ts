@@ -1,5 +1,5 @@
 export type PageType = {
-  submit: any
+  submit: (formData: FormData) => void;
 }
 
 export type TypeSignUp = {
@@ -8,10 +8,11 @@ export type TypeSignUp = {
   email: string
   cpf: string
   birthDate: string
-  picture: string
+  picture?: string
   country: string
   phone: string
-  desc: string
+  description: string
+  isSeller: boolean
   password: string
   confirmPassword: string
 }

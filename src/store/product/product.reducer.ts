@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Product } from './types'
 
 export const slice = createSlice({
   name: 'product',
   initialState: {
     loading: false,
-    all: [],
+    all: [] as Product[],
+    productid: {} as Product,
+    sort: '',
   },
   reducers: {
     loadingProduct(state) {
@@ -20,6 +23,19 @@ export const slice = createSlice({
         loading: false
       }
     },
+    listSort(state, { payload }) {
+      return {
+        ...state,
+        sort: payload,
+      }
+    },
+    listByIdProduct(state, { payload }) {
+      return {
+        ...state,
+        productid: payload,
+        loading: false
+      }
+    },
     createProduct(state) {
       return {
         ...state,
@@ -28,5 +44,5 @@ export const slice = createSlice({
     }
   }
 })
-export const { loadingProduct, finishLoadingProduct, listAllProduct, createProduct } = slice.actions
+export const { loadingProduct, finishLoadingProduct, listAllProduct, listByIdProduct, createProduct, listSort } = slice.actions
 export default slice.reducer

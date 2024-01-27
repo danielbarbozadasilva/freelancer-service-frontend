@@ -12,7 +12,6 @@ const FormMessage: React.FC<PageType> = ({ submit }) => {
   const [form, setForm] = useState({} as IMessage)
 
   const handleChange = ({ target }: any) => {
-    console.log(user);
     const { value, name } = target
     setForm({
       ...form,

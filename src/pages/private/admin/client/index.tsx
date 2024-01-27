@@ -1,57 +1,108 @@
-import React, { useEffect, useCallback } from 'react'
-import { Grid } from '@material-ui/core'
-import { useDispatch, useSelector } from 'react-redux'
-// import {
-//   listAllClientAction,
-//   removeClientAction
-// } from '../../../../store/client/client.action'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import {
+  listAllClientAction,
+  listClientByIdAction,
+  removeClientAction,
+  updateClientAction
+} from '../../../../store/client/client.action'
 import Title from '../../../../components/dashboard/title/index'
 import DataList from '../../../../components/dashboard/admin/client/index'
-import DialogModal from '../../../../components/dialog'
+import DialogModal from '../../../../components/dialog/index'
+import FormClientUpdate from '../../../../components/dashboard/admin/client/form/update/index'
 import Remove from '../../../../components/dashboard/admin/client/form/remove/index'
-import { StyleContainer, SearchContainer } from '../styled'
 import { Helmet } from 'react-helmet'
+import {
+  deleteClient,
+  finishLoadingClient,
+  listAllClient,
+  listByIdClient,
+  loadingClient,
+  updateClient
+} from '../../../../store/client/client.reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks'
+import { ClientProps, IModal } from './types'
+import { navigate } from '@reach/router'
 
-const Client = (props:any) => {
-  const dispatch = useDispatch()
-  // const [modal, setModal] = React.useState({})
-  // const clients = useSelector((state) => state.client.all)
-  // const loading = useSelector((state) => state.client.loading)
+const Client: React.FC<ClientProps> = (props) => {
+  const dispatch = useAppDispatch()
+  const [modal, setModal] = useState<IModal>({})
+  const client = useAppSelector((state) => state.client.all)
+  const clientById = useAppSelector((state) => state.client.clientid)
+  const loading = useAppSelector((state) => state.client.loading)
 
-  // const callClient = useCallback(() => {
-  //   dispatch(listAllClientAction())
-  // }, [dispatch])
+  const callClients = useCallback(() => {
+    dispatch(loadingClient())
+    listAllClientAction().then((result) => {
+      if (result) {
+        dispatch(listAllClient(result))
+      }
+      dispatch(finishLoadingClient())
+    })
+  }, [dispatch])
 
-  // useEffect(() => {
-  //   callClient()
-  // }, [callClient])
+  useEffect(() => {
+    callClients()
+  }, [callClients])
 
-  // const toogleModal = (type = 1, id = null) => {
-  //   setModal({ type, id, status: true })
-  // }
+  const toggleModal = (type = 1, data: any = {}) => {
+    const id = data?.id || null
+    if (id){
+      dispatch(loadingClient())
+      listClientByIdAction(id).then((result) => {
+        if (result) {
+          dispatch(listByIdClient(result))
+        }
+        dispatch(finishLoadingClient())
+        setModal({ type, id, status: true })
+      })
+    } else {
+      setModal({ type, id, status: true })
+    }
+  }
 
-  // const closeModal = () => setModal({ status: false, type: 1 })
+  const closeModal = () => setModal({ status: false, type: 1 })
 
-  // const submitForm = (form) => {
-  //   dispatch(removeClientAction(modal.id)).then(() => setModal(false))
-  // }
+  const submitForm = async (form: any) => {
+    switch (modal.type) {
+      case 1:
+        await updateClientAction(modal?.id as string, form).then(() => {
+          dispatch(loadingClient())
+          dispatch(updateClient())
+          dispatch(finishLoadingClient())
+        })
+        setModal({ status: false })
+        navigate(0)
+        return
 
-  // const actions = () => (
-  //   <StyleContainer>
-  //     <SearchContainer>
-  //       <Search />
-  //     </SearchContainer>
-  //   </StyleContainer>
-  // )
+      case 2:
+        await removeClientAction(modal.id as string).then(() => {
+          dispatch(loadingClient())
+          dispatch(deleteClient())
+          dispatch(finishLoadingClient())
+        })
+        setModal({ status: false })
+        callClients()
+        return
+
+      default:
+        return false
+    }
+  }
+
   const actions = () => null
 
   return (
     <>
-      {/* <Helmet title={props.title} />
-      <Title title="Clientes" subTitle="Página de Clientes" actions={actions} />
+      <Helmet title={props.title} />
+      <Title title="Cliente" actions={actions} />
       <Grid container spacing={2}>
         <Grid item md={12} xl={12}>
-          <DataList data={clients} loading={loading} modal={toogleModal} />
+          {!client?.length ? (
+            <h6>Não há clientes disponiveis</h6>
+          ) : (
+            <DataList data={client} loading={loading} modal={toggleModal} />
+          )}
         </Grid>
       </Grid>
 
@@ -61,15 +112,17 @@ const Client = (props:any) => {
         close={closeModal}
       >
         <>
-          <Remove open={!!modal} close={closeModal} remove={submitForm} />
+          {modal.type === 1 ? (
+            <FormClientUpdate submit={submitForm} data={clientById} />
+          ) : modal.type === 2 ? (
+            <Remove
+              open={!!modal}
+              close={closeModal}
+              remove={submitForm as any}
+            />
+          ) : null}
         </>
-      </DialogModal> */}
-      
-      <Helmet title={props.title} />
-      <Title title="Cliente" actions={actions} />
-      <h1>1111Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti illum voluptate, eveniet sunt rerum error culpa voluptates fugit ut provident sed ad, dignissimos incidunt libero. Quidem accusamus maiores asperiores. Itaque!</h1>
-      {/* <ProfileForm submit={submitForm} /> */}
-    
+      </DialogModal>
     </>
   )
 }

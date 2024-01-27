@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Dashboard as DashboardIcon } from '@material-ui/icons';
 import { AccountBox, Group } from '@mui/icons-material';
 import PanelLayout from './components/layout/panel/layout-panel';
-import Profile from './pages/private/client/profile/index';
+import Orders from './pages/private/admin/orders/index';
 import Category from './pages/private/admin/category/index';
 import Client from './pages/private/admin/client/index';
 import Home from './pages/portal/home';
@@ -13,12 +13,12 @@ import Error500 from './pages/error/500';
 import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
-import MyProductsPage from './pages/portal/myproducts/index';
+import MyProductsPage from './pages/portal/myProducts/index';
 import AddProductPage from './pages/portal/addProduct';
 import OrdersPage from './pages/portal/orders/index';
 import Messages from './pages/portal/messages/index';
 import Message from './pages/portal/message/index';
-import ProductPage from './pages/portal/product/index';
+import ProductDetails from './pages/portal/productDetails/index';
 import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
@@ -35,12 +35,21 @@ interface MenuItem {
 
 export const Menu: MenuItem[] = [
   {
-    title: 'Perfil',
-    icon: <AccountBox />,
-    route: '/profile',
+    title: 'Clientes',
+    icon: <Group />,
+    route: '/clients',
     visibleMenu: true,
     enabled: true,
-    component: Profile,
+    component: Client,
+    authorization: ['admin'],
+  },
+  {
+    title: 'Pedidos',
+    icon: <AccountBox />,
+    route: '/orders',
+    visibleMenu: true,
+    enabled: true,
+    component: Orders,
     authorization: ['admin'],
   },
   {
@@ -50,15 +59,6 @@ export const Menu: MenuItem[] = [
     visibleMenu: true,
     enabled: true,
     component: Category,
-    authorization: ['admin'],
-  },
-  {
-    title: 'Clientes',
-    icon: <Group />,
-    route: '/clients',
-    visibleMenu: true,
-    enabled: true,
-    component: Client,
     authorization: ['admin'],
   },
 ];
@@ -86,7 +86,7 @@ const MainRoutes: React.FC = () => {
                 <Route path="messages" element={<Messages title="Mensagens" />} />
                 <Route path="message/:id" element={<Message title="Mensagens" />} />
                 <Route path="add" element={<AddProductPage title="Cadastrar" />} />
-                <Route path="product/:id" element={<ProductPage title="Produtos" />} />
+                <Route path="product/:id" element={<ProductDetails title="Produtos" />} />
                 <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
               </Routes>
             </Layout>

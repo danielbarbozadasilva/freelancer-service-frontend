@@ -16,7 +16,6 @@ const Header: React.FC = () => {
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
 
- 
   useEffect(() => {
     dispatch(loadingCategory())
     listAllCategoryAction().then((result) => {
@@ -40,6 +39,7 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     removeToken()
+    navigate("/signin")
     navigate(0)
   }
 
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
                   <Link className="link" to="/messages">
                     Mensagens
                   </Link>
-                  <Link className="link" to="/" onClick={handleLogout}>
+                  <Link className="link" to="/signin" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>

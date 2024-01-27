@@ -12,7 +12,7 @@ export const signInAction = async (data: object) => {
         saveAuth(data)
         http.defaults.headers.token = data.token
         if (data.data.permissions.includes('admin')) {
-          navigate('/dashboard/profile')
+          navigate('/dashboard/clients')
           navigate(0)
         } else {
           navigate('/')
@@ -35,6 +35,8 @@ export const signUpAction = async (data: object) => {
     }
     await registerService(data, config)
     toast.success('Usuário criado com sucesso!')
+    navigate('/signin')
+    navigate(0)
     return true
   } catch (error: any) {
     toast.error(error?.response?.data?.message)
