@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import ProductCard from '../../../components/portal/cards/productCard/index'
+import ProductCard from '../../../components/portal/cards/product/index'
 import {
   loadingProduct,
   finishLoadingProduct,

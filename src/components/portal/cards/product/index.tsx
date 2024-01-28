@@ -9,7 +9,6 @@ import {
   SCardPrice,
   SCardInstallments
 } from './styled'
-import { navigate } from '@reach/router'
 import { formatPriceBr } from '../../../../util/helpers/format'
 import { ProductCardProps } from './types'
 import { Link } from 'react-router-dom'
@@ -17,7 +16,7 @@ import { Link } from 'react-router-dom'
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   return (
     <SCard>
-      {item.data.images?.length > 0 ? <SCardImg src={item.data.images} /> : ''}
+      {item.data.images?.length !== 0 ? <SCardImg src={item.data.images[0]} /> : ''}
       <Card.Body>
         <SCardTitle>
           <strong>{item.data.title}</strong>

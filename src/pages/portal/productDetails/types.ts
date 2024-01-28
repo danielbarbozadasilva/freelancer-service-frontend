@@ -6,19 +6,11 @@ export interface Filters {
   search: string
 }
 
-export type IUser = {
-  id: string
-  username: string
-  email: string
-  isSeller: boolean
-  picture: string
-}
-
 export type PageTitle = {
   title: string
 }
 
-interface User {
+export interface User {
   _id: string;
   name: string;
   username: string;
@@ -40,9 +32,18 @@ export interface Product {
   description: string;
   category: string;
   price: number;
-  images: string;
+  images: string[];
   deliveryTime: string;
   features: string[];
   sales: number;
   rating: string;
+}
+
+export interface Rating {
+  _id: string
+  name: string
+  text: string
+  score: string
+  productId: string
+  userId: string
 }

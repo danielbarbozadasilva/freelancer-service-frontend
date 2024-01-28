@@ -5,6 +5,7 @@ import ProductReducer from './product/product.reducer'
 import messageReducer from './message/message.reducer'
 import conversationReducer from './conversation/conversation.reducer'
 import clientReducer from './client/client.reducer'
+import ratingReducer from './rating/rating.reducer'
 
 const store = configureStore({
   reducer:{
@@ -14,6 +15,7 @@ const store = configureStore({
     message: messageReducer,
     conversation: conversationReducer,
     client: clientReducer,
+    rating: ratingReducer,
   }
 })
 
