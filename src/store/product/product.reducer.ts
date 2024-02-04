@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Product } from './types'
+import { IProduct, IProductById } from './types'
 
 export const slice = createSlice({
   name: 'product',
   initialState: {
     loading: false,
-    all: [] as Product[],
-    productid: {} as Product,
+    all: [] as IProduct[],
+    productid: {} as IProductById,
     sort: '',
   },
   reducers: {

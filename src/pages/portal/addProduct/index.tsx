@@ -9,7 +9,6 @@ import { createProduct, finishLoadingProduct, loadingProduct } from "../../../st
 import { createProductAction } from "../../../store/product/product.action";
 
 const AddProductPage: React.FC<PageTitle> = ({ title }) => { 
-  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 

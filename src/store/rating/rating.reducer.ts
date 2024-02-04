@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { ResultRating } from './types'
 
 export const slice = createSlice({
   name: 'rating',
   initialState: {
     loading: false,
-    all: [],
-    ratingid: {}
+    all: {} as ResultRating,
+    ratingid: {} as ResultRating
   },
   reducers: {
     loadingRating(state) {

@@ -40,7 +40,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionEdit = (id: string, row: object) => {
+  const actionEdit = (id: string) => {
     return (
       <>
         <IconButton onClick={() => modal(2, id)} color="primary" size="small">
@@ -50,7 +50,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionRemove = (id: string, row: object) => {
+  const actionRemove = (id: string) => {
     return (
       <>
         <IconButton onClick={() => modal(3, id)} color="primary" size="small">

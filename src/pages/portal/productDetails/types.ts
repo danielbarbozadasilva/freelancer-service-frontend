@@ -25,25 +25,35 @@ export interface User {
   isSeller: boolean;
 }
 
-export interface Product {
+export interface ICategory {
+  _id: string
+  name: string
+  description: string
+  picture: string[]
+}
+
+export interface IProduct {
   id: string;
   userId?: User;
   title: string;
   description: string;
-  category: string;
+  category: ICategory;
   price: number;
   images: string[];
   deliveryTime: string;
   features: string[];
   sales: number;
-  rating: string;
 }
 
-export interface Rating {
-  _id: string
-  name: string
-  text: string
-  score: string
-  productId: string
-  userId: string
+export interface IRating {
+  name: string;
+  text: string;
+  score: number;
+  productId: string;
+  userId: string;
+}
+
+export interface IResultRating {
+  result: IRating[];
+  averageScore: number;
 }

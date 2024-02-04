@@ -5,7 +5,7 @@ export interface Filters {
     limit: number
     search: string
     order: string
-  }
+}
 
 export interface IProductFilter{
   id: string

@@ -7,7 +7,7 @@
       padding: 30px 0px;
       display: flex;
       gap: 50px;
-  
+      
       .left {
         flex: 2;
         display: flex;
@@ -21,7 +21,8 @@
           color: #555;
         }
   
-        h1 {
+        .avaliacoes {
+          margin: 5% 0%;
         }
   
         .user {
@@ -29,7 +30,7 @@
           align-items: center;
           gap: 10px;
   
-          .pp {
+          .picture {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -131,18 +132,20 @@
             border-radius: 5px;
             padding: 20px;
             margin-top: 20px;
-  
+            margin-bottom: 5%;
+
             .items {
               display: flex;
               justify-content: space-between;
               flex-wrap: wrap;
+              
   
               .item {
                 width: 300px;
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                margin-bottom: 20px;
+                margin-bottom: 5%;
   
                 .title {
                   font-weight: 300;
@@ -164,13 +167,12 @@
       .right {
         flex: 1;
         border: 1px solid lightgray;
-        padding: 20px;
+        padding: 5%;
         border-radius: 5px;
         display: flex;
         flex-direction: column;
         gap: 20px;
         height: max-content;
-        max-height: 500px;
         position: sticky;
         top: 150px;
   
@@ -226,7 +228,7 @@
         }
   
         button{
-          background-color: #1dbf73;
+          background-color: #473F57;
           padding: 10px;
           color: white;
           font-weight: 500;

@@ -22,6 +22,7 @@ import ProductDetails from './pages/portal/productDetails/index';
 import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
+import EditProductPage from './pages/portal/editProduct';
 
 interface MenuItem {
   title: string;
@@ -76,6 +77,7 @@ const MainRoutes: React.FC = () => {
             <Layout>
               <Routes>
                 <Route index element={<Home title="Home" />} />
+                <Route path="product/search/:search" element={<Home title="Produtos" />} />
                 <Route path="signin" element={<SignIn title="Login" />} />
                 <Route path="signup" element={<SignUp title="Cadastrar" />} />
                 <Route path="error404" element={<Error404 title="Erro 404" />} />
@@ -85,7 +87,8 @@ const MainRoutes: React.FC = () => {
                 <Route path="orders" element={<OrdersPage title="Pedidos" />} />
                 <Route path="messages" element={<Messages title="Mensagens" />} />
                 <Route path="message/:id" element={<Message title="Mensagens" />} />
-                <Route path="add" element={<AddProductPage title="Cadastrar" />} />
+                <Route path="add-product" element={<AddProductPage title="Cadastrar" />} />
+                <Route path="edit-product/:id" element={<EditProductPage title="Editar" />} />
                 <Route path="product/:id" element={<ProductDetails title="Produtos" />} />
                 <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
               </Routes>

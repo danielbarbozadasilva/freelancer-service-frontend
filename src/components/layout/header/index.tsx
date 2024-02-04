@@ -3,27 +3,20 @@ import { Link } from 'react-router-dom'
 import './styled.scss'
 import { removeToken } from '../../../config/auth'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { finishLoadingCategory, loadingCategory, listAllCategory } from '../../../store/category/category.reducer'
 import { listAllCategoryAction } from '../../../store/category/category.action'
 import { ICategory, IUser } from './types'
 import { navigate } from '@reach/router'
-const noAvatar = require('../../../assets/img/noavatar.jpg')
+import noAvatar from '../../../assets/img/noavatar.jpg'
 
 const Header: React.FC = () => { 
   const user: IUser = useAppSelector((state) => state.auth.user)
-  const category = useAppSelector((state) => state.category.all)
+  const category: ICategory[] = useAppSelector((state) => state.category.all)
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(loadingCategory())
-    listAllCategoryAction().then((result) => {
-      if (result) {
-        dispatch(listAllCategory(result))
-      }
-      dispatch(finishLoadingCategory())
-    })
+    dispatch(listAllCategoryAction())
   }, [dispatch])
 
   const isActive = () => {
@@ -62,10 +55,7 @@ const Header: React.FC = () => {
                   {user.isSeller && (
                     <>
                       <Link className="link" to="/myproducts">
-                        Serviço
-                      </Link>
-                      <Link className="link" to="/add">
-                        Novo Serviço
+                        Serviços
                       </Link>
                     </>
                   )}
@@ -97,9 +87,9 @@ const Header: React.FC = () => {
         <>
           <hr />
           <div className="menu">
-            {category.length && category.length <= 7 ? category.map((item: ICategory)=>(
+            {category?.length && category?.length <= 7 ? category?.map((item: ICategory)=>(
               <>
-                <Link className="link menuLink" to="/">
+                <Link className="link menuLink" to={`/category/${item.id}`} reloadDocument>
                   {item.name}
                 </Link>
               </>

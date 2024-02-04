@@ -28,13 +28,7 @@ const AddProduct: React.FC<IAddProduct> = ({ submit }) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(loadingCategory())
-    listAllCategoryAction().then((result) => {
-      if (result) {
-        dispatch(listAllCategory(result))
-      }
-      dispatch(finishLoadingCategory())
-    })
+    dispatch(listAllCategoryAction())
   }, [dispatch])
 
   const handleChange = (

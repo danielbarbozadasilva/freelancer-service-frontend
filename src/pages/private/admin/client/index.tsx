@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import {
   listAllClientAction,
@@ -12,50 +12,25 @@ import DialogModal from '../../../../components/dialog/index'
 import FormClientUpdate from '../../../../components/dashboard/admin/client/form/update/index'
 import Remove from '../../../../components/dashboard/admin/client/form/remove/index'
 import { Helmet } from 'react-helmet'
-import {
-  deleteClient,
-  finishLoadingClient,
-  listAllClient,
-  listByIdClient,
-  loadingClient,
-  updateClient
-} from '../../../../store/client/client.reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
-import { ClientProps, IModal } from './types'
-import { navigate } from '@reach/router'
+import { ClientProps, IModal, UserInterface } from './types'
 
 const Client: React.FC<ClientProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
-  const client = useAppSelector((state) => state.client.all)
-  const clientById = useAppSelector((state) => state.client.clientid)
+  const client: UserInterface[] = useAppSelector((state) => state.client.all)
+  const clientById: UserInterface = useAppSelector((state) => state.client.clientid)
   const loading = useAppSelector((state) => state.client.loading)
 
-  const callClients = useCallback(() => {
-    dispatch(loadingClient())
-    listAllClientAction().then((result) => {
-      if (result) {
-        dispatch(listAllClient(result))
-      }
-      dispatch(finishLoadingClient())
-    })
-  }, [dispatch])
-
   useEffect(() => {
-    callClients()
-  }, [callClients])
+    dispatch(listAllClientAction())
+  }, [dispatch])
 
   const toggleModal = (type = 1, data: any = {}) => {
     const id = data?.id || null
-    if (id){
-      dispatch(loadingClient())
-      listClientByIdAction(id).then((result) => {
-        if (result) {
-          dispatch(listByIdClient(result))
-        }
-        dispatch(finishLoadingClient())
-        setModal({ type, id, status: true })
-      })
+    if (id) {
+      dispatch(listClientByIdAction(data))
+      setModal({ type, id, status: true })
     } else {
       setModal({ type, id, status: true })
     }
@@ -63,31 +38,16 @@ const Client: React.FC<ClientProps> = (props) => {
 
   const closeModal = () => setModal({ status: false, type: 1 })
 
-  const submitForm = async (form: any) => {
-    switch (modal.type) {
-      case 1:
-        await updateClientAction(modal?.id as string, form).then(() => {
-          dispatch(loadingClient())
-          dispatch(updateClient())
-          dispatch(finishLoadingClient())
-        })
-        setModal({ status: false })
-        navigate(0)
-        return
-
-      case 2:
-        await removeClientAction(modal.id as string).then(() => {
-          dispatch(loadingClient())
-          dispatch(deleteClient())
-          dispatch(finishLoadingClient())
-        })
-        setModal({ status: false })
-        callClients()
-        return
-
-      default:
-        return false
+  const deleteClient = () => {
+    if (modal?.id) {
+      dispatch(removeClientAction(modal?.id))
+      setModal({ status: false })
     }
+  }
+
+  const updateClient = (form: FormData) => {
+    dispatch(updateClientAction({ id: modal?.id, form }))
+    setModal({ status: false })
   }
 
   const actions = () => null
@@ -113,13 +73,9 @@ const Client: React.FC<ClientProps> = (props) => {
       >
         <>
           {modal.type === 1 ? (
-            <FormClientUpdate submit={submitForm} data={clientById} />
+            <FormClientUpdate submit={updateClient} data={clientById} />
           ) : modal.type === 2 ? (
-            <Remove
-              open={!!modal}
-              close={closeModal}
-              remove={submitForm as any}
-            />
+            <Remove open={!!modal} close={closeModal} remove={deleteClient} />
           ) : null}
         </>
       </DialogModal>

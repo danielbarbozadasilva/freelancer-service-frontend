@@ -1,8 +1,12 @@
-export interface Rating{
-  _id: string
-  name: string
-  text: string
-  score: string
-  productId: string
-  userId: string
+export interface Rating {
+  name: string;
+  text: string;
+  score: number;
+  productId: string;
+  userId: string;
+}
+
+export interface ResultRating {
+  result: Rating[];
+  averageScore: number;
 }

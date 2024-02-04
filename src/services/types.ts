@@ -8,10 +8,9 @@ export interface Filters {
 }
 
 export interface Rating{
-  _id: string
   name: string
   text: string
-  score: string
+  score: number
   productId: string
   userId: string
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const SContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 130px;
+  margin: 7% 10%;
   @media (max-width: 870px) {
     flex-direction: column;
   }

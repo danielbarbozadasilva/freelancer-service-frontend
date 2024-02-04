@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import {
   listAllCategoryAction,
@@ -15,15 +15,6 @@ import FormCategoryUpdate from '../../../../components/dashboard/admin/category/
 import Remove from '../../../../components/dashboard/admin/category/form/remove/index'
 import { SButton } from '../styled'
 import { Helmet } from 'react-helmet'
-import {
-  createCategory,
-  deleteCategory,
-  finishLoadingCategory,
-  listAllCategory,
-  loadingCategory,
-  updateCategory,
-  listByIdCategory
-} from '../../../../store/category/category.reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { CategoryProps, IModal } from './types'
 
@@ -34,31 +25,15 @@ const Category: React.FC<CategoryProps> = (props) => {
   const categoryById = useAppSelector((state) => state.category.categoryid)
   const loading = useAppSelector((state) => state.category.loading)
 
-  const callCategories = useCallback(() => {
-    dispatch(loadingCategory())
-    listAllCategoryAction().then((result) => {
-      if (result) {
-        dispatch(listAllCategory(result))
-      }
-      dispatch(finishLoadingCategory())
-    })
-  }, [dispatch])
-
   useEffect(() => {
-    callCategories()
-  }, [callCategories])
+    dispatch(listAllCategoryAction())
+  }, [dispatch])
 
   const toggleModal = (type = 1, data: any = {}) => {
     const id = data?.id || null
-    if (id){
-      dispatch(loadingCategory())
-      listCategoryByIdAction(id).then((result) => {
-        if (result) {
-          dispatch(listByIdCategory(result))
-        }
-        dispatch(finishLoadingCategory())
-        setModal({ type, id, status: true })
-      })
+    if (id) {
+      dispatch(listCategoryByIdAction(id))
+      setModal({ type, id, status: true })
     } else {
       setModal({ type, id, status: true })
     }
@@ -69,31 +44,19 @@ const Category: React.FC<CategoryProps> = (props) => {
   const submitForm = async (form: any) => {
     switch (modal.type) {
       case 1:
-        await createCategoryAction(form).then(() => {
-          dispatch(loadingCategory())
-          dispatch(createCategory())
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(createCategoryAction(form))
         setModal({ status: false })
         return
 
       case 2:
-        await updateCategoryAction(modal?.id as string, form).then(() => {
-          dispatch(loadingCategory())
-          dispatch(updateCategory())
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(updateCategoryAction({ id: modal?.id, data: form }))
         setModal({ status: false })
         return
 
       case 3:
-        await removeCategoryAction(modal.id as string).then(() => {
-          dispatch(loadingCategory())
-          dispatch(deleteCategory(modal.id as any))
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(removeCategoryAction(modal.id as string))
         setModal({ status: false })
-        callCategories()
+        dispatch(listAllCategoryAction())
         return
 
       default:
