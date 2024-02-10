@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { Container, Row, Col, Form } from 'react-bootstrap'
 import {
   SFormSignIn,
@@ -22,7 +22,7 @@ const SignIn: React.FC<PageType> = ({ submit }) => {
     }
   }, [registered])
 
-  const handleChange = (props: any) => {
+  const handleChange = (props: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = props.target
     setForm({
       ...form,
@@ -65,9 +65,9 @@ const SignIn: React.FC<PageType> = ({ submit }) => {
                 placeholder="Informe a sua senha"
               />
             </Form.Group>
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Check type="checkbox" label="Lembrar credenciais" />
-            </Form.Group>
+            </Form.Group> */}
             {loading ? (
               <Loading />
             ) : (

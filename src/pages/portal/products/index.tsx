@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react'
 import ProductCard from '../../../components/portal/cards/product/index'
-import {
-  loadingProduct,
-  finishLoadingProduct,
-  listAllProduct
-} from '../../../store/product/product.reducer'
 import { listAllProductsAction } from '../../../store/product/product.action'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useParams } from 'react-router-dom'
@@ -27,7 +22,6 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
   const [currentPage, setCurrentPage] = React.useState(0)
 
   useEffect(() => {
-    dispatch(loadingProduct())
     const filters: Filters = {
       category: String(id),
       offset: currentPage,
@@ -35,12 +29,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
       search: '',
       order: ''
     }
-    listAllProductsAction(filters).then((result) => {
-      if (result) {
-        dispatch(listAllProduct(result))
-      }
-      dispatch(finishLoadingProduct())
-    })  
+    dispatch(listAllProductsAction(filters))
   }, [itensPerPage, currentPage])
 
 

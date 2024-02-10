@@ -1,102 +1,98 @@
-import React, { useCallback, useEffect } from 'react'
-import { Filters, IProduct, IUser, PageTitle } from './types'
+import React, { useEffect, useState } from 'react'
+import { Filters, IProduct, IProductById, IProductSend, IUser, PageTitle } from './types'
 import { Helmet } from 'react-helmet'
 import MyProductsTable from '../../../components/portal/table/product'
-import BasicButton from '../../../components/portal/button'
-import {
-  finishLoadingProduct,
-  listAllProduct,
-  loadingProduct
-} from '../../../store/product/product.reducer'
+import TopButton from '../../../components/portal/button/top'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { listAllProductsAction } from '../../../store/product/product.action'
-import { ContainerTop, ContainerTable } from './styled'
-import Title from '../../../components/portal/title/product/index'
-import { useNavigate } from 'react-router-dom'
+import { createProductAction, listAllProductsAction, listByIdProductsAction, removeProductAction, updateProductAction } from '../../../store/product/product.action'
+import { SContainerTop } from './styled'
+import { SContainer, TitlePage } from '../../../assets/styled'
+import DialogModal from '../../../components/dialog/index'
+import FormCreateProduct from '../../../components/modal/product/create'
+import FormUpdateProduct from '../../../components/modal/product/update'
+import FormUpdateRemove from '../../../components/modal/product/remove'
+import { navigate } from '@reach/router'
 
 const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
+  const [modal, setModal] = useState<{ status: boolean; id?: string | null; type?: number }>({ status: false, id: null, type: 1 })
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const user: IUser = useAppSelector((state) => state.auth.user)
   const product: IProduct[] = useAppSelector((state) => state.product.all)
+  const productById: IProductById = useAppSelector((state) => state.product.productid)
 
-  const callProducts = useCallback(() => {
-    dispatch(loadingProduct())
-    const filters: Filters = {
-      userId: user.id,
-      category: '',
-      offset: 0,
-      limit: 1000,
-      search: '',
-      order: ''
-    }
-    listAllProductsAction(filters).then((result) => {
-      if (result) {
-        dispatch(listAllProduct(result))
-      }
-      dispatch(finishLoadingProduct())
-    })
-  }, [dispatch])
+  const filters: Filters = {
+    userId: user.id,
+    category: '',
+    offset: 0,
+    limit: 1000,
+    search: '',
+    order: ''
+  }
 
   useEffect(() => {
-    callProducts()
-  }, [callProducts])
+    dispatch(listAllProductsAction(filters))
+  }, [dispatch])
 
-  const toggleModal = (type = 1, data: any = {}) => {
-    // const id = data?.id || null
-    // if (id) {
-    //   dispatch(loadingProduct())
-    //   listCategoryByIdAction(id).then((result) => {
-    //     if (result) {
-    //       dispatch(listByIdCategory(result))
-    //     }
-    //     dispatch(finishLoadingCategory())
-    //     setModal({ type, id, status: true })
-    //   })
-    // } else {
-    //   setModal({ type, id, status: true })
-    // }
+  const toogleModal = (type = 1, id = null) => {
+    if (id) {
+      dispatch(listByIdProductsAction(id)).then(() =>
+        setModal({ type, id, status: true })
+      )
+    } else {
+      setModal({ type, id, status: true })
+    }
   }
 
-  const submitForm = async (form: any) => {
-    //     await removeProductAction(modal.id as string).then(() => {
-    //       dispatch(loadingProduct())
-    //       dispatch(deleteProduct(modal.id as any))
-    //       dispatch(finishLoadingProduct())
-    //     })
-    //     setModal({ status: false })
-    //     callProducts()
-    console.log('aquiii')
-  }
+  const closeModal = () => setModal({ status: false, type: 1 })
 
-  const onDeleteAction = (id: string): any => {
-    // return (
-    //   <DialogModal
-    //     title="Serviço"
-    //     open={modal.status || false}
-    //     close={closeModal}
-    //   >
-    //     <Remove open={!!modal} close={closeModal} remove={submitForm as any} />
-    //   </DialogModal>
-    // )
-  }
+  const submitForm = (form: IProductSend) => {
+    switch (modal.type) {
+      case 1:
+        dispatch(createProductAction(form))
+        setModal({ status: false })
+        return
 
-  const actions = () => null
+      case 2:
+        dispatch(updateProductAction({ id: modal.id, data: form }))
+        setModal({ status: false })
+        return
+
+      case 3:
+        if (modal?.id) {
+          dispatch(removeProductAction(modal.id))
+        }
+        setModal({ status: false })
+        navigate(0)
+        return
+
+      default:
+        return false
+    }
+  }
 
   return (
     <>
       <Helmet title={title} />
-      <ContainerTop>
-        <Title title="Serviços" actions={actions} />
-        <BasicButton title="Adicionar Serviço" />
-      </ContainerTop>
-      <ContainerTable>
-          {!product?.length ? (
-            <h6>Não há serviços disponiveis</h6>
-          ) : (
-            <MyProductsTable result={product} onRemove={submitForm} />
-          )}
-      </ContainerTable>
+      <SContainer>
+        <SContainerTop>
+          <TitlePage>Serviços</TitlePage>
+          <TopButton title="Adicionar Serviço" onClick={() => toogleModal(1, null)} />
+        </SContainerTop>
+        <MyProductsTable result={product} modal={toogleModal} />
+        <DialogModal title= "Serviço" open={modal.status || false} close={closeModal}>
+        <>
+          {modal.type === 1 ? (
+            <FormCreateProduct submit={submitForm} />
+          ) : null}
+          {modal.type === 2 ? (
+            <FormUpdateProduct data={productById} submit={submitForm} />
+          ) : null}
+          {modal.type === 3 ? (
+            <FormUpdateRemove open={modal.status} close={closeModal} remove={submitForm} />
+          ) : null}
+        </>
+      </DialogModal>
+      </SContainer>
     </>
   )
 }

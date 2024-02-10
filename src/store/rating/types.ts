@@ -1,4 +1,5 @@
 export interface Rating {
+  id?: string;
   name: string;
   text: string;
   score: number;

@@ -8,6 +8,9 @@ export const SButton = styled.button`
     padding: 10px;
     height: 50px!important;
     cursor: pointer;
-    margin: 4% 0%;
-    margin-left: 61.5%;
+    margin: 40px 0% 50px 79.5%;
+    @media (max-width: 555px) {
+      padding-left: 0px;
+      margin: 30px 0px 50px 0px;
+    }
 `

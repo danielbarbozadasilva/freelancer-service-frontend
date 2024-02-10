@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IUser, IDataSend, PageTitle } from "./types";
-import { finishLoadingConversation, listConversation, loadingConversation, updateConversation } from "../../../store/conversation/conversation.reducer";
+import { PageTitle, IDataSendUpdate, IDataSend, IUser } from "./types";
 import { listAllConversationAction, updateConversationAction } from "../../../store/conversation/conversation.action";
 import { Helmet } from "react-helmet";
 import FormMessages from "../../../components/portal/messages";
+import { SContainer, TitlePage } from "../../../assets/styled";
 
 const Messages: React.FC<PageTitle> = ({ title }) => {  
   const user: IUser = useAppSelector((state) => state.auth.user)
@@ -16,34 +16,20 @@ const Messages: React.FC<PageTitle> = ({ title }) => {
   }
 
   useEffect(() => {
-    dispatch(loadingConversation())
-    listAllConversationAction(data).then((result) => {
-      if (result) {
-        dispatch(listConversation(result))
-      }
-      dispatch(finishLoadingConversation())
-    })
+    dispatch(listAllConversationAction(data))
   }, [dispatch])
 
-  const handleSubmit = async (id: string, data: object)=>{
-    dispatch(loadingConversation())
-    await updateConversationAction(id, data).then(() => {
-      dispatch(updateConversation())
-      dispatch(finishLoadingConversation())
-    })
-    dispatch(loadingConversation())
-    await listAllConversationAction(data).then((result) => {
-      if (result) {
-        dispatch(listConversation(result))
-      }
-      dispatch(finishLoadingConversation())
-    })
+  const handleSubmit = async (data: IDataSendUpdate)=>{
+      dispatch(updateConversationAction(data))
   }
 
   return (
     <>
       <Helmet title={title} />
-      <FormMessages submit={handleSubmit}/>
+      <SContainer>
+        <TitlePage>Mensagens</TitlePage>
+        <FormMessages submit={handleSubmit} />
+      </SContainer>
     </>
   );
 };

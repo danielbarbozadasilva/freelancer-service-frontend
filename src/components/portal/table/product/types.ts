@@ -34,5 +34,5 @@ interface Rating {
 
 export interface IProps {
   result: Row[]
-  onRemove: any
+  modal: any
 }

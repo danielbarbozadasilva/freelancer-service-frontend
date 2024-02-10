@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../hooks'
 import { IMessage, IUser, PageType } from './types'
 import './styled.scss'
 import Loading from '../../loading/page'
+import BasicButton from '../button/basic'
 
 const FormMessage: React.FC<PageType> = ({ submit }) => {
   const message: IMessage[] = useAppSelector((state) => state.message.all)
@@ -52,7 +53,7 @@ const FormMessage: React.FC<PageType> = ({ submit }) => {
             onChange={handleChange}
             placeholder="Escreva uma mensagem..."
           />
-          <button onClick={submitForm}>Enviar</button>
+          <BasicButton title="Enviar" onClick={submitForm} />
         </div>
       </div>
     </div>

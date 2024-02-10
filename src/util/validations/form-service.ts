@@ -1,20 +1,17 @@
-import * as moment from 'moment'
 import { IProduct } from './types'
 
 export function isNotValid(form: any, formValidate: IProduct) {
   const inputs = [
-    'title',
-    'category',
-    'description',
-    'deliveryTime',
+   'title',
+   'deliveryTime',
+   'description'
   ]
   const invalid = (label: any) =>
     !Object.keys(form).includes(label) || form[label]?.length === 0
 
   const validations =
     Object.values(formValidate).filter((item) => item !== '').length > 0
-
-  return inputs.some((item) => invalid(item)) || validations
+    return inputs.some((item) => invalid(item)) || validations
 }
 
 export function fieldValidate(name: any, value: any, form: any) {

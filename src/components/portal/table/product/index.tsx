@@ -1,72 +1,73 @@
-import React, { useState } from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
+import React from 'react'
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import DialogModal from '../../../dialog/index'
 import { IProps } from './types'
-import { useNavigate } from 'react-router-dom'
+import { Table } from 'reactstrap'
+import { formatCurrency } from '../../../../util/helpers/format'
+import { Std } from './styled'
+import { FiEdit, FiTrash2 } from 'react-icons/fi'
 
-const MyProductsTable: React.FC<IProps> = ({ result, onRemove }) => {
-  const navigate = useNavigate()
-  const [modal, setModal] = useState<{ status: boolean; id: string | null }>({
-    status: false,
-    id: null
-  })
+const MyProductsTable: React.FC<IProps> = ({ result, modal }) => {
 
-  const openModal = (id: string) => {
-    setModal({ status: true, id })
+  const actionEdit = (id: string) => {
+    return (
+      <>
+        <IconButton onClick={modal(2, id)} color="primary" size="small">
+          <FiEdit />
+        </IconButton>
+      </>
+    )
   }
 
-  const closeModal = () => {
-    setModal({ status: false, id: null })
+  const actionRemove = (id: string) => {
+    return (
+      <>
+        <IconButton onClick={modal(3, id)} color="primary" size="small">
+          <FiTrash2 />
+        </IconButton>
+      </>
+    )
   }
 
   return (
     <>
-      <DialogModal
-        title="Serviço"
-        open={modal.status}
-        close={closeModal}
-        remove={onRemove}
-      />
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nome</TableCell>
-              <TableCell>Descrição</TableCell>
-              <TableCell>Preço</TableCell>
-              <TableCell align="center">Ações</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {result.map((row) => (
-              <TableRow key={row?.data?._id}>
-                <TableCell>{row?.data?.title}</TableCell>
-                <TableCell>{row?.data?.description}</TableCell>
-                <TableCell>{row?.data?.price}</TableCell>
-                <TableCell align="center">
-                  <IconButton
-                    onClick={() => navigate(`/edit-product/${row?.data?._id}`)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => openModal(row?.data?._id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {result?.length ? (
+        <div>
+          <Table bordered hover responsive striped>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+              </tr>
+            </thead>
+            <tbody>
+              {result.map((row, i) => (
+                <tr key={i}>
+                  <Std>{row.data.title}</Std>
+                  <Std>{row.data.description}</Std>
+                  <Std>{formatCurrency(row.data.price)}</Std>
+                  <td>
+                    <IconButton onClick={() => actionEdit(row?.data?._id)}>
+                      <EditIcon />
+                    </IconButton>
+                  </td>
+                  <td>
+                    <IconButton onClick={() => actionRemove(row?.data?._id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      ) : (
+        <div>Você não possui nenhum serviço cadastrado.</div>
+      )}
     </>
   )
 }

@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react"
+
 export function formatPhone(phone: string) {
   return phone
     ?.replace(/\D/g, '')
@@ -13,6 +15,10 @@ export function formatCPF(cpf: string) {
     ?.replace(/(\d{3})(\d)/, '$1.$2')
     ?.replace(/(\d{3})(\d)/, '$1-$2')
     ?.replace(/(-\d{2})\d+?$/, '$1')
+}
+
+export function formatPriceField(data: any) {
+  return data?.replace('R$', '').replace('.', '').replace(',', '.').trim()
 }
 
 export function formatPriceBr(data: number) : string{
@@ -35,8 +41,9 @@ export function formatObjectURL(data: any) {
   return URL.createObjectURL(data)
 }
 
-export function getMoney(str: string) {
-  const result = str?.replace('R$', '')
+export function getMoney(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  const money = event?.target?.value
+  const result = money?.replace('R$', '')
   return formatReal(parseInt(result?.replace(/[\D]+/g, '')))
 }
 
@@ -72,5 +79,14 @@ export function formatReal(int: Number) : string{
   return negative
     ? '-' + 'R$' + result.replace('NaN', '')
     : 'R$' + result.replace('NaN', '')
+}
+
+export function formatCurrency(value: number): string {
+  const formattedValue = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(value)
+
+  return formattedValue
 }
 

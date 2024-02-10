@@ -22,15 +22,11 @@ import Slider from 'react-slick'
 import { Helmet } from 'react-helmet'
 import { Filters, ICategory, PageTitle, IProduct } from './types'
 import Search from '../../../components/portal/search'
-import {
-  finishLoadingProduct,
-  listAllProduct,
-  loadingProduct
-} from '../../../store/product/product.reducer'
 import { listAllProductsAction } from '../../../store/product/product.action'
 import ProductCard from '../../../components/portal/cards/product'
 import PaginationSelector from '../../../components/paginate/selector/index.tsx'
 import PaginationComponent from '../../../components/paginate/index'
+import { SContainerAbout, STitleAbout, SubTitleAbout } from './styled.ts'
 
 const Home: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
@@ -45,7 +41,6 @@ const Home: React.FC<PageTitle> = ({ title }) => {
 
   useEffect(() => {
     if (search) {
-      dispatch(loadingProduct())
       const filters: Filters = {
         category: '',
         offset: currentPage,
@@ -53,12 +48,7 @@ const Home: React.FC<PageTitle> = ({ title }) => {
         search: search,
         order: ''
       }
-      listAllProductsAction(filters).then((result) => {
-        if (result) {
-          dispatch(listAllProduct(result))
-        }
-        dispatch(finishLoadingProduct())
-      })
+      dispatch(listAllProductsAction(filters))
     }
   }, [itensPerPage, currentPage])
 
@@ -154,9 +144,16 @@ const Home: React.FC<PageTitle> = ({ title }) => {
           <SButtonAbout onClick={() => navigate(`/signup`)}>
             ABRA SUA CONTA
           </SButtonAbout>
-          <CardAbout />
         </STextInvest>
       </ContainerResources>
+
+      <SContainerAbout>
+        <STitleAbout>Opiniões Dos Nossos Clientes</STitleAbout>
+        <SubTitleAbout>
+          O que acham da nossa plataforma...
+        </SubTitleAbout>
+        <CardAbout />
+      </SContainerAbout>
     </>
   )
 }

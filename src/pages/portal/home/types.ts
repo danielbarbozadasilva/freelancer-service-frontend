@@ -44,16 +44,18 @@ interface Rating {
 
 export interface IProduct {
   metadata?: any
-  _id: string
-  userId: string
-  title: string
-  description: string
-  category?: Category
-  price: number
-  promotion: number
-  images: string
-  deliveryTime: number
-  features: string[]
-  sales: number
-  rating?: Rating
+  data: {
+    _id: string
+    userId: string
+    title: string
+    description: string
+    category?: Category
+    price: number
+    promotion: number
+    images: string
+    deliveryTime: number
+    features: string[]
+    sales: number
+    rating?: Rating
+  }
 }

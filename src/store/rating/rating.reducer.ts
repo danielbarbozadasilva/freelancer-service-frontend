@@ -1,63 +1,63 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ResultRating } from './types'
+import { createRatingAction, deleteRatingAction, findByIdRatingAction, updateRatingAction } from './rating.action'
 
 export const slice = createSlice({
   name: 'rating',
   initialState: {
     loading: false,
     all: {} as ResultRating,
-    ratingid: {} as ResultRating
+    ratingid: {} as ResultRating,
+    error: ''
   },
-  reducers: {
-    loadingRating(state) {
-      return { ...state, error: false, loading: true }
-    },
-    finishLoadingRating(state) {
-      return { ...state, error: false, loading: false }
-    },
-    listAllRating(state, { payload }) {
-      return {
-        ...state,
-        all: payload,
-        loading: false
-      }
-    },
-    listByIdRating(state, { payload }) {
-      return {
-        ...state,
-        ratingid: payload.data,
-        loading: false
-      }
-    },
-    createRating(state) {
-      return {
-        ...state,
-        loading: false
-      }
-    },
-    updateRating(state) {
-      return {
-        ...state,
-        loading: false
-      }
-    },
-    deleteRating(state) {
-      return {
-        ...state,
-        loading: false
-      }
-    }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(findByIdRatingAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(findByIdRatingAction.fulfilled, (state, action) => {
+        state.loading = false
+        state.ratingid = action.payload
+      })
+      .addCase(findByIdRatingAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
+
+      .addCase(createRatingAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createRatingAction.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(createRatingAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
+
+      .addCase(updateRatingAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateRatingAction.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(updateRatingAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
+
+      .addCase(deleteRatingAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteRatingAction.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(deleteRatingAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
   }
 })
-
-export const { 
-  loadingRating, 
-  finishLoadingRating, 
-  listAllRating, 
-  listByIdRating, 
-  createRating,
-  updateRating,
-  deleteRating
-} = slice.actions
 
 export default slice.reducer

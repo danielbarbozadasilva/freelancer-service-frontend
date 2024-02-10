@@ -7,18 +7,7 @@ import {
   createRatingAction,
   findByIdRatingAction
 } from '../../../store/rating/rating.action'
-import {
-  finishLoadingProduct,
-  listByIdProduct,
-  loadingProduct
-} from '../../../store/product/product.reducer'
-import { IProduct, IRating, IResultRating } from './types'
-import {
-  createRating,
-  finishLoadingRating,
-  listByIdRating,
-  loadingRating
-} from '../../../store/rating/rating.reducer'
+import { IProduct, IRating, IResultRating, PageTitle } from './types'
 import Reviews from '../../../components/portal/rating/index'
 import { FaCheck, FaRegClock } from 'react-icons/fa'
 import ContainerHero from '../../../components/portal/hero'
@@ -27,8 +16,9 @@ import ContainerForm from '../../../components/portal/rating/form'
 import Rating from '@mui/material/Rating'
 import Loading from '../../../components/loading/page'
 import { SLink } from './styled'
+import { Helmet } from 'react-helmet'
 
-const ProductDetails: React.FC<PageTitle> = ({ title }) => { 
+const ProductDetails: React.FC<PageTitle> = ({ title }) => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
 
@@ -37,36 +27,13 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
   const loading: boolean = useAppSelector((state) => state.product.loading)
 
   useEffect(() => {
-    dispatch(loadingProduct())
-    listByIdProductsAction(id as string).then((result) => {
-      if (result) {
-        dispatch(listByIdProduct(result))
-      }
-      dispatch(finishLoadingProduct())
-    })
-    dispatch(loadingRating())
-
-    findByIdRatingAction(id as string).then((result: IRating) => {
-      if (result) {
-        dispatch(listByIdRating(result))
-      }
-      dispatch(finishLoadingRating())
-    })
+    dispatch(listByIdProductsAction(id))
+    dispatch(findByIdRatingAction(id))
   }, [dispatch])
 
   const submitRating = (form: IRating) => {
-    dispatch(loadingRating())
-    createRatingAction(form).then(() => {
-      dispatch(createRating())
-      dispatch(finishLoadingRating())
-    })
-
-    findByIdRatingAction(id as string).then((result: IRating) => {
-      if (result) {
-        dispatch(listByIdRating(result))
-      }
-      dispatch(finishLoadingRating())
-    })
+    dispatch(createRatingAction(form))
+    dispatch(findByIdRatingAction(id))
   }
 
   if (loading) {
@@ -75,15 +42,16 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
 
   return (
     <div className="gig">
+      <Helmet title={title} />
       <div className="container">
         <div className="left">
           <span className="breadcrumbs">
-            <SLink to="/">Freelancer</SLink> 
+            <SLink to="/">Freelancer</SLink>
             {'  >  '}
             <SLink to={`/category/${product?.category?._id}`}>
               {product?.category?.name}
             </SLink>
-            {'  >  '} 
+            {'  >  '}
             {product?.title}
           </span>
           <h1>{product?.title}</h1>

@@ -6,15 +6,20 @@ import {
   } from '../../services/rating.service'
 import { toast } from 'react-toastify'
 import { Rating } from './types'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const findByIdRatingAction = async (categoryid: string) => {
+export const findByIdRatingAction = createAsyncThunk(
+  'rating/listById',
+  async (id: string) => {
   try {
-    const result = await findByIdRatingService(categoryid)    
+    const result = await findByIdRatingService(id)    
     return result.data
   } catch (error) {}
-}
+})
 
-export const createRatingAction = async (data: Rating) => {
+export const createRatingAction = createAsyncThunk(
+  'rating/create',
+  async (data: Rating) => {
   try {
     await createRatingService(data)
     toast.success('Avaliação criada com sucesso!')
@@ -23,24 +28,28 @@ export const createRatingAction = async (data: Rating) => {
     toast.error(error?.response?.data?.message)
     return false
   }
-}
+})
 
-export const updateRatingAction = async (id: string, data: Rating) => {
+export const updateRatingAction = createAsyncThunk(
+  'rating/update',
+  async (data: Rating) => {
   try {
-    await updateRatingService(id, data)
+    await updateRatingService(data.id, data)
     toast.success('Avaliação atualizada com sucesso!')
     return true
   } catch (error: any) {
     toast.error(error?.response?.data?.message)
     return false
   }
-}
+})
 
-export const deleteRatingAction = async (id: string) => {
+export const deleteRatingAction = createAsyncThunk(
+  'rating/delete',
+  async (id: string) => {
     try {
       await deleteRatingService(id)
       toast.success('Avaliação excluida com sucesso!')
     } catch (error: any) {
       toast.error(error?.response?.data?.message)
     }
-}
+})

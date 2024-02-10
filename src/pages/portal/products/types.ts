@@ -38,21 +38,20 @@ interface Category {
 }
 
 export interface Product {
-  metadata?: number,
-  data:{
-    _id: string;
-    userId: string;
-    title: string;
-    description: string;
-    category: Category;
-    price: number;
-    promotion: number;
-    images: string;
-    deliveryTime: number;
-    features: string[];
-    sales: number;
-    rating: Rating;
-    user: User;
+  metadata?: any
+  data: {
+    _id: string
+    userId: string
+    title: string
+    description: string
+    category?: Category
+    price: number
+    promotion: number
+    images: string
+    deliveryTime: number
+    features: string[]
+    sales: number
+    rating?: Rating
   }
 }
 

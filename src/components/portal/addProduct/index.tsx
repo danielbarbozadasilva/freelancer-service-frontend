@@ -11,11 +11,6 @@ import {
 import './styled.scss'
 import { IAddProduct, ICategory, IProduct, IUser } from './types'
 import { formatMoney, getMoney } from '../../../util/helpers/format'
-import {
-  finishLoadingCategory,
-  listAllCategory,
-  loadingCategory
-} from '../../../store/category/category.reducer'
 import { listAllCategoryAction } from '../../../store/category/category.action'
 
 const AddProduct: React.FC<IAddProduct> = ({ submit }) => {
