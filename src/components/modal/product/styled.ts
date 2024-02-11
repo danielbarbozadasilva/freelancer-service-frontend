@@ -25,23 +25,33 @@ export const SInput = styled.input`
 `
 
 export const SBox = styled.div`
-  width: 550px;
+  width: 530px;
   padding: 20px 100px;
 `
 
 export const SFormControl = styled(FormControl)`
-  display: flex!important;
-  margin-top: 30px!important;
+  display: flex !important;
+  margin-top: 30px !important;
 `
 
 export const SButton = styled(Button)`
-  margin-top: 40px!important;
-  background-color: #303f9f!important;
-  color: white!important;
+  background-color: #473f57 !important;
+  color: white !important;
+  width: 100px;
+  padding: 20px;
+  color: white;
+  font-weight: 500;
+  border: none;
+  padding: 10px;
+  height: 50px !important;
+  cursor: pointer;
+  @media (max-width: 555px) {
+    padding-left: 0px;
+  }
   :hover {
-    background-color: #5c6abc;
+    background-color: #716589 !important;
   }
   :disabled {
-    background-color: #dddddd;
+    background-color: #716589 !important;
   }
 `

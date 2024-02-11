@@ -11,6 +11,12 @@ export interface Filters {
   order: string
 }
 
+export interface IModal {
+  status: boolean
+  id?: string | null
+  type?: number
+}
+
 export interface IProduct {
   metadata?: any
   data: {

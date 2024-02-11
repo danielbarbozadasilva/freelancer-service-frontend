@@ -24,16 +24,21 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
 
   const product: IProduct = useAppSelector((state) => state.product.productid)
   const rating: IResultRating = useAppSelector((state) => state.rating.ratingid)
+  const user: IUser = useAppSelector((state) => state.auth.user)
   const loading: boolean = useAppSelector((state) => state.product.loading)
 
   useEffect(() => {
-    dispatch(listByIdProductsAction(id))
-    dispatch(findByIdRatingAction(id))
+    if (id) {
+      dispatch(listByIdProductsAction(id))
+      dispatch(findByIdRatingAction(id))
+    }
   }, [dispatch])
 
   const submitRating = (form: IRating) => {
     dispatch(createRatingAction(form))
-    dispatch(findByIdRatingAction(id))
+    if (id) {
+      dispatch(findByIdRatingAction(id))
+    }
   }
 
   if (loading) {
@@ -137,7 +142,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
                 </div>
               ))}
           </div>
-          <Link to={`/pay/${id}`}>
+          <Link to={`/pay/${id}/buyerid/${user?.id}`}>
             <button>Confirmar</button>
           </Link>
         </div>

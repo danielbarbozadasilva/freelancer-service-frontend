@@ -108,7 +108,6 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
                       <Image src={formatObjectURL(item)} />
                       <Button
                         onClick={() => removeImage(item)}
-                        component="label"
                       >
                         Remover
                       </Button>
@@ -121,12 +120,11 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <Button
+            <SButton
               fullWidth
               variant="contained"
               color="primary"
               size="small"
-              component="label"
             >
               Upload Foto
               <input
@@ -137,7 +135,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
                 onChange={previewImg}
                 disabled={loading}
               />
-            </Button>
+            </SButton>
           </Grid>
           <Grid item xs={12}>
             <TextField

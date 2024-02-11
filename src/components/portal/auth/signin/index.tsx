@@ -65,9 +65,6 @@ const SignIn: React.FC<PageType> = ({ submit }) => {
                 placeholder="Informe a sua senha"
               />
             </Form.Group>
-            {/* <Form.Group className="mb-3">
-              <Form.Check type="checkbox" label="Lembrar credenciais" />
-            </Form.Group> */}
             {loading ? (
               <Loading />
             ) : (

@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../../hooks'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { IMessage, IUser, PageType } from './types'
 import './styled.scss'
 import Loading from '../../loading/page'
 import BasicButton from '../button/basic'
+import { listByIdMessageAction } from '../../../store/message/message.action'
 
 const FormMessage: React.FC<PageType> = ({ submit }) => {
   const message: IMessage[] = useAppSelector((state) => state.message.all)
   const user: IUser = useAppSelector((state) => state.auth.user)
   const loading = useAppSelector((state) => state.message.loading)
   const [form, setForm] = useState({} as IMessage)
+  const dispatch = useAppDispatch()
+  const { id } = useParams()
+
+  useEffect(() => {
+    if (id) {
+      dispatch(listByIdMessageAction(id))
+    }
+  }, [dispatch])
+
 
   const handleChange = ({ target }: any) => {
     const { value, name } = target

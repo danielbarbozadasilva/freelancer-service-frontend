@@ -14,7 +14,6 @@ import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
 import MyProductsPage from './pages/portal/myProducts/index';
-import AddProductPage from './pages/portal/addProduct';
 import OrdersPage from './pages/portal/orders/index';
 import Messages from './pages/portal/messages/index';
 import Message from './pages/portal/message/index';
@@ -22,7 +21,8 @@ import ProductDetails from './pages/portal/productDetails/index';
 import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
-import EditProductPage from './pages/portal/editProduct';
+import PayPage from './pages/portal/payment';
+import PaymentSucessPage from './pages/portal/payment/success';
 
 interface MenuItem {
   title: string;
@@ -65,7 +65,7 @@ export const Menu: MenuItem[] = [
 ];
 
 const MainRoutes: React.FC = () => {
-  const typeUser = useAppSelector((state) => state.auth.user.permissions)
+  const typeUser = useAppSelector((state) => state.auth.user?.permissions)
   const authorizedRoutes = typeUser?.length? Menu.filter((route) => route.authorization.includes(typeUser[0])) : [];
 
   return (
@@ -87,10 +87,10 @@ const MainRoutes: React.FC = () => {
                 <Route path="orders" element={<OrdersPage title="Pedidos" />} />
                 <Route path="messages" element={<Messages title="Mensagens" />} />
                 <Route path="message/:id" element={<Message title="Mensagens" />} />
-                <Route path="add-product" element={<AddProductPage title="Cadastrar" />} />
-                <Route path="edit-product/:id" element={<EditProductPage title="Editar" />} />
                 <Route path="product/:id" element={<ProductDetails title="Produtos" />} />
                 <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
+                <Route path="pay/:id/buyerid/:buyerid" element={<PayPage title="Pagamento" />} />
+                <Route path="success" element={<PaymentSucessPage title="Sucesso" />} />
               </Routes>
             </Layout>
           }

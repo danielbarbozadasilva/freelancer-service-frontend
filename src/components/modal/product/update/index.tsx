@@ -108,7 +108,6 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                       <Image src={formatObjectURL(item)} />
                       <Button
                         onClick={() => removeImage(item)}
-                        component="label"
                       >
                         Remover
                       </Button>
@@ -121,7 +120,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <Button
+            <SButton
               fullWidth
               variant="contained"
               color="primary"
@@ -137,7 +136,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                 onChange={previewImg}
                 disabled={loading}
               />
-            </Button>
+            </SButton>
           </Grid>
           <Grid item xs={12}>
             <TextField

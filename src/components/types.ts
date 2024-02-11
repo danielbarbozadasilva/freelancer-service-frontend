@@ -1,5 +1,10 @@
 export type PageType = {
-  submit: (formData: FormData) => void;
+  submit: any
+}
+
+export type ISignIn = {
+  email: string
+  password: string
 }
 
 export type TypeSignUp = {

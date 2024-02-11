@@ -26,8 +26,9 @@ export const slice = createSlice({
       .addCase(createMessageAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(createMessageAction.fulfilled, (state) => {
+      .addCase(createMessageAction.fulfilled, (state, action) => {
         state.loading = false
+        state.all = action.payload.data
       })
       .addCase(createMessageAction.rejected, (state, action) => {
         state.loading = false

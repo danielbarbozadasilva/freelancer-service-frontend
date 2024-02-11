@@ -31,8 +31,8 @@ export const slice = createSlice({
       .addCase(signInAction.fulfilled, (state, action) => {
         state.loading = false
         state.registered = true,
-        state.token = action.payload.token,
-        state.user = action.payload.data
+        state.token = action.payload?.token,
+        state.user = action.payload?.data
       })
       .addCase(signInAction.rejected, (state, action) => {
         state.loading = false

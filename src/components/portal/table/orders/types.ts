@@ -1,6 +1,7 @@
 export interface IOrder {
   _id: string
-  productId: {
+  description: string
+  product: {
     _id: string
     userId: string
     title: string
@@ -15,7 +16,7 @@ export interface IOrder {
   }
   title: string
   price: number
-  userId: {
+  user: {
     _id: string
     name: string
     username: string
@@ -30,7 +31,7 @@ export interface IOrder {
     isSeller: boolean
     createdAt: Date
   }
-  buyerId: {
+  buyer: {
     _id: string
     name: string
     username: string

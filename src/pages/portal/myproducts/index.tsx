@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Filters, IProduct, IProductById, IProductSend, IUser, PageTitle } from './types'
+import { Filters, IModal, IProduct, IProductById, IProductSend, IUser, PageTitle } from './types'
 import { Helmet } from 'react-helmet'
 import MyProductsTable from '../../../components/portal/table/product'
 import TopButton from '../../../components/portal/button/top'
@@ -14,7 +14,7 @@ import FormUpdateRemove from '../../../components/modal/product/remove'
 import { navigate } from '@reach/router'
 
 const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
-  const [modal, setModal] = useState<{ status: boolean; id?: string | null; type?: number }>({ status: false, id: null, type: 1 })
+  const [modal, setModal] = useState<IModal>({ status: false, id: null, type: 1 })
   const dispatch = useAppDispatch()
   const user: IUser = useAppSelector((state) => state.auth.user)
   const product: IProduct[] = useAppSelector((state) => state.product.all)
@@ -55,6 +55,7 @@ const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
       case 2:
         dispatch(updateProductAction({ id: modal.id, data: form }))
         setModal({ status: false })
+        navigate(0)
         return
 
       case 3:

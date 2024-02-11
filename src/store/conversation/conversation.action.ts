@@ -31,7 +31,8 @@ export const createConversationAction = createAsyncThunk(
   'conversation/create',
   async (data: IDataSend) => {
     try {
-      await createConversationService(data)
+      const result = await createConversationService(data)
+      return result.data
     } catch (error) {}
   }
 )

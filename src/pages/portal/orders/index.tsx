@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { listByIdUserOrdersAction } from '../../../store/order/order.action'
-import TableSubscribers from '../../../components/portal/table/orders/index'
 import { TitlePage, SContainer } from '../../../assets/styled'
-import { PageTitle } from "./types";
-import { Helmet } from "react-helmet";
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { PageTitle } from './types'
+import { Helmet } from 'react-helmet'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { IUser } from '../messages/types'
+import TableOrdersClient from '../../../components/portal/table/orders/client'
+import TableOrdersBuyer from '../../../components/portal/table/orders/buyer'
 
 const OrdersPage: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
@@ -20,11 +21,10 @@ const OrdersPage: React.FC<PageTitle> = ({ title }) => {
       <Helmet title={title} />
       <SContainer>
         <TitlePage>Pedidos</TitlePage>
-        <TableSubscribers />
+        {user.isSeller ?  <TableOrdersBuyer /> : <TableOrdersClient />}
       </SContainer>
     </>
   )
 }
 
 export default OrdersPage
-

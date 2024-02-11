@@ -40,8 +40,9 @@ export const slice = createSlice({
       .addCase(createConversationAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(createConversationAction.fulfilled, (state) => {
+      .addCase(createConversationAction.fulfilled, (state, action) => {
         state.loading = false
+        state.all = action.payload.data
       })
       .addCase(createConversationAction.rejected, (state, action) => {
         state.loading = false
