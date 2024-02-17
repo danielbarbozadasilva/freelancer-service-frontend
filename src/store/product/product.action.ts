@@ -12,7 +12,7 @@ export const listAllProductsAction = createAsyncThunk(
   'product/listAll',
   async (filters: Filters) => {
     try {
-      const result = await listAllProductsService(filters)
+      const result = await listAllProductsService(filters)      
       return result.data.data
     } catch (error) {}
   }

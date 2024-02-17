@@ -143,7 +143,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { username, email, permissions } = useAppSelector((state) => state.auth.user);
+  const { username, email } = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
 
@@ -162,6 +162,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     logoutAction()
     dispatch(logoutUser())
     navigate('/')
+    navigate(0)
   }
 
   return (

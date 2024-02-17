@@ -1,6 +1,7 @@
 export type IDataSend = {
   isSeller: boolean
   userId: string
+  to?: string
 }
 
 export type IDataSendUpdate = {
@@ -9,7 +10,7 @@ export type IDataSendUpdate = {
 }
 
 export interface User {
-  _id: string;
+  id: string;
   name: string;
   username: string;
   email: string;

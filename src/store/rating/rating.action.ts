@@ -5,7 +5,7 @@ import {
     updateRatingService
   } from '../../services/rating.service'
 import { toast } from 'react-toastify'
-import { Rating } from './types'
+import { IRating } from './types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const findByIdRatingAction = createAsyncThunk(
@@ -13,13 +13,13 @@ export const findByIdRatingAction = createAsyncThunk(
   async (id: string) => {
   try {
     const result = await findByIdRatingService(id)    
-    return result.data
+    return result.data.data
   } catch (error) {}
 })
 
 export const createRatingAction = createAsyncThunk(
   'rating/create',
-  async (data: Rating) => {
+  async (data: IRating) => {
   try {
     await createRatingService(data)
     toast.success('Avaliação criada com sucesso!')

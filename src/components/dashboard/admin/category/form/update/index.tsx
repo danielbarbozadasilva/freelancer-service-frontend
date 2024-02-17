@@ -5,9 +5,9 @@ import { useAppSelector } from '../../../../../../hooks';
 import { FormCategoryUpdateProps } from './types';
 
 const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data }) => {
-  const [preview, setPreview] = useState(data.picture);
-  const [form, setForm] = useState(data);
-  const loading = useAppSelector((state) => state.category.loading)
+  const [preview, setPreview] = useState(data?.picture);
+  const [form, setForm] = useState({ ...data });
+  const loading: boolean = useAppSelector((state) => state.category.loading)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -34,7 +34,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
 
   const previewImg = (event: ChangeEvent<HTMLInputElement>) => {
     const image = event.target.files && event.target.files[0];
-    setPreview([image]);
+    setPreview(Array(image));
   };
 
   const handleError = () => form?.name && form?.description && preview?.length;
@@ -48,7 +48,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
               {preview?.length === 1 ? (
                 <Image src={URL.createObjectURL(preview[0])} />
               ) : (
-                <Image src={preview} />
+                <Image src={preview || data.picture} />
               )}
 
               <Button onClick={removeImage} component="label">
@@ -87,7 +87,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
           id="standard-error-helper-text"
           label="Nome"
           name="name"
-          value={form.name || ''}
+          value={form?.name}
           onChange={handleChange}
           disabled={loading}
         />
@@ -99,7 +99,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
           id="standard-error-helper-text"
           label="Descrição"
           name="description"
-          value={form.description || ''}
+          value={form?.description}
           onChange={handleChange}
           disabled={loading}
         />

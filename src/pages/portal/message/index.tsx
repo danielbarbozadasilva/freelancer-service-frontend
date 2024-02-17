@@ -19,7 +19,7 @@ const Message: React.FC<PageTitle> = ({ title }) => {
     }
   }, [dispatch])
 
-  const submitForm = async (form: IMessage) => {
+  const submitForm = (form: IMessage): void => {
     dispatch(createMessageAction(form))
     if (id) {
       dispatch(listByIdMessageAction(id))

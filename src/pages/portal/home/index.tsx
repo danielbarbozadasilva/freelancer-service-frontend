@@ -34,10 +34,10 @@ const Home: React.FC<PageTitle> = ({ title }) => {
 
   const product: IProduct[] =  useAppSelector((state) => state.product.all)
   const category: ICategory[] = useAppSelector((state) => state.category.all)
-  const loading = useAppSelector((state) => state.category.loading)
-  const [itensPerPage, setItensPerPage] = React.useState(5)
-  const [currentPage, setCurrentPage] = React.useState(0)
-  const { search } = useParams()
+  const loading: boolean = useAppSelector((state) => state.category.loading)
+  const [itensPerPage, setItensPerPage] = React.useState<number>(5)
+  const [currentPage, setCurrentPage] = React.useState<number>(0)
+  const { search } = useParams<string>()
 
   useEffect(() => {
     if (search) {

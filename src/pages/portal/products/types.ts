@@ -7,7 +7,7 @@ export type IUser = {
 }
 
 interface Rating {
-  _id: string;
+  id: string;
   name: string;
   text: string;
   score: number;
@@ -16,7 +16,7 @@ interface Rating {
 }
 
 interface User {
-  _id: string;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -31,7 +31,7 @@ interface User {
 }
 
 interface Category {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   picture: string;
@@ -40,7 +40,7 @@ interface Category {
 export interface Product {
   metadata?: any
   data: {
-    _id: string
+    id: string
     userId: string
     title: string
     description: string

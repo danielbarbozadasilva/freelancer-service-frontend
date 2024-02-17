@@ -8,6 +8,7 @@ import {
 import { StripeLinkAuthenticationElementChangeEvent } from '@stripe/stripe-js'
 import { SButton } from '../../portal/button/basic/styled'
 import Loading from '../../loading/form'
+import { SContainerLoading } from './styled'
 
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe()
@@ -87,10 +88,14 @@ const CheckoutForm: React.FC = () => {
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       {isLoading ? (
-        <Loading />
+        <>
+          <SContainerLoading>
+            <Loading />
+          </SContainerLoading>
+        </>
       ) : (
         <SButton disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">{'Pagar agora'}</span>
+          Pagar agora
         </SButton>
       )}
       {message && <div id="payment-message">{message}</div>}

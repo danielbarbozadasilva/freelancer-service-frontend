@@ -8,7 +8,7 @@ import {
   ModalFooter
 } from 'reactstrap'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks'
-import { IOrder } from '../types'
+import { IMessage, IOrder } from '../types'
 import TableButton from '../../../button/table'
 import { Std } from './styled'
 import { navigate } from '@reach/router'
@@ -29,24 +29,28 @@ const TableOrdersClient: React.FC = () => {
   }
 
   const handlerChat = (order: IOrder) => {
-    let dataMessage;
-    let dataConversation = {
-      isSeller: order.user.isSeller,
-      userId: order.user._id,
-      to: order.buyer._id
-    }
-    dispatch(createConversationAction(dataConversation)).then((item) => {
-      dataMessage = {
-        conversationId: item.payload.data._id,
-        userId: order.user._id,
-        description: 'Olá! Agradeço por me contratar, seu pedido ficará pronto em breve!',
-        isSeller: order.user.isSeller
+    const {user, buyer} = order
+    if (user && buyer) {
+      let dataMessage: IMessage
+      let dataConversation = {
+        isSeller: user.isSeller,
+        userId: user.id,
+        to: buyer.id
       }
-      dispatch(createMessageAction(dataMessage)).then((item) => {
-        navigate(`message/${dataMessage.conversationId}`)
-        navigate(0)
+      dispatch(createConversationAction(dataConversation)).then((item) => {
+        dataMessage = {
+          conversationId: item.payload.data.id,
+          userId: user.id,
+          description:
+            'Olá! Agradeço por me contratar, seu pedido ficará pronto em breve!',
+          isSeller: user.isSeller
+        }
+        dispatch(createMessageAction(dataMessage)).then(() => {
+          navigate(`message/${dataMessage.conversationId}`)
+          navigate(0)
+        })
       })
-    })
+    }
   }
 
   return (
@@ -60,7 +64,7 @@ const TableOrdersClient: React.FC = () => {
                 <th>E-mail</th>
                 <th>Serviço</th>
                 <th>Data da Solicitação</th>
-                <th>Tempo de entrega</th>
+                <th>Tempo de entrega - Dias</th>
                 <th>Transação completa</th>
                 <th>Detalhes</th>
                 <th>Chat</th>
@@ -69,11 +73,11 @@ const TableOrdersClient: React.FC = () => {
             <tbody>
               {orderByUser.map((item, i) => (
                 <tr key={i}>
-                  <Std>{item.user.name}</Std>
-                  <Std>{item.user.email}</Std>
-                  <Std>{item.product.title}</Std>
-                  <Std>{item.createdAt}</Std>
-                  <Std>{item.product.deliveryTime}</Std>
+                  <Std>{item.user?.name}</Std>
+                  <Std>{item.user?.email}</Std>
+                  <Std>{item.product?.title}</Std>
+                  <Std>{String(item.createdAt)}</Std>
+                  <Std>{item.product?.deliveryTime}</Std>
                   <Std>{item.isCompleted ? 'Sim' : 'Não'}</Std>
                   <td>
                     <TableButton
@@ -98,7 +102,7 @@ const TableOrdersClient: React.FC = () => {
             <ModalBody>
               <p>Título: {selectedOrder?.title}</p>
               <p>Preço: {selectedOrder?.price}</p>
-              <p>Data/Hora: {selectedOrder?.createdAt}</p>
+              <p>Data/Hora: {String(selectedOrder?.createdAt)}</p>
               <p>Finalizado: {selectedOrder?.isCompleted ? 'Sim' : 'Não'}</p>
               <p>Pagamento: {selectedOrder?.payment_intent}</p>
               <p>Descrição: {selectedOrder?.description}</p>

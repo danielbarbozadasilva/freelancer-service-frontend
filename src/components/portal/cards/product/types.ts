@@ -1,7 +1,7 @@
 export interface ProductCardProps {
   item: {
     data:{
-      _id: string;
+      id: string;
       title: string;
       user: {
         username: string;

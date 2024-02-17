@@ -1,7 +1,7 @@
 export interface Row {
   metadata?: any
   data: {
-    _id: string
+    id: string
     userId: string
     title: string
     description: string
@@ -17,14 +17,14 @@ export interface Row {
 }
 
 interface Category {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string
 }
 
 interface Rating {
-  _id: string
+  id: string
   name: string
   text: string
   score: number

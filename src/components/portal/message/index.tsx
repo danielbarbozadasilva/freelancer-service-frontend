@@ -10,10 +10,10 @@ import { listByIdMessageAction } from '../../../store/message/message.action'
 const FormMessage: React.FC<PageType> = ({ submit }) => {
   const message: IMessage[] = useAppSelector((state) => state.message.all)
   const user: IUser = useAppSelector((state) => state.auth.user)
-  const loading = useAppSelector((state) => state.message.loading)
+  const loading: boolean = useAppSelector((state) => state.message.loading)
   const [form, setForm] = useState({} as IMessage)
   const dispatch = useAppDispatch()
-  const { id } = useParams()
+  const { id } = useParams<string>()
 
   useEffect(() => {
     if (id) {

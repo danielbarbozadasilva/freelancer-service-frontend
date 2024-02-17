@@ -8,7 +8,7 @@ export interface Filters {
 }
 
 interface User {
-  _id: string
+  id: string
   name: string
   username: string
   email: string
@@ -23,23 +23,7 @@ interface User {
 }
 
 interface Category {
-  _id: string
-  name: string
-  description: string
-  picture: string
-}
-
-interface Rating {
-  _id: string
-  name: string
-  text: string
-  score: number
-  productId: string
-  userId: string
-}
-
-interface Category {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string
@@ -48,7 +32,7 @@ interface Category {
 export interface IProduct {
   metadata?: any
   data: {
-    _id: string
+    id: string
     userId: string
     title: string
     description: string
@@ -63,13 +47,29 @@ export interface IProduct {
   }
 }
 
+interface Category {
+  id: string
+  name: string
+  description: string
+  picture: string
+}
+
+interface Rating {
+  id: string
+  name: string
+  text: string
+  score: number
+  productId: string
+  userId: string
+}
+
 export interface IProductSend {
   id?: string
   title: string
   description: string
   category: string
   price: number
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   userId: string
 }
@@ -81,14 +81,14 @@ export interface IProductSendUpdate {
     description: string
     category: string
     price: number
-    deliveryTime: string
+    deliveryTime: number
     features: string[]
     userId: string
   }
 }
 
 interface IUser {
-  _id: string
+  id: string
   name: string
   username: string
   email: string
@@ -103,7 +103,7 @@ interface IUser {
 }
 
 export interface ICategory {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string[]
@@ -117,7 +117,7 @@ export interface IProductById {
   price: number
   promotion: number
   images: string[]
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   sales: number
   userId?: IUser
@@ -131,7 +131,7 @@ export interface IProduct {
   price: number
   promotion: number
   images: string[]
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   sales: number
   userId?: User

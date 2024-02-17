@@ -8,8 +8,12 @@ import { useAppDispatch } from '../../../hooks'
 import { createPaymentIntent } from '../../../store/order/order.action'
 import { PageTitle } from './types'
 import { SContainer, TitlePage } from '../../../assets/styled'
+import { useLocation } from 'react-router-dom';
 
 const PayPage: React.FC<PageTitle> = ({ title }) => {
+  const location = useLocation()
+  const data = location.state?.data
+
   let stripePromise
   if (process.env.REACT_APP_STRIPE) {
     stripePromise = loadStripe(process.env.REACT_APP_STRIPE)
@@ -21,7 +25,7 @@ const PayPage: React.FC<PageTitle> = ({ title }) => {
 
   useEffect(() => {
     if (id && buyerid) {
-      dispatch(createPaymentIntent({ id, buyerid })).then((result: any) => {
+      dispatch(createPaymentIntent({ id, buyerid, data })).then((result: any) => {
         setClientSecret(result.payload.data.data)
       })
     }

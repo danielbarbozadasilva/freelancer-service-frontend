@@ -16,7 +16,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
   const [formValidate, setFormValidate] = useState<Record<string, string>>({});
   const [score, setScore] = useState<number>(4);
   const user: IUser = useAppSelector((state) => state.auth.user)
-  const loading = useAppSelector((state) => state.rating.loading);
+  const loading: boolean = useAppSelector((state) => state.rating.loading);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;

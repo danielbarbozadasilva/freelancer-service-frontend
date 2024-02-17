@@ -36,7 +36,7 @@
             border-radius: 50%;
             object-fit: cover;
           }
-  
+         
           span {
             font-size: 14px;
             font-weight: 500;
@@ -59,7 +59,9 @@
             }
           }
         }
-  
+        .stars{
+          font-size: 17px!important;
+        }
         .slider {
           background-color: #F5F5F5;
           img {

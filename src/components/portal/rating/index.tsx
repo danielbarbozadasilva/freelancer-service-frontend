@@ -31,16 +31,14 @@ const Reviews: React.FC<IProps> = ({ data }) => {
                   {item.text}
                 </Typography>
                 <Typography className={classes.text} color="textSecondary">
-                    <SRating name="simple-controlled" value={item.score} />
+                    <SRating name="simple-controlled" readOnly={true} value={item.score} />
                 </Typography>
               </CardContent>
             </div>
           ))}
         </Card>
       ) : (
-        <Typography className={classes.notFound} color="textSecondary">
-          Nenhuma avaliação
-        </Typography>
+        <h6>Nenhuma avaliação</h6>
       )}
     </>
   )

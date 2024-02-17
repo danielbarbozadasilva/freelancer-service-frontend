@@ -5,7 +5,7 @@ import {
   updateOrderService,
   createPaymentIntentService
 } from '../../services/order.service'
-import { IOrder, IPayment, IUser } from './types'
+import { IPayment, IUser } from './types'
 
 export const listAllOrdersAction = createAsyncThunk(
   'order/listAll',
@@ -38,9 +38,9 @@ export const updateOrderAction = createAsyncThunk(
 
 export const createPaymentIntent = createAsyncThunk(
   'order/create',
-  async (data: any) => {
+  async (data: IPayment) => {
     try {
-      const result = await createPaymentIntentService(data.id, data.buyerid)
+      const result = await createPaymentIntentService(data.id, data.buyerid, data.data.description)
       return result
     } catch (error) {}
   }

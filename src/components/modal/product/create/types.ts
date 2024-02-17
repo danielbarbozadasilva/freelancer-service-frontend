@@ -22,7 +22,7 @@ export interface IFormSend {
   title: string
   category: string
   description: string
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   price: string
 }
@@ -34,7 +34,7 @@ export interface IProductById {
   category: string
   price: number
   images: string[]
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
 }
 

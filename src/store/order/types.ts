@@ -1,29 +1,37 @@
 export interface IOrder {
-  _id: string
+  id: string
+  productId: string
+  title: string
   description: string
-  product: {
-    _id: string
+  price: number
+  userId: string
+  buyerId: string
+  isCompleted: boolean
+  isSeller: boolean
+  payment_intent: string
+  createdAt: Date
+  updatedAt: Date
+  product?: {
+    id: string
     userId: string
     title: string
     description: string
     category: string
     price: number
     images: string[]
-    deliveryTime: string
+    deliveryTime: number
     features: string[]
     sales: number
-    rating: string
+    rating: string[]
   }
-  title: string
-  price: number
-  user: {
-    _id: string
+  buyer?: {
+    id: string
     name: string
     username: string
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -31,14 +39,14 @@ export interface IOrder {
     isSeller: boolean
     createdAt: Date
   }
-  buyer: {
-    _id: string
+  user?: {
+    id: string
     name: string
     username: string
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -46,16 +54,12 @@ export interface IOrder {
     isSeller: boolean
     createdAt: Date
   }
-  isCompleted: boolean
-  isSeller: boolean
-  payment_intent: string
-  createdAt: string
-  updatedAt: string
 }
 
 export interface IPayment {
-  buyerId: string
-  productId: string
+  id: string
+  buyerid: string
+  data: any
 }
 
 export interface IUser {

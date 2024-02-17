@@ -19,7 +19,7 @@ const Messages: React.FC<PageTitle> = ({ title }) => {
     dispatch(listAllConversationAction(data))
   }, [dispatch])
 
-  const handleSubmit = async (data: IDataSendUpdate)=>{
+  const handleSubmit = (data: IDataSendUpdate) : void =>{
       dispatch(updateConversationAction(data))
   }
 

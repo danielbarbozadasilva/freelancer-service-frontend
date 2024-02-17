@@ -18,7 +18,7 @@ export interface Filters {
   order: string
 }
 interface Rating {
-  _id: string
+  id: string
   name: string
   text: string
   score: number
@@ -27,14 +27,14 @@ interface Rating {
 }
 
 interface Category {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string
 }
 
 interface Rating {
-  _id: string
+  id: string
   name: string
   text: string
   score: number
@@ -45,7 +45,7 @@ interface Rating {
 export interface IProduct {
   metadata?: any
   data: {
-    _id: string
+    id: string
     userId: string
     title: string
     description: string

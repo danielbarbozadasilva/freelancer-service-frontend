@@ -11,13 +11,13 @@ export interface IProduct {
   price: number
   promotion: number
   images: string[]
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   sales: number
   userId?: IUser
 }
 export interface IUser {
-  _id: string
+  id: string
   name: string
   username: string
   id?: string
@@ -33,14 +33,14 @@ export interface IUser {
 }
 
 export interface Category {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string[]
 }
 
 export interface ICategory {
-  _id?: string
+  id?: string
   id: string
   name: string
   description: string
@@ -52,7 +52,7 @@ export interface IFormSend {
   title: string
   category: any
   description: string
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   price: string
 }
@@ -64,7 +64,7 @@ export interface IProductById {
   category: ICategory
   price: number
   images: string[]
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
 }
 

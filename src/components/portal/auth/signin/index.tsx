@@ -12,8 +12,8 @@ import Loading from '../../../loading/form'
 import { useAppSelector } from '../../../../hooks'
 
 const SignIn: React.FC<PageType> = ({ submit }) => {
-  const loading = useAppSelector((state) => state.auth.loading)
-  const registered = useAppSelector((state) => state.auth.registered)
+  const loading: boolean = useAppSelector((state) => state.auth.loading)
+  const registered: boolean = useAppSelector((state) => state.auth.registered)
   const [form, setForm] = React.useState({ email: '', password: '' })
 
   React.useEffect(() => {

@@ -6,6 +6,7 @@ export const SButton = styled.button`
     font-weight: 500;
     border: none;
     padding: 10px;
-    height: 50px!important;
+    height: 40px!important;
     cursor: pointer;
+    width: 100px;
 `

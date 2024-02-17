@@ -52,7 +52,7 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
                   <td>
                     {((user.isSeller && !item.readBySeller) ||
                       (!user.isSeller && !item.readByBuyer)) && (
-                      <TableButton title="Marcar como lido" onClick={() => handleRead(item.id, user.isSeller)} />
+                      <TableButton title="Marcar lido" onClick={() => handleRead(item.id, user.isSeller)} />
                     )}
                   </td>
                 </tr>

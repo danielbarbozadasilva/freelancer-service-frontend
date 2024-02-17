@@ -51,12 +51,12 @@ const MyProductsTable: React.FC<IProps> = ({ result, modal }) => {
                   <Std>{row.data.description}</Std>
                   <Std>{formatCurrency(row.data.price)}</Std>
                   <td>
-                    <IconButton onClick={() => actionEdit(row?.data?._id)}>
+                    <IconButton onClick={() => actionEdit(row?.data?.id)}>
                       <EditIcon />
                     </IconButton>
                   </td>
                   <td>
-                    <IconButton onClick={() => actionRemove(row?.data?._id)}>
+                    <IconButton onClick={() => actionRemove(row?.data?.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </td>

@@ -1,31 +1,25 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-// import OrdersForm from '../../../../components/portal/auth/Orders/index'
-import Loading from '../../../../components/loading/page/index'
-// import {
-//   listByIdClientAction,
-//   updateClientOrdersAction
-// } from '~/store/client/client.action'
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
 import Title from '../../../../components/dashboard/title/index'
+import DataList from '../../../../components/dashboard/admin/orders/index'
 import { Helmet } from 'react-helmet'
+import { useAppDispatch, useAppSelector } from '../../../../hooks'
+import { OrdersProps, IModal, IOrder } from './types'
+import { listAllOrdersAction } from '../../../../store/order/order.action'
 
-const Orders = (props: any) => {
-  // const dispatch = useDispatch()
-  // const clientid = useSelector((state) => state.auth.clientid)
-  // const userid = useSelector((state) => state.auth.userid)
-  // const loading = useSelector((state) => state.auth.loading)
+const Orders: React.FC<OrdersProps> = (props) => {
+  const dispatch = useAppDispatch()
+  const [modal, setModal] = useState<IModal>({})
+  const orders: IOrder[] = useAppSelector((state) => state.order.all)
+  const loading: boolean = useAppSelector((state) => state.client.loading)
 
-  // const submitForm = (form) => {
-  //   dispatch(updateClientOrdersAction(clientid, userid, form))
-  // }
+  useEffect(() => {
+    dispatch(listAllOrdersAction())
+  }, [dispatch])
 
-  // if (loading) {
-  //   return <Loading />
-  // }
-
-  // useEffect(() => {
-  //   dispatch(listByIdClientAction(clientid))
-  // }, [dispatch])
+  const toggleModal = (type = 1, data: IOrder): void => {
+    setModal({ type, status: true })
+  }
 
   const actions = () => null
 
@@ -33,8 +27,15 @@ const Orders = (props: any) => {
     <>
       <Helmet title={props.title} />
       <Title title="Pedidos" actions={actions} />
-      <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti illum voluptate, eveniet sunt rerum error culpa voluptates fugit ut provident sed ad, dignissimos incidunt libero. Quidem accusamus maiores asperiores. Itaque!</h1>
-      {/* <OrdersForm submit={submitForm} /> */}
+      <Grid container spacing={2}>
+        <Grid item md={12} xl={12}>
+          {!orders?.length ? (
+            <h6>Não há pedidos disponiveis</h6>
+          ) : (
+            <DataList data={orders} loading={loading} modal={toggleModal} />
+          )}
+        </Grid>
+      </Grid>
     </>
   )
 }

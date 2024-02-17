@@ -69,7 +69,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
     const newForm: IFormSend = {
       userId: user.id,
       title: form.title,
-      category: form.category._id || form.category,
+      category: form.category.id || form.category,
       description: form.description,
       deliveryTime: form.deliveryTime,
       features: form.features,
@@ -155,7 +155,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <SFormControl error={Number(form.category._id) === 0}>
+            <SFormControl error={Number(form.category.id) === 0}>
               <InputLabel>Categoria</InputLabel>
               <Select
                 name="category"
@@ -164,7 +164,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                   name: 'category',
                   id: 'outlined-native-simple'
                 }}
-                value={form.category._id || '0'}
+                value={form.category.id || '0'}
                 onChange={handleChange}
                 disabled={loading}
               >

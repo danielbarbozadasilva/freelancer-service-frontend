@@ -11,7 +11,7 @@ export type PageTitle = {
 }
 
 export interface User {
-  _id: string;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -26,23 +26,39 @@ export interface User {
 }
 
 export interface ICategory {
-  _id: string
+  id: string
   name: string
   description: string
   picture: string[]
 }
 
+interface IUser {
+  id: string
+  name: string
+  username: string
+  email: string
+  cpf: string
+  Date: string
+  picture: string[]
+  country: string
+  phone: string
+  description: string
+  permissions: string[]
+  isSeller: boolean
+}
+
 export interface IProduct {
-  id: string;
-  userId?: User;
-  title: string;
-  description: string;
-  category: ICategory;
-  price: number;
-  images: string[];
-  deliveryTime: string;
-  features: string[];
-  sales: number;
+  id: string
+  title: string
+  description: string
+  category: ICategory
+  price: number
+  promotion: number
+  images: string[]
+  deliveryTime: number
+  features: string[]
+  sales: number
+  userId?: IUser
 }
 
 export interface IRating {

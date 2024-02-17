@@ -14,7 +14,7 @@ export const listAllCategoryAction = createAsyncThunk(
   async () => {
     try {
       const result = await listAllCategoryService()
-      return result.data.data
+      return result.data
     } catch (error) {}
   }
 )
@@ -31,7 +31,7 @@ export const listCategoryByIdAction = createAsyncThunk(
 
 export const createCategoryAction = createAsyncThunk(
   'category/create',
-  async (data: ICategory) => {
+  async (data: FormData) => {
     try {
       const config = {
         headers: {

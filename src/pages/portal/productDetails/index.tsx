@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.scss'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { listByIdProductsAction } from '../../../store/product/product.action'
 import {
   createRatingAction,
   findByIdRatingAction
 } from '../../../store/rating/rating.action'
-import { IProduct, IRating, IResultRating, PageTitle } from './types'
+import { IProduct, IRating, IResultRating, User, PageTitle } from './types'
 import Reviews from '../../../components/portal/rating/index'
 import { FaCheck, FaRegClock } from 'react-icons/fa'
 import ContainerHero from '../../../components/portal/hero'
@@ -17,14 +17,17 @@ import Rating from '@mui/material/Rating'
 import Loading from '../../../components/loading/page'
 import { SLink } from './styled'
 import { Helmet } from 'react-helmet'
+import { FormDialog } from '../../../components/modal/description'
 
 const ProductDetails: React.FC<PageTitle> = ({ title }) => {
-  const { id } = useParams()
+  const { id } = useParams<string>()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
+  const [openModal, setOpenModal] = useState<boolean>(false)
   const product: IProduct = useAppSelector((state) => state.product.productid)
   const rating: IResultRating = useAppSelector((state) => state.rating.ratingid)
-  const user: IUser = useAppSelector((state) => state.auth.user)
+  const user: User = useAppSelector((state) => state.auth.user)
   const loading: boolean = useAppSelector((state) => state.product.loading)
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
     }
   }, [dispatch])
 
-  const submitRating = (form: IRating) => {
+  const submitRating = (form: IRating): void => {
     dispatch(createRatingAction(form))
     if (id) {
       dispatch(findByIdRatingAction(id))
@@ -45,6 +48,16 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
     return <Loading />
   }
 
+  const handleSubmit = (description: string): void => {
+    const data = { description };
+    navigate(`/pay/${id}/buyerid/${user?.id}`, { state: { data } });
+    navigate(0);
+  }
+
+  const handleCloseModal = (): void => {
+    setOpenModal(false)
+  }
+
   return (
     <div className="gig">
       <Helmet title={title} />
@@ -53,7 +66,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
           <span className="breadcrumbs">
             <SLink to="/">Freelancer</SLink>
             {'  >  '}
-            <SLink to={`/category/${product?.category?._id}`}>
+            <SLink to={`/category/${product?.category?.id}`}>
               {product?.category?.name}
             </SLink>
             {'  >  '}
@@ -63,12 +76,18 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
           <div className="user">
             <img className="picture" src={product?.userId?.picture[0]} alt="" />
             <span>{product?.userId?.username}</span>
-            {rating.averageScore && (
-              <>
-                <Rating name="simple-controlled" value={rating.averageScore} />
-              </>
-            )}
           </div>
+          {rating?.averageScore ? (
+            <div>
+              <Rating
+                className="stars"
+                readOnly={true}
+                value={rating.averageScore}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
 
           <ContainerHero data={product} />
 
@@ -80,7 +99,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
               <img src={product?.userId?.picture[0]} alt="" />
               <div className="info">
                 <span>{product?.userId?.username}</span>
-                <Rating name="simple-controlled" value={rating.averageScore} />
+                <Rating readOnly={true} value={rating.averageScore} />
                 <button>Contate-me</button>
               </div>
             </div>
@@ -130,7 +149,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
           <div className="details">
             <div className="item">
               <FaRegClock />
-              <span>Prazo: {product?.deliveryTime}</span>
+              <span>Prazo: {product?.deliveryTime} dias</span>
             </div>
           </div>
           <div className="features">
@@ -142,11 +161,10 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
                 </div>
               ))}
           </div>
-          <Link to={`/pay/${id}/buyerid/${user?.id}`}>
-            <button>Confirmar</button>
-          </Link>
+          <button onClick={() => setOpenModal(true)}>Confirmar</button>
         </div>
       </div>
+      <FormDialog open={openModal} close={handleCloseModal} submit={handleSubmit} />
     </div>
   )
 }

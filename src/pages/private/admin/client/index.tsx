@@ -20,17 +20,17 @@ const Client: React.FC<ClientProps> = (props) => {
   const [modal, setModal] = useState<IModal>({})
   const client: UserInterface[] = useAppSelector((state) => state.client.all)
   const clientById: UserInterface = useAppSelector((state) => state.client.clientid)
-  const loading = useAppSelector((state) => state.client.loading)
+  const loading: boolean = useAppSelector((state) => state.client.loading)
 
   useEffect(() => {
     dispatch(listAllClientAction())
   }, [dispatch])
 
-  const toggleModal = (type = 1, data: any = {}) => {
-    const id = data?.id || null
+  const toggleModal = (type = 1, id: string): void => {
     if (id) {
-      dispatch(listClientByIdAction(data))
-      setModal({ type, id, status: true })
+      dispatch(listClientByIdAction(id)).then(()=>
+        setModal({ type, id, status: true })
+      )
     } else {
       setModal({ type, id, status: true })
     }
@@ -38,14 +38,14 @@ const Client: React.FC<ClientProps> = (props) => {
 
   const closeModal = () => setModal({ status: false, type: 1 })
 
-  const deleteClient = () => {
+  const deleteClient = (): void => {
     if (modal?.id) {
       dispatch(removeClientAction(modal?.id))
       setModal({ status: false })
     }
   }
 
-  const updateClient = (form: FormData) => {
+  const updateClient = (form: FormData): void => {
     dispatch(updateClientAction({ id: modal?.id, form }))
     setModal({ status: false })
   }
@@ -65,7 +65,6 @@ const Client: React.FC<ClientProps> = (props) => {
           )}
         </Grid>
       </Grid>
-
       <DialogModal
         title="Cliente"
         open={modal.status || false}

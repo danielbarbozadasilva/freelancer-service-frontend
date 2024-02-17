@@ -1,4 +1,4 @@
-export interface Rating {
+export interface IRating {
   id?: string;
   name: string;
   text: string;
@@ -8,6 +8,6 @@ export interface Rating {
 }
 
 export interface ResultRating {
-  result: Rating[];
+  result: IRating[];
   averageScore: number;
 }

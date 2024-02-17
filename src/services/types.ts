@@ -16,17 +16,17 @@ export interface IRating {
 }
 
 export interface IOrder {
-  _id: string
+  id: string
   description: string
   product: {
-    _id: string
+    id: string
     userId: string
     title: string
     description: string
     category: string
     price: number
     images: string[]
-    deliveryTime: string
+    deliveryTime: number
     features: string[]
     sales: number
     rating: string
@@ -34,7 +34,7 @@ export interface IOrder {
   title: string
   price: number
   user: {
-    _id: string
+    id: string
     name: string
     username: string
     email: string
@@ -49,7 +49,7 @@ export interface IOrder {
     createdAt: Date
   }
   buyer: {
-    _id: string
+    id: string
     name: string
     username: string
     email: string
@@ -106,7 +106,7 @@ export interface IProduct {
   description: string
   category: string
   price: number
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   userId: string
 }
@@ -116,7 +116,7 @@ export interface IProductCreate{
   description: string
   category: string
   price: number
-  deliveryTime: string
+  deliveryTime: number
   features: string[]
   userId: string
 }

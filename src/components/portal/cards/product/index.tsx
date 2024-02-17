@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         <SCardInstallments>
           ou 6x de {formatPriceBr(item.data.price / 6)} sem juros
         </SCardInstallments>
-        <Link to={`/product/${item.data._id}`}>
+        <Link to={`/product/${item.data.id}`}>
           <SButton>Solicitar</SButton>
         </Link>
       </Card.Body>

@@ -24,7 +24,7 @@ export const slice = createSlice({
       })
       .addCase(listAllCategoryAction.fulfilled, (state, action) => {
         state.loading = false
-        state.all = action.payload
+        state.all = action.payload.data
       })
       .addCase(listAllCategoryAction.rejected, (state, action) => {
         state.loading = false
@@ -36,7 +36,7 @@ export const slice = createSlice({
       })
       .addCase(listCategoryByIdAction.fulfilled, (state, action) => {
         state.loading = false
-        state.categoryid = action.payload
+        state.categoryid = action.payload.data
       })
       .addCase(listCategoryByIdAction.rejected, (state, action) => {
         state.loading = false

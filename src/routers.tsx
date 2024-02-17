@@ -1,11 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Dashboard as DashboardIcon } from '@material-ui/icons';
-import { AccountBox, Group } from '@mui/icons-material';
+import { Group } from '@mui/icons-material';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import CategoryIcon from '@mui/icons-material/Category';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import PanelLayout from './components/layout/panel/layout-panel';
 import Orders from './pages/private/admin/orders/index';
 import Category from './pages/private/admin/category/index';
 import Client from './pages/private/admin/client/index';
+import Product from './pages/private/admin/product/index';
 import Home from './pages/portal/home';
 import Error403 from './pages/error/403';
 import Error404 from './pages/error/404';
@@ -46,7 +49,7 @@ export const Menu: MenuItem[] = [
   },
   {
     title: 'Pedidos',
-    icon: <AccountBox />,
+    icon: <ListAltIcon />,
     route: '/orders',
     visibleMenu: true,
     enabled: true,
@@ -55,11 +58,20 @@ export const Menu: MenuItem[] = [
   },
   {
     title: 'Categorias',
-    icon: <DashboardIcon />,
+    icon: <CategoryIcon />,
     route: '/category',
     visibleMenu: true,
     enabled: true,
     component: Category,
+    authorization: ['admin'],
+  },
+  {
+    title: 'Serviços',
+    icon: <DesignServicesIcon />,
+    route: '/services',
+    visibleMenu: true,
+    enabled: true,
+    component: Product,
     authorization: ['admin'],
   },
 ];

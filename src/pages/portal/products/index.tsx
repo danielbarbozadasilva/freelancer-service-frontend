@@ -14,12 +14,12 @@ import { Helmet } from 'react-helmet'
 
 const CategoryProducts: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
-  const { id } = useParams()
+  const { id } = useParams<string>()
 
   const product: Product[] = useAppSelector((state) => state.product.all)
-  const loading = useAppSelector((state) => state.product.loading)
-  const [itensPerPage, setItensPerPage] = React.useState(5)
-  const [currentPage, setCurrentPage] = React.useState(0)
+  const loading: boolean = useAppSelector((state) => state.product.loading)
+  const [itensPerPage, setItensPerPage] = React.useState<number>(5)
+  const [currentPage, setCurrentPage] = React.useState<number>(0)
 
   useEffect(() => {
     const filters: Filters = {

@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import { BoxTable } from '../../datalist/styled';
 import Loading from '../../../../components/loading/page/index';
-import { DataGrid, GridColumns, GridCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
 import { IconButton, Tooltip } from '@mui/material';
 import { More as MoreIcon } from '@mui/icons-material';
 import { SImg } from './styled';
 import ListProduct from './form/product';
 import { DataListProps, IProductModal } from './form/types';
+import { IProduct } from './types';
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   const [modalProduct, setModalProduct] = useState<IProductModal>();
 
-  const thumb = (params: GridCellParams) => {
+  const thumb = (params: GridRenderCellParams) => {
     return <SImg src={params.value as string} />;
   };
 
-  function openProduct(row: object) {
+  function openProduct(row: IProduct[]) {
     setModalProduct({ open: true, data: row });
   }
 
-  const actionModalProduct = (params: GridCellParams) => {
-    const result = params.row.product;
+  const actionModalProduct = (params: GridRenderCellParams) => {
+    const result: IProduct[] = params.row.product;
 
     return (
       <>
@@ -40,7 +41,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionEdit = (id: string) => {
+  const actionEdit = (id: GridRenderCellParams) => {
     return (
       <>
         <IconButton onClick={() => modal(2, id)} color="primary" size="small">
@@ -50,7 +51,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     );
   };
 
-  const actionRemove = (id: string) => {
+  const actionRemove = (id: GridRenderCellParams) => {
     return (
       <>
         <IconButton onClick={() => modal(3, id)} color="primary" size="small">
@@ -61,7 +62,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   };
 
 
-  const columns: GridColumns = [
+  const columns: GridColDef[] = [
     {
       field: 'picture',
       headerName: 'Imagem',
@@ -108,7 +109,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     {
       field: 'actionRemove',
       headerName: 'Excluir',
-      renderCell: actionRemove as any,
+      renderCell: actionRemove,
       flex: 1,
       align: 'center',
       headerAlign: 'center',
@@ -133,7 +134,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       </BoxTable>
       <ListProduct
         open={modalProduct?.open || false}
-        products={modalProduct?.data}
+        products={modalProduct?.data as IProduct[]}
         close={() => setModalProduct({ ...modalProduct, open: false } as IProductModal)}
       />
     </>
