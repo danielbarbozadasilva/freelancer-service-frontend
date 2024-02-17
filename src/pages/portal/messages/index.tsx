@@ -10,17 +10,19 @@ const Messages: React.FC<PageTitle> = ({ title }) => {
   const user: IUser = useAppSelector((state) => state.auth.user)
   const dispatch = useAppDispatch()
 
-  const data: IDataSend = {
+  const info: IDataSend = {
     isSeller: user.isSeller,
     userId: user.id
   }
 
   useEffect(() => {
-    dispatch(listAllConversationAction(data))
+    dispatch(listAllConversationAction(info))
   }, [dispatch])
 
-  const handleSubmit = (data: IDataSendUpdate) : void =>{
-      dispatch(updateConversationAction(data))
+  const handleSubmit = (data: IDataSendUpdate) : void => {
+      dispatch(updateConversationAction(data)).then(()=>{
+        dispatch(listAllConversationAction(info))
+      })
   }
 
   return (

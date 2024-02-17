@@ -25,7 +25,7 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
             <thead>
               <tr>
                 <th>{user.isSeller ? 'Comprador' : 'Freelancer'}</th>
-                <th>Ultimas mensagens</th>
+                <th>Últimas mensagens</th>
                 <th>Data</th>
                 <th>Ação</th>
               </tr>
@@ -45,15 +45,15 @@ const FormMessages: React.FC<PageType> = ({ submit }) => {
                   </Std>
                   <Std>
                     <Link to={`/message/${item._id}`} className="link">
-                      {item?.lastMessage?.substring(0, 100)}...
+                      {item?.lastMessage?.substring(0, 20)}...
                     </Link>
                   </Std>
                   <Std>{moment(item.updatedAt).fromNow()}</Std>
                   <td>
-                    {((user.isSeller && !item.readBySeller) ||
-                      (!user.isSeller && !item.readByBuyer)) && (
-                      <TableButton title="Marcar lido" onClick={() => handleRead(item.id, user.isSeller)} />
-                    )}
+                    <TableButton
+                      title="Marcar lido"
+                      onClick={() => handleRead(item.id, user.isSeller)}
+                    />
                   </td>
                 </tr>
               ))}

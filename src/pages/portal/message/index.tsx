@@ -11,7 +11,7 @@ import { IMessage, PageTitle } from './types'
 
 const Message: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
-  const { id } = useParams()
+  const { id } = useParams<string>()
 
   useEffect(() => {
     if (id) {
@@ -20,10 +20,11 @@ const Message: React.FC<PageTitle> = ({ title }) => {
   }, [dispatch])
 
   const submitForm = (form: IMessage): void => {
-    dispatch(createMessageAction(form))
-    if (id) {
-      dispatch(listByIdMessageAction(id))
-    }
+    dispatch(createMessageAction(form)).then(() => {
+      if (id) {
+        dispatch(listByIdMessageAction(id))
+      }
+    })
   }
 
   return (

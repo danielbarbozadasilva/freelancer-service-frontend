@@ -16,9 +16,7 @@ import { createConversationAction } from '../../../../../store/conversation/conv
 import { createMessageAction } from '../../../../../store/message/message.action'
 
 const TableOrdersClient: React.FC = () => {
-  const orderByUser: IOrder[] = useAppSelector(
-    (state) => state.order.orderByUser
-  )
+  const orderByUser: IOrder[] = useAppSelector((state) => state.order.orderByUser)
   const [modal, setModal] = useState<boolean>(false)
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null)
   const dispatch = useAppDispatch()
@@ -29,21 +27,21 @@ const TableOrdersClient: React.FC = () => {
   }
 
   const handlerChat = (order: IOrder) => {
-    const {user, buyer} = order
-    if (user && buyer) {
+    if (order.user && order.buyer) {
       let dataMessage: IMessage
       let dataConversation = {
-        isSeller: user.isSeller,
-        userId: user.id,
-        to: buyer.id
-      }
+        isSeller: order.user.isSeller,
+        userId: order.user._id,
+        to: order.buyer._id
+      }      
       dispatch(createConversationAction(dataConversation)).then((item) => {
-        dataMessage = {
-          conversationId: item.payload.data.id,
-          userId: user.id,
-          description:
-            'Olá! Agradeço por me contratar, seu pedido ficará pronto em breve!',
-          isSeller: user.isSeller
+        if (order.user) {
+          dataMessage = {
+            conversationId: item.payload.data._id,
+            userId: order.user._id,
+            description: 'Olá! Bem vindo ao chat, aqui você pode interagir melhor com o Freelancer e tirar todas as suas dúvidas.',
+            isSeller: order.user.isSeller
+          }
         }
         dispatch(createMessageAction(dataMessage)).then(() => {
           navigate(`message/${dataMessage.conversationId}`)
@@ -100,12 +98,12 @@ const TableOrdersClient: React.FC = () => {
               Detalhes do Pedido
             </ModalHeader>
             <ModalBody>
-              <p>Título: {selectedOrder?.title}</p>
-              <p>Preço: {selectedOrder?.price}</p>
-              <p>Data/Hora: {String(selectedOrder?.createdAt)}</p>
-              <p>Finalizado: {selectedOrder?.isCompleted ? 'Sim' : 'Não'}</p>
-              <p>Pagamento: {selectedOrder?.payment_intent}</p>
-              <p>Descrição: {selectedOrder?.description}</p>
+              <p><strong>Título: </strong>{selectedOrder?.title}</p>
+              <p><strong>Preço: </strong>{selectedOrder?.price}</p>
+              <p><strong>Data/Hora: </strong>{String(selectedOrder?.createdAt)}</p>
+              <p><strong>Transação finalizada: </strong>{selectedOrder?.isCompleted ? 'Sim' : 'Não'}</p>
+              <p><strong>Código do Pagamento: </strong>{selectedOrder?.payment_intent}</p>
+              <p><strong>Descrição do Pedido: </strong>{selectedOrder?.description}</p>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={() => setModal(!modal)}>
