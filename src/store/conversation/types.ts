@@ -16,7 +16,7 @@ export interface User {
   email: string;
   cpf: string;
   birthDate: Date;
-  picture: string[];
+  picture: string;
   country: string;
   phone?: string;
   description?: string;

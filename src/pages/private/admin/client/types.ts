@@ -9,12 +9,13 @@ export interface ClientProps {
 }
 
 export interface UserInterface {
+  id: string
   name: string
   username: string
   email: string
   cpf: string
   birthDate: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string

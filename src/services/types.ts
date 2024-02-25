@@ -40,7 +40,7 @@ export interface IOrder {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -55,7 +55,7 @@ export interface IOrder {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -86,13 +86,11 @@ export interface ISignUp {
   email: string
   cpf: string
   birthDate: string
-  picture?: string
   country: string
   phone: string
   description: string
   isSeller: boolean
   password: string
-  confirmPassword: string
 }
 
 export interface IMessage {
@@ -134,7 +132,7 @@ export interface IClient {
   email: string
   cpf: string
   birthDate: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string

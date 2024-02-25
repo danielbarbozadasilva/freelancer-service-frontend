@@ -42,12 +42,8 @@ export const signUpAction = createAsyncThunk(
       }
       await registerService(data, config)
       toast.success('Usuário criado com sucesso!')
-      navigate('/signin')
-      navigate(0)
-      return true
     } catch (error: any) {
-      toast.error(error?.response?.data?.message)
-      return false
+      toast.error('Ocorreu um erro!')
     }
   }
 )

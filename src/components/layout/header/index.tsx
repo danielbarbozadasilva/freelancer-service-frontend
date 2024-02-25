@@ -45,7 +45,7 @@ const Header: React.FC = () => {
           <Nav className="mr-auto">
             {user ? (
               <div className='avatarUser'>
-                <img className="avatar" src={user.picture || noAvatar} alt="" />
+                <img className="avatar" src={user?.picture || noAvatar} alt="" />
                 <NavDropdown
                   title={user?.username}
                   id="basic-nav-dropdown"

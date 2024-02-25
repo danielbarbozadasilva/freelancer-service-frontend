@@ -13,11 +13,11 @@ export type TypeSignUp = {
   email: string
   cpf: string
   birthDate: string
-  picture?: string
+  picture?: any,
   country: string
   phone: string
   description: string
   isSeller: boolean
   password: string
-  confirmPassword: string
+  confirmPassword?: string
 }

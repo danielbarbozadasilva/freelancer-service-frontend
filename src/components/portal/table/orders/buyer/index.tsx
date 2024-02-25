@@ -106,7 +106,7 @@ const TableOrdersBuyer: React.FC = () => {
               <p><strong>Data/Hora: </strong>{String(selectedOrder?.createdAt)}</p>
               <p><strong>Transação finalizada: </strong>{selectedOrder?.isCompleted ? 'Sim' : 'Não'}</p>
               <p><strong>Código do Pagamento: </strong>{selectedOrder?.payment_intent}</p>
-              <p><strong>Descrição do Pedido: </strong>{selectedOrder?.description}</p>
+              <p style={{ wordWrap: 'break-word' }}><strong>Descrição do Pedido: </strong>{selectedOrder?.description}</p>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={() => setModal(!modal)}>

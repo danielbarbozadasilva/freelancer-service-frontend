@@ -10,7 +10,7 @@ export interface IUser {
   email: string
   cpf: string
   Date: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string

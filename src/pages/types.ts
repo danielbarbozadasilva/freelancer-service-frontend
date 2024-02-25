@@ -10,22 +10,13 @@ export type TypeSignIn = {
 
 export type TypeSignUp = {
   name: string
+  username: string
   email: string
-  password: string
-  nationality: string
-  firstName: string
-  lastName: string
-  birthDate: Date
-  phone: string
-  rg: string
   cpf: string
-  gender: string
-  typeAddress: string
-  address: string
-  complement: string
-  city: string
-  state: string
-  cep: string
-  number: string
-  district: string
+  birthDate: string
+  country: string
+  phone: string
+  description: string
+  isSeller: boolean
+  password: string
 }
