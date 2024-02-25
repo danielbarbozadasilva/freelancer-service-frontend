@@ -11,10 +11,9 @@ import ufCountryFile from '../../../../../../util/country.json'
 
 const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => {
   const [preview, setPreview] = useState(data.picture);
-  const [button, setButton] = useState(false)
-  const loading = useAppSelector((state) => state.client.loading)
-  const selected = useAppSelector((state) => state.client.clientid)
-  const [form, setForm] = useState({ ...selected } as IUser)
+  const [button, setButton] = useState<boolean>(false)
+  const loading: boolean = useAppSelector((state) => state.client.loading)
+  const [form, setForm] = useState({ ...data })
   const [formValidate, setFormValidate] = useState({} as IUser)
   const [country, setCountry] = useState([{}])
 

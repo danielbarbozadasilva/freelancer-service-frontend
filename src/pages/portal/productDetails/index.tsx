@@ -1,142 +1,172 @@
-import React, { useEffect } from "react";
-import "./style.scss";
-import { Slider } from "infinite-react-carousel/lib";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { listByIdProductsAction } from "../../../store/product/product.action";
-import { finishLoadingProduct, listByIdProduct, loadingProduct } from "../../../store/product/product.reducer";
-import { Product } from "./types";
-// import Reviews from "../../../components/portal/reviews/index";
+import React, { useEffect, useState } from 'react'
+import './style.css'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { listByIdProductsAction } from '../../../store/product/product.action'
+import {
+  createRatingAction,
+  findByIdRatingAction
+} from '../../../store/rating/rating.action'
+import { IProduct, IRating, IResultRating, User, PageTitle } from './types'
+import Reviews from '../../../components/portal/rating/index'
+import { FaCheck, FaRegClock } from 'react-icons/fa'
+import ContainerHero from '../../../components/portal/hero'
+import { isAuthenticated } from '../../../config/auth'
+import ContainerForm from '../../../components/portal/rating/form'
+import Rating from '@mui/material/Rating'
+import Loading from '../../../components/loading/page'
+import { SLink } from './styled'
+import { Helmet } from 'react-helmet'
+import { FormDialog } from '../../../components/modal/description'
 
-const ProductDetails: React.FC = () => {
-  const { id } = useParams();
+const ProductDetails: React.FC<PageTitle> = ({ title }) => {
+  const { id } = useParams<string>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const product: Product = useAppSelector((state) => state.product.productid)
-  const loading = useAppSelector((state) => state.product.loading)
- 
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const product: IProduct = useAppSelector((state) => state.product.productid)
+  const rating: IResultRating = useAppSelector((state) => state.rating.ratingid)
+  const user: User = useAppSelector((state) => state.auth.user)
+  const loading: boolean = useAppSelector((state) => state.product.loading)
+
   useEffect(() => {
-    dispatch(loadingProduct())
-    listByIdProductsAction(id).then((result) => {
-      if (result) {
-        dispatch(listByIdProduct(result))
-      }
-      dispatch(finishLoadingProduct())
-    })
+    if (id) {
+      dispatch(listByIdProductsAction(id))
+      dispatch(findByIdRatingAction(id))
+    }
   }, [dispatch])
-  
+
+  const submitRating = (form: IRating): void => {
+    dispatch(createRatingAction(form))
+    if (id) {
+      dispatch(findByIdRatingAction(id))
+    }
+  }
+
+  if (loading) {
+    return <Loading />
+  }
+
+  const handleSubmit = (description: string): void => {
+    const data = { description };
+    navigate(`/pay/${id}/buyerid/${user?.id}`, { state: { data } });
+    navigate(0);
+  }
+
+  const handleCloseModal = (): void => {
+    setOpenModal(false)
+  }
+
   return (
     <div className="gig">
-        <div className="container">
-          <div className="left">
-            <span className="breadcrumbs">
-              Fiverr {">"} Graphics & Design {">"}
-            </span>
-            <h1>{product?.title}</h1>
-              <div className="user">
-                <img
-                  className="pp"
-                  src={product?.images}
-                  alt=""
-                />
-                <span>{product?.userId?.username}</span>
-                {!isNaN(data.totalStars / data.starNumber) && (
-                  <div className="stars">
-                    {Array(Math.round(data.totalStars / data.starNumber))
-                      .fill()
-                      .map((item, i) => (
-                        <img src="/img/star.png" alt="" key={i} />
-                      ))}
-                    <span>{Math.round(data.totalStars / data.starNumber)}</span>
-                  </div>
-                )}
-              </div>
-            )}
-            <Slider slidesToShow={1} arrowsScroll={1} className="slider">
-              {product?.images.map((img) => (
-                <img key={img} src={img} alt="" />
-              ))}
-            </Slider>
-            <h2>Sobre o serviço</h2>
-            <p>{product?.description}</p>
-              <div className="seller">
-                <h2>Informações</h2>
-                <div className="user">
-                  <img src={product?.userId?.picture[0]} alt="" />
-                  <div className="info">
-                    <span>{product?.userId?.username}</span>
-                    {!isNaN(data.totalStars / data.starNumber) && (
-                      <div className="stars">
-                        {Array(Math.round(data.totalStars / data.starNumber))
-                          .fill()
-                          .map((item, i) => (
-                            <img src="/img/star.png" alt="" key={i} />
-                          ))}
-                        <span>
-                          {Math.round(data.totalStars / data.starNumber)}
-                        </span>
-                      </div>
-                    )}
-                    <button>Contate-me</button>
-                  </div>
-                </div>
-                <div className="box">
-                  <div className="items">
-                    <div className="item">
-                      <span className="title">Sou do: </span>
-                      <span className="desc">{product?.userId?.country}</span>
-                    </div>
-                    <div className="item">
-                      <span className="title">Avg. response time</span>
-                      <span className="desc">4 hours</span>
-                    </div>
-                    <div className="item">
-                      <span className="title">Last delivery</span>
-                      <span className="desc">1 day</span>
-                    </div>
-                    <div className="item">
-                      <span className="title">Languages</span>
-                      <span className="desc">English</span>
-                    </div>
-                  </div>
-                  <hr />
-                  <p>{product?.userId?.description}</p>
-                </div>
-              </div>
-            {/* <Reviews gigId={id} /> */}
+      <Helmet title={title} />
+      <div className="container">
+        <div className="left">
+          <span className="breadcrumbs">
+            <SLink to="/">Freelancer</SLink>
+            {'  >  '}
+            <SLink to={`/category/${product?.category?.id}`}>
+              {product?.category?.name}
+            </SLink>
+            {'  >  '}
+            {product?.title}
+          </span>
+          <h1>{product?.title}</h1>
+          <div className="user">
+            <img className="picture" src={product?.userId?.picture[0]} alt="" />
+            <span>{product?.userId?.username}</span>
           </div>
-          <div className="right">
-            <div className="price">
-              <h3>{product?.description}</h3>
-              <h2>$ {product?.price}</h2>
+          {rating?.averageScore ? (
+            <div>
+              <Rating
+                className="stars"
+                readOnly={true}
+                value={rating.averageScore}
+              />
             </div>
-            <p>{product?.description}</p>
-            <div className="details">
-              <div className="item">
-                <img src="/img/clock.png" alt="" />
-                <span>{product?.deliveryTime} Days Delivery</span>
-              </div>
-              <div className="item">
-                <img src="/img/recycle.png" alt="" />
-                <span>{product?.revisionNumber} Revisions</span>
+          ) : (
+            <></>
+          )}
+
+          <ContainerHero data={product} />
+
+          <h2>Sobre o serviço</h2>
+          <p>{product?.description}</p>
+          <div className="seller">
+            <h2>Informações</h2>
+            <div className="user">
+              <img src={product?.userId?.picture[0]} alt="" />
+              <div className="info">
+                <span>{product?.userId?.username}</span>
+                <Rating readOnly={true} value={rating.averageScore} />
+                <button>Contate-me</button>
               </div>
             </div>
-            <div className="features">
-              {product?.features.map((feature) => (
+            <div className="box">
+              <div className="items">
+                <div className="item">
+                  <span className="title">Sou do: </span>
+                  <span className="desc">{product?.userId?.country}</span>
+                </div>
+                <div className="item">
+                  <span className="title">Tempo médio de resposta</span>
+                  <span className="desc">4 horas</span>
+                </div>
+                <div className="item">
+                  <span className="title">Última entrega</span>
+                  <span className="desc">1 dia</span>
+                </div>
+                <div className="item">
+                  <span className="title">Idioma</span>
+                  <span className="desc">Portugues</span>
+                </div>
+              </div>
+              <hr />
+              <p>{product?.userId?.description}</p>
+            </div>
+          </div>
+
+          <div>
+            {isAuthenticated() ? (
+              <>
+                <h2 className="avaliacoes">Deixe sua avaliação</h2>
+                <ContainerForm id={product.id} submit={submitRating} />
+              </>
+            ) : (
+              ''
+            )}
+            <h2 className="avaliacoes">Avaliações</h2>
+            <Reviews data={rating.result} />
+          </div>
+        </div>
+        <div className="right">
+          <h3>{product?.description}</h3>
+          <div className="price">
+            <h2>{product?.price}</h2>
+          </div>
+          <p>{product?.description}</p>
+          <div className="details">
+            <div className="item">
+              <FaRegClock />
+              <span>Prazo: {product?.deliveryTime} dias</span>
+            </div>
+          </div>
+          <div className="features">
+            {!!product &&
+              product?.features?.map((feature) => (
                 <div className="item" key={feature}>
-                  <img src="/img/greencheck.png" alt="" />
+                  <FaCheck />
                   <span>{feature}</span>
                 </div>
               ))}
-            </div>
-            <Link to={`/pay/${id}`}>
-            <button>Continue</button>
-            </Link>
           </div>
+          <button onClick={() => setOpenModal(true)}>Confirmar</button>
         </div>
+      </div>
+      <FormDialog open={openModal} close={handleCloseModal} submit={handleSubmit} />
     </div>
-  );
+  )
 }
 
-export default ProductDetails;
+export default ProductDetails

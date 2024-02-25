@@ -5,15 +5,19 @@ import ProductReducer from './product/product.reducer'
 import messageReducer from './message/message.reducer'
 import conversationReducer from './conversation/conversation.reducer'
 import clientReducer from './client/client.reducer'
+import ratingReducer from './rating/rating.reducer'
+import orderReducer from './order/order.reducer'
 
 const store = configureStore({
-  reducer:{
+  reducer: {
     auth: SignReducer,
     category: CategoryReducer,
     product: ProductReducer,
     message: messageReducer,
     conversation: conversationReducer,
     client: clientReducer,
+    rating: ratingReducer,
+    order: orderReducer,
   }
 })
 

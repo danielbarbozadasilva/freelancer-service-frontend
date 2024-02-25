@@ -1,11 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Dashboard as DashboardIcon } from '@material-ui/icons';
-import { AccountBox, Group } from '@mui/icons-material';
+import { Group } from '@mui/icons-material';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import CategoryIcon from '@mui/icons-material/Category';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import PanelLayout from './components/layout/panel/layout-panel';
 import Orders from './pages/private/admin/orders/index';
 import Category from './pages/private/admin/category/index';
 import Client from './pages/private/admin/client/index';
+import Product from './pages/private/admin/product/index';
 import Home from './pages/portal/home';
 import Error403 from './pages/error/403';
 import Error404 from './pages/error/404';
@@ -14,7 +17,6 @@ import Layout from './components/layout/main';
 import SignIn from './pages/portal/auth/signin';
 import SignUp from './pages/portal/auth/signup';
 import MyProductsPage from './pages/portal/myProducts/index';
-import AddProductPage from './pages/portal/addProduct';
 import OrdersPage from './pages/portal/orders/index';
 import Messages from './pages/portal/messages/index';
 import Message from './pages/portal/message/index';
@@ -22,6 +24,8 @@ import ProductDetails from './pages/portal/productDetails/index';
 import CategoryProducts from './pages/portal/products/index';
 import { useAppSelector } from './hooks';
 import { isAuthenticated } from './config/auth';
+import PayPage from './pages/portal/payment';
+import PaymentSucessPage from './pages/portal/payment/success';
 
 interface MenuItem {
   title: string;
@@ -45,7 +49,7 @@ export const Menu: MenuItem[] = [
   },
   {
     title: 'Pedidos',
-    icon: <AccountBox />,
+    icon: <ListAltIcon />,
     route: '/orders',
     visibleMenu: true,
     enabled: true,
@@ -54,17 +58,26 @@ export const Menu: MenuItem[] = [
   },
   {
     title: 'Categorias',
-    icon: <DashboardIcon />,
+    icon: <CategoryIcon />,
     route: '/category',
     visibleMenu: true,
     enabled: true,
     component: Category,
     authorization: ['admin'],
   },
+  {
+    title: 'Serviços',
+    icon: <DesignServicesIcon />,
+    route: '/services',
+    visibleMenu: true,
+    enabled: true,
+    component: Product,
+    authorization: ['admin'],
+  },
 ];
 
 const MainRoutes: React.FC = () => {
-  const typeUser = useAppSelector((state) => state.auth.user.permissions)
+  const typeUser = useAppSelector((state) => state.auth.user?.permissions)
   const authorizedRoutes = typeUser?.length? Menu.filter((route) => route.authorization.includes(typeUser[0])) : [];
 
   return (
@@ -76,6 +89,7 @@ const MainRoutes: React.FC = () => {
             <Layout>
               <Routes>
                 <Route index element={<Home title="Home" />} />
+                <Route path="product/search/:search" element={<Home title="Produtos" />} />
                 <Route path="signin" element={<SignIn title="Login" />} />
                 <Route path="signup" element={<SignUp title="Cadastrar" />} />
                 <Route path="error404" element={<Error404 title="Erro 404" />} />
@@ -85,9 +99,10 @@ const MainRoutes: React.FC = () => {
                 <Route path="orders" element={<OrdersPage title="Pedidos" />} />
                 <Route path="messages" element={<Messages title="Mensagens" />} />
                 <Route path="message/:id" element={<Message title="Mensagens" />} />
-                <Route path="add" element={<AddProductPage title="Cadastrar" />} />
                 <Route path="product/:id" element={<ProductDetails title="Produtos" />} />
                 <Route path="category/:id" element={<CategoryProducts title="Produtos" />} />
+                <Route path="pay/:id/buyerid/:buyerid" element={<PayPage title="Pagamento" />} />
+                <Route path="success" element={<PaymentSucessPage title="Sucesso" />} />
               </Routes>
             </Layout>
           }

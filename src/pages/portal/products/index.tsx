@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react'
-import ProductCard from '../../../components/portal/cards/productCard/index'
-import {
-  loadingProduct,
-  finishLoadingProduct,
-  listAllProduct
-} from '../../../store/product/product.reducer'
+import ProductCard from '../../../components/portal/cards/product/index'
 import { listAllProductsAction } from '../../../store/product/product.action'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useParams } from 'react-router-dom'
@@ -19,15 +14,14 @@ import { Helmet } from 'react-helmet'
 
 const CategoryProducts: React.FC<PageTitle> = ({ title }) => {  
   const dispatch = useAppDispatch()
-  const { id } = useParams()
+  const { id } = useParams<string>()
 
   const product: Product[] = useAppSelector((state) => state.product.all)
-  const loading = useAppSelector((state) => state.product.loading)
-  const [itensPerPage, setItensPerPage] = React.useState(5)
-  const [currentPage, setCurrentPage] = React.useState(0)
+  const loading: boolean = useAppSelector((state) => state.product.loading)
+  const [itensPerPage, setItensPerPage] = React.useState<number>(5)
+  const [currentPage, setCurrentPage] = React.useState<number>(0)
 
   useEffect(() => {
-    dispatch(loadingProduct())
     const filters: Filters = {
       category: String(id),
       offset: currentPage,
@@ -35,12 +29,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
       search: '',
       order: ''
     }
-    listAllProductsAction(filters).then((result) => {
-      if (result) {
-        dispatch(listAllProduct(result))
-      }
-      dispatch(finishLoadingProduct())
-    })  
+    dispatch(listAllProductsAction(filters))
   }, [itensPerPage, currentPage])
 
 
@@ -50,7 +39,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
   
   const pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
 
-  const ProductList = (product: Product[]) => {
+  const ProductList = (product: Product[]) => {    
     return product.map((item: Product, i: number) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>

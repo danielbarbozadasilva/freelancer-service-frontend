@@ -4,7 +4,7 @@ export interface IProduct {
     category: string;
     price: number;
     images?: string;
-    deliveryTime: string;
+    deliveryTime: number;
     features: string[];
 }
 

@@ -6,4 +6,11 @@ export interface IModal{
 
 export interface CategoryProps {
     title: string;
+}  
+
+export type ICategory = {
+  id: string
+  name: string
+  description: string
+  picture: any
 }

@@ -7,7 +7,7 @@ export type IUser = {
 }
 
 interface Rating {
-  _id: string;
+  id: string;
   name: string;
   text: string;
   score: number;
@@ -16,7 +16,7 @@ interface Rating {
 }
 
 interface User {
-  _id: string;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -31,28 +31,27 @@ interface User {
 }
 
 interface Category {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   picture: string;
 }
 
 export interface Product {
-  metadata?: number,
-  data:{
-    _id: string;
-    userId: string;
-    title: string;
-    description: string;
-    category: Category;
-    price: number;
-    promotion: number;
-    images: string;
-    deliveryTime: number;
-    features: string[];
-    sales: number;
-    rating: Rating;
-    user: User;
+  metadata?: any
+  data: {
+    id: string
+    userId: string
+    title: string
+    description: string
+    category?: Category
+    price: number
+    promotion: number
+    images: string
+    deliveryTime: number
+    features: string[]
+    sales: number
+    rating?: Rating
   }
 }
 

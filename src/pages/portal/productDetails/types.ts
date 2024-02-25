@@ -6,20 +6,12 @@ export interface Filters {
   search: string
 }
 
-export type IUser = {
-  id: string
-  username: string
-  email: string
-  isSeller: boolean
-  picture: string
-}
-
 export type PageTitle = {
   title: string
 }
 
-interface User {
-  _id: string;
+export interface User {
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -33,16 +25,51 @@ interface User {
   isSeller: boolean;
 }
 
-export interface Product {
-  id: string;
-  userId?: User;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  images: string;
-  deliveryTime: string;
-  features: string[];
-  sales: number;
-  rating: string;
+export interface ICategory {
+  id: string
+  name: string
+  description: string
+  picture: string
+}
+
+interface IUser {
+  id: string
+  name: string
+  username: string
+  email: string
+  cpf: string
+  Date: string
+  picture: string[]
+  country: string
+  phone: string
+  description: string
+  permissions: string[]
+  isSeller: boolean
+}
+
+export interface IProduct {
+  id: string
+  title: string
+  description: string
+  category: ICategory
+  price: number
+  promotion: number
+  images: string[]
+  deliveryTime: number
+  features: string[]
+  sales: number
+  userId?: IUser
+}
+
+export interface IRating {
+  name: string;
+  text: string;
+  score: number;
+  productId: string;
+  userId: string;
+}
+
+export interface IResultRating {
+  result: IRating[];
+  averageScore: number;
 }

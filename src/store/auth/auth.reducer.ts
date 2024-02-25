@@ -1,5 +1,6 @@
-import { getToken, getUser } from '../../config/auth'
+import { getUser } from '../../config/auth'
 import { createSlice } from '@reduxjs/toolkit'
+import { signInAction, signUpAction } from './auth.action'
 
 export const slice = createSlice({
   name: 'user',
@@ -9,41 +10,47 @@ export const slice = createSlice({
     user: getUser(),
     clientid: '',
     userid: '',
-    error: false,
+    error: '',
     registered: false
   },
   reducers: {
-    loadingUser(state) {
-      return { ...state, error: false, loading: true }
-    },
-    finishLoadingUser(state) {
-      return { ...state, error: false, loading: false }
-    },
-    signInUser(state, { payload }) {
-      return {
-        ...state,
-        registered: true,
-        token: payload?.token,
-        user: payload?.data,
-        loading: false
-      }
-    },
-    signUpUser(state) {
-      return {
-        ...state,
-        registered: true,
-        loading: false
-      }
-    },
     logoutUser(state) {
       return {
         ...state,
         token: '',
         user: {},
-        error: false
+        error: ''
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signInAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(signInAction.fulfilled, (state, action) => {
+        state.loading = false
+        state.registered = true,
+        state.token = action.payload?.token,
+        state.user = action.payload?.data
+      })
+      .addCase(signInAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
+
+      .addCase(signUpAction.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(signUpAction.fulfilled, (state) => {
+        state.loading = false
+        state.registered = true
+      })
+      .addCase(signUpAction.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch'
+      })
   }
 })
-export const { loadingUser, finishLoadingUser, signInUser, signUpUser, logoutUser } = slice.actions
+export const { logoutUser } = slice.actions
 export default slice.reducer

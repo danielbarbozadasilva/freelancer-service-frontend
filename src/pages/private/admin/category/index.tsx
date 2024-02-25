@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import {
   listAllCategoryAction,
@@ -15,50 +15,26 @@ import FormCategoryUpdate from '../../../../components/dashboard/admin/category/
 import Remove from '../../../../components/dashboard/admin/category/form/remove/index'
 import { SButton } from '../styled'
 import { Helmet } from 'react-helmet'
-import {
-  createCategory,
-  deleteCategory,
-  finishLoadingCategory,
-  listAllCategory,
-  loadingCategory,
-  updateCategory,
-  listByIdCategory
-} from '../../../../store/category/category.reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
-import { CategoryProps, IModal } from './types'
+import { CategoryProps, ICategory, IModal } from './types'
 
 const Category: React.FC<CategoryProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
-  const category = useAppSelector((state) => state.category.all)
-  const categoryById = useAppSelector((state) => state.category.categoryid)
-  const loading = useAppSelector((state) => state.category.loading)
-
-  const callCategories = useCallback(() => {
-    dispatch(loadingCategory())
-    listAllCategoryAction().then((result) => {
-      if (result) {
-        dispatch(listAllCategory(result))
-      }
-      dispatch(finishLoadingCategory())
-    })
-  }, [dispatch])
+  const category: ICategory[] = useAppSelector((state) => state.category.all)
+  const categoryById: ICategory = useAppSelector((state) => state.category.categoryid)
+  const loading: boolean = useAppSelector((state) => state.category.loading)
 
   useEffect(() => {
-    callCategories()
-  }, [callCategories])
+    dispatch(listAllCategoryAction())
+  }, [dispatch])
 
-  const toggleModal = (type = 1, data: any = {}) => {
+  const toggleModal = (type = 1, data: ICategory): void => {
     const id = data?.id || null
-    if (id){
-      dispatch(loadingCategory())
-      listCategoryByIdAction(id).then((result) => {
-        if (result) {
-          dispatch(listByIdCategory(result))
-        }
-        dispatch(finishLoadingCategory())
+    if (id) {
+      dispatch(listCategoryByIdAction(id)).then(() =>
         setModal({ type, id, status: true })
-      })
+      )
     } else {
       setModal({ type, id, status: true })
     }
@@ -66,44 +42,36 @@ const Category: React.FC<CategoryProps> = (props) => {
 
   const closeModal = () => setModal({ status: false, type: 1 })
 
-  const submitForm = async (form: any) => {
+  const submitForm = async (formData: FormData): Promise<void> => {
     switch (modal.type) {
       case 1:
-        await createCategoryAction(form).then(() => {
-          dispatch(loadingCategory())
-          dispatch(createCategory())
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(createCategoryAction(formData))
         setModal({ status: false })
-        return
+        break
 
       case 2:
-        await updateCategoryAction(modal?.id as string, form).then(() => {
-          dispatch(loadingCategory())
-          dispatch(updateCategory())
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(updateCategoryAction({ id: modal.id, data: formData }))
         setModal({ status: false })
-        return
+        break
 
       case 3:
-        await removeCategoryAction(modal.id as string).then(() => {
-          dispatch(loadingCategory())
-          dispatch(deleteCategory(modal.id as any))
-          dispatch(finishLoadingCategory())
-        })
+        dispatch(removeCategoryAction(modal.id))
         setModal({ status: false })
-        callCategories()
-        return
+        dispatch(listAllCategoryAction())
+        break
 
       default:
-        return false
+        break
     }
   }
 
-  const actions = () => (
-    <SButton onClick={() => toggleModal(1, null)}>Novo</SButton>
-  )
+  const actions = (): JSX.Element => {
+    return (
+      <>
+        <SButton onClick={() => toggleModal(1, null)}>Novo</SButton>
+      </>
+    )
+  }
 
   return (
     <>
@@ -130,11 +98,7 @@ const Category: React.FC<CategoryProps> = (props) => {
           ) : modal.type === 2 ? (
             <FormCategoryUpdate submit={submitForm} data={categoryById} />
           ) : modal.type === 3 ? (
-            <Remove
-              open={!!modal}
-              close={closeModal}
-              remove={submitForm as any}
-            />
+            <Remove open={!!modal} close={closeModal} remove={submitForm} />
           ) : null}
         </>
       </DialogModal>

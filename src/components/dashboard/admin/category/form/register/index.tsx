@@ -7,7 +7,7 @@ import { FormCategoryRegisterProps } from './types';
 const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) => {
   const [preview, setPreview] = useState<File[]>([]);
   const [form, setForm] = useState<Record<string, string | boolean>>({});
-  const loading = useAppSelector((state) => state.category.loading)
+  const loading: boolean = useAppSelector((state) => state.category.loading)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -34,7 +34,9 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
 
   const previewImg = (event: ChangeEvent<HTMLInputElement>) => {
     const picture = event.target.files && event.target.files[0];
-    setPreview([picture]);
+    if(picture){
+      setPreview(Array(picture));
+    }
   };
 
  const handleError = () => form.name && form.description && preview?.length;

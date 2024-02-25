@@ -1,14 +1,15 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DataList from '../../../../../dashboard/datagrid/index';
-import { ListProductProps } from './types';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import DataList from '../../../../../dashboard/datagrid/index'
+import { ListProductProps } from './types'
+import { GridColDef } from '@mui/x-data-grid'
 
 const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
-  const columnProduct = [
+  const columnProduct: GridColDef[] = [
     {
       field: 'title',
       headerName: 'Nome',
@@ -16,7 +17,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerAlign: 'center',
       flex: 1,
       width: 500,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'price',
@@ -25,7 +26,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerAlign: 'center',
       flex: 1,
       width: 340,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'deliveryTime',
@@ -34,7 +35,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerAlign: 'center',
       flex: 1,
       width: 340,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'sales',
@@ -43,9 +44,9 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerAlign: 'center',
       flex: 1,
       width: 340,
-      disableColumnMenu: true,
-    },
-  ];
+      disableColumnMenu: true
+    }
+  ]
 
   return (
     <Dialog
@@ -64,7 +65,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default ListProduct;
+export default ListProduct

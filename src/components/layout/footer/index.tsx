@@ -1,76 +1,77 @@
-import React from "react";
-import "./styled.scss";
-const twitter = require('../../../assets/img/twitter.png');
-const facebook = require('../../../assets/img/facebook.png');
-const linkedin = require('../../../assets/img/linkedin.png');
-const pinterest = require('../../../assets/img/pinterest.png');
-const instagram = require('../../../assets/img/instagram.png');
-const language = require('../../../assets/img/language.png');
-const coin = require('../../../assets/img/coin.png');
-const accessibility = require('../../../assets/img/accessibility.png');
+import React from 'react'
+import './styled.css'
+import twitter from '../../../assets/img/twitter.png'
+import facebook from '../../../assets/img/facebook.png'
+import linkedin from '../../../assets/img/linkedin.png'
+import pinterest from '../../../assets/img/pinterest.png'
+import instagram from '../../../assets/img/instagram.png'
+import language from '../../../assets/img/language.png'
+import coin from '../../../assets/img/coin.png'
+import accessibility from '../../../assets/img/accessibility.png'
+import { SLink } from './styled'
+import { ICategory } from './types'
+import { useAppSelector } from '../../../hooks'
 
-function Footer() {
+const Footer: React.FC = () => {
+  const category: ICategory[] = useAppSelector((state) => state.category.all)
+
   return (
     <div className="footer">
       <div className="container">
-      <hr />
+        <hr />
         <div className="top">
           <div className="item">
-            <h2>Categories</h2>
-            <span>Graphics & Design</span>
-            <span>Digital Marketing</span>
-            <span>Writing & Translation</span>
-            <span>Video & Animation</span>
-            <span>Music & Audio</span>
-            <span>Programming & Tech</span>
-            <span>Data</span>
-            <span>Business</span>
-            <span>Lifestyle</span>
-            <span>Photography</span>
-            <span>Sitemap</span>
+            <h2>Categorias</h2>
+            {category?.length && category?.length <= 7 ? (
+              category?.map((item: ICategory) => (
+                <React.Fragment key={item.id}>
+                  <SLink
+                    className="link menuLink"
+                    to={`/category/${item.id}`}
+                    reloadDocument
+                  >
+                    <span>{item.name}</span>
+                  </SLink>
+                </React.Fragment>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
           <div className="item">
-            <h2>About</h2>
-            <span>Press & News</span>
-            <span>Partnerships</span>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Intellectual Property Claims</span>
-            <span>Investor Relations</span>
-            <span>Contact Sales</span>
+            <h2>Sobre</h2>
+            <span>Noticias</span>
+            <span>Serviços</span>
+            <span>Novidades</span>
+            <span>Politica de privacidade</span>
+            <span>Termos de serviço</span>
+            <span>Propriedade intelectual</span>
           </div>
           <div className="item">
-            <h2>Support</h2>
-            <span>Help & Support</span>
-            <span>Trust & Safety</span>
-            <span>Selling on Freelancer</span>
-            <span>Buying on Freelancer</span>
+            <h2>Suporte</h2>
+            <span>Ajuda & Suporte</span>
+            <span>Confiança & segurança</span>
+            <span>Prestar um serviço como Freelancer</span>
+            <span>Adiquirir um serviço</span>
+            <span>Privacidade</span>
+            <span>Comunicação</span>
           </div>
           <div className="item">
-            <h2>Community</h2>
-            <span>Customer Success Stories</span>
-            <span>Community hub</span>
+            <h2>Comunidade</h2>
+            <span>Sucesso do cliente</span>
             <span>Forum</span>
-            <span>Events</span>
+            <span>Eventos</span>
             <span>Blog</span>
-            <span>Influencers</span>
-            <span>Affiliates</span>
             <span>Podcast</span>
-            <span>Invite a Friend</span>
-            <span>Become a Seller</span>
-            <span>Community Standards</span>
+            <span>Indique um amigo</span>
           </div>
           <div className="item">
-            <h2>More From Fiverr</h2>
-            <span>Freelancer Business</span>
-            <span>Freelancer Pro</span>
-            <span>Freelancer Logo Maker</span>
-            <span>Freelancer Guides</span>
-            <span>Get Inspired</span>
-            <span>Freelancer Select</span>
-            <span>ClearVoice</span>
-            <span>Freelancer Workspace</span>
-            <span>Learn</span>
+            <h2>Mais informações</h2>
+            <span>Guides</span>
+            <span>Tenha inspiração</span>
+            <span>Select</span>
+            <span>Workspace</span>
+            <span>Leia mais</span>
             <span>Working Not Working</span>
           </div>
         </div>
@@ -101,7 +102,7 @@ function Footer() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

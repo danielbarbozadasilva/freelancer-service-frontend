@@ -11,7 +11,7 @@ import { PageType, TypeSignUp } from '../../../types'
 import ufCountryFile from '../../../../util/country.json'
 
 const SignUp: React.FC<PageType> = ({ submit }) => {
-  const loading = useAppSelector((state) => state.auth.loading)
+  const loading: boolean = useAppSelector((state) => state.auth.loading)
   const [formValidate, setFormValidate] = useState({} as TypeSignUp)
   const [form, setForm] = useState({} as TypeSignUp)
   const [file, setFile] = useState<string | Blob>('')

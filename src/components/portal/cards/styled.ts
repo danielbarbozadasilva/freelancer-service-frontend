@@ -62,7 +62,7 @@ export const SCardImg = styled.img`
   width: 100%;
   height: auto;
   display: block;
-`;
+`
 
 export const SCardText = styled.div`
   position: absolute;
@@ -70,9 +70,9 @@ export const SCardText = styled.div`
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.7);
-  color: #fff; 
-  padding: 10px; 
-`;
+  color: #fff;
+  padding: 10px;
+`
 
 export const StyleImg = styled.img`
   background-position: cover;
@@ -161,6 +161,14 @@ export const STextInvest = styled.div`
   }
 `
 
+export const ContainerCards = styled.div`
+  font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 100px;
+`
+
 export const SButtonAbout = styled.button`
   text-align: center;
   color: #fff;
@@ -179,4 +187,7 @@ export const SButtonAbout = styled.button`
     transition: 1s;
     opacity: 0.5;
   }
+`
+export const SContainerPagination = styled.div`
+  margin: 0px 8% 2% 8%;
 `

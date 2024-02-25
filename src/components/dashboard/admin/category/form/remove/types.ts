@@ -1,5 +1,5 @@
 export interface RemoveProps {
     open: boolean;
-    remove: () => void;
+    remove: (formData: FormData) => void
     close: () => void;
   }

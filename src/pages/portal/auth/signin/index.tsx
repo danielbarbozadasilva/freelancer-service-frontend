@@ -4,19 +4,13 @@ import { useAppDispatch } from '../../../../hooks'
 import FormSignIn from '../../../../components/portal/auth/signin'
 import { TypeSignIn } from '../../../types'
 import { Helmet } from 'react-helmet'
-import { signInUser, loadingUser, finishLoadingUser } from '../../../../store/auth/auth.reducer'
 import { PageTitle } from './types'
 
-const SignIn: React.FC<PageTitle> = ({ title }) => {  
+const SignIn: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
 
   const submitForm = async (form: TypeSignIn) => {
-    dispatch(loadingUser())
-    const result = await signInAction(form)
-    if(result){
-      dispatch(signInUser(result))
-    }
-    dispatch(finishLoadingUser())
+    dispatch(signInAction(form))
   }
 
   return (

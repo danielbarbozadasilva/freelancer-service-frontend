@@ -1,43 +1,32 @@
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch } from "../../../hooks";
-import { finishLoadingMessage, listMessage, loadingMessage, createMessage } from "../../../store/message/message.reducer";
-import { listByIdMessageAction, createMessageAction } from "../../../store/message/message.action";
+import { useAppDispatch } from '../../../hooks'
+import {
+  listByIdMessageAction,
+  createMessageAction
+} from '../../../store/message/message.action'
 import FormMessage from '../../../components/portal/message'
-import { IMessage, PageTitle } from './types';
+import { IMessage, PageTitle } from './types'
 
-const Message: React.FC<PageTitle> = ({ title }) => {  
+const Message: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
-  const { id } = useParams()
+  const { id } = useParams<string>()
 
   useEffect(() => {
-    dispatch(loadingMessage())
-    listByIdMessageAction(id as string).then((result) => {
-      if (result) {
-        dispatch(listMessage(result))
-      }
-      dispatch(finishLoadingMessage())
-    })
+    if (id) {
+      dispatch(listByIdMessageAction(id))
+    }
   }, [dispatch])
 
-  const submitForm = async (form: IMessage) => {
-    dispatch(loadingMessage())
-    await createMessageAction(form).then((result) => {
-      if (result) {
-        dispatch(createMessage(result))
+  const submitForm = (form: IMessage): void => {
+    dispatch(createMessageAction(form)).then(() => {
+      if (id) {
+        dispatch(listByIdMessageAction(id))
       }
-      dispatch(finishLoadingMessage())
-    })
-    dispatch(loadingMessage())
-    await listByIdMessageAction(id as string).then((result) => {
-      if (result) {
-        dispatch(listMessage(result))
-      }
-      dispatch(finishLoadingMessage())
     })
   }
-  
+
   return (
     <>
       <Helmet title={title} />

@@ -1,58 +1,75 @@
-import { 
-    listAllClientService,
-    listClientByIdService,
-    removeClientService,
-    updateClientService,
-    updateClientSellerService
-  } from '../../services/client.service'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  listAllClientService,
+  listClientByIdService,
+  removeClientService,
+  updateClientService,
+  updateClientSellerService
+} from '../../services/client.service'
 import { toast } from 'react-toastify'
+import { ISeller } from './types'
 
-export const listAllClientAction = async () => {
-  try {
-    const result = await listAllClientService()  
-    return result.data.data
-  } catch (error) {}
-}
+export const listAllClientAction = createAsyncThunk(
+  'client/listAll',
+  async () => {
+    try {
+      const result = await listAllClientService()
+      return result.data.data
+    } catch (error) {}
+  }
+)
 
-export const listClientByIdAction = async (id: string) => {
-  try {
-    const result = await listClientByIdService(id)    
-    return result.data.data
-  } catch (error) {}
-}
+export const listClientByIdAction = createAsyncThunk(
+  'client/listById',
+  async (id: string) => {
+    try {
+      const result = await listClientByIdService(id)
+      return result.data.data
+    } catch (error) {}
+  }
+)
 
-export const updateClientAction = async (id: string, data: object) => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+export const updateClientAction = createAsyncThunk(
+  'client/update',
+  async (data: FormData) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }
+      await updateClientService(data.id, data, config)
+      toast.success('Cliente atualizado com sucesso!')
+      return true
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message)
+      return false
     }
-    await updateClientService(id, data, config)
-    toast.success('Cliente atualizado com sucesso!')
-    return true
-  } catch (error: any) {
-    toast.error(error?.response?.data?.message)
-    return false
   }
-}
+)
 
-export const updateClientSellerAction = async (id: string, isSeller: boolean) => {
-  try {
-    await updateClientSellerService(id, isSeller)
-    toast.success('Cliente atualizado com sucesso!')
-    return true
-  } catch (error: any) {
-    toast.error(error?.response?.data?.message)
-    return false
+export const updateClientSellerAction = createAsyncThunk(
+  'client/updateSeller',
+  async (data: ISeller) => {
+    try {
+      await updateClientSellerService(data.id, data.isSeller)
+      toast.success('Cliente atualizado com sucesso!')
+      return true
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message)
+      return false
+    }
   }
-}
+)
 
-export const removeClientAction = async (id: string) => {
+export const removeClientAction = createAsyncThunk(
+  'client/remove',
+  async (id: string) => {
     try {
       await removeClientService(id)
       toast.success('Cliente excluido com sucesso!')
     } catch (error: any) {
       toast.error(error?.response?.data?.message)
     }
-}
+  }
+)

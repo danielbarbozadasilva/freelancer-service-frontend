@@ -1,56 +1,46 @@
 import React from 'react';
 import { BoxTable } from '../../datalist/styled';
 import Loading from '../../../../components/loading/page/index';
-import { DataGrid, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
 import { IconButton, Tooltip } from '@mui/material';
 import { DataListProps } from './form/types';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs'
 import { useAppDispatch } from '../../../../hooks';
-import { ActionModalProps } from './types';
 import { updateClientSellerAction } from '../../../../store/client/client.action';
-import { updateClient } from '../../../../store/client/client.reducer';
-import { navigate } from '@reach/router'
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   const dispatch = useAppDispatch()
 
   const toggleActive = (id: string, status: boolean) => {
-    updateClientSellerAction(id, !status).then(()=>{
-      dispatch(updateClient())
-      navigate(0)
-    })
+      dispatch(updateClientSellerAction({ id, isSeller: !status }))
   }
 
-  const actionModal: React.FC<ActionModalProps> = ({ id, row }) => {
+  const actionModal = (params: GridRenderCellParams) => {
     return (
       <>
-        <Tooltip title={row?.isSeller ? 'Desativar' : 'Ativar'}>
-          <IconButton onClick={() => toggleActive(id, row?.isSeller)} color="primary">
-            {!row?.isSeller ? <BsToggleOff /> : <BsToggleOn />}
+        <Tooltip title={params.row?.isSeller ? 'Desativar' : 'Ativar'}>
+          <IconButton onClick={() => toggleActive(String(params.id), params.row?.isSeller)} color="primary">
+            {!params.row?.isSeller ? <BsToggleOff /> : <BsToggleOn />}
           </IconButton>
         </Tooltip>
       </>
     );
   };
 
-  const actionEdit = (id: string) => {
+  const actionEdit = (params: GridRenderCellParams) => {
     return (
-      <>
-        <IconButton onClick={() => modal(1, id)} color="primary" size="small">
-          <FiEdit />
-        </IconButton>
-      </>
+      <IconButton onClick={() => modal(1, params.row.id)} color="primary" size="small">
+        <FiEdit />
+      </IconButton>
     );
   };
-
-  const actionRemove = (id: string) => {
+  
+  const actionRemove = (params: GridRenderCellParams) => {
     return (
-      <>
-        <IconButton onClick={() => modal(2, id)} color="primary" size="small">
-          <FiTrash2 />
-        </IconButton>
-      </>
+      <IconButton onClick={() => modal(2, params.row.id)} color="primary" size="small">
+        <FiTrash2 />
+      </IconButton>
     );
   };
 
@@ -106,7 +96,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     {
       field: 'actionEdit',
       headerName: 'Editar',
-      renderCell: actionEdit as any,
+      renderCell: actionEdit,
       flex: 1,
       align: 'center',
       headerAlign: 'center',
@@ -115,7 +105,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     {
       field: 'actionRemove',
       headerName: 'Excluir',
-      renderCell: actionRemove as any,
+      renderCell: actionRemove,
       flex: 1,
       align: 'center',
       headerAlign: 'center',
@@ -123,8 +113,8 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     },
     {
       field: 'actions',
-      headerName: 'Ações',
-      renderCell: actionModal as any,
+      headerName: 'Freelancer',
+      renderCell: actionModal,
       width: 140,
       disableColumnMenu: true
     }
