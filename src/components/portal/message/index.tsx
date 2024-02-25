@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../hooks'
 import { IMessage, IUser, PageType } from './types'
-import './styled.scss'
+import './styled.css'
 import Loading from '../../loading/page'
 import BasicButton from '../button/basic'
 

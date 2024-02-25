@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './style.scss'
+import './style.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { listByIdProductsAction } from '../../../store/product/product.action'

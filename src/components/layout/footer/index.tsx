@@ -1,5 +1,5 @@
 import React from 'react'
-import './styled.scss'
+import './styled.css'
 import twitter from '../../../assets/img/twitter.png'
 import facebook from '../../../assets/img/facebook.png'
 import linkedin from '../../../assets/img/linkedin.png'

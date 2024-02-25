@@ -113,7 +113,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     },
     {
       field: 'actions',
-      headerName: 'Ações',
+      headerName: 'Freelancer',
       renderCell: actionModal,
       width: 140,
       disableColumnMenu: true

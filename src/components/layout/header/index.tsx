@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-import './styled.scss'
+import './styled.css'
 import { removeToken } from '../../../config/auth'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { listAllCategoryAction } from '../../../store/category/category.action'
@@ -75,11 +75,11 @@ const Header: React.FC = () => {
               </div>
             ) : (
               <>
-                <Nav.Link as={Link} to="/signin" className="link">
+                <Nav.Link as={Link} to="/signin" className="link loginLink">
                   Login
                 </Nav.Link>
                 <Nav.Link as={Link} to="/SignUp" className="link">
-                  <button>Cadastrar</button>
+                  <button className='signupButton'>Cadastrar</button>
                 </Nav.Link>
               </>
             )}
