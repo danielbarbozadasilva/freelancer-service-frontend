@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IProduct, IProductById } from './types'
-import { createProductAction, listAllProductsAction, listByIdProductsAction, removeProductAction, updateProductAction } from './product.action'
+import {
+  createProductAction,
+  listAllProductsAction,
+  listByIdProductsAction,
+  removeProductAction,
+  updateProductAction
+} from './product.action'
 
 export const slice = createSlice({
   name: 'product',
@@ -10,14 +16,15 @@ export const slice = createSlice({
     productid: {} as IProductById,
     sort: '',
     error: '',
+    features: [] as string[]
   },
   reducers: {
     listSort(state, { payload }) {
-        return {
-          ...state,
-          sort: payload,
-        }
-    },
+      return {
+        ...state,
+        sort: payload
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -80,5 +87,5 @@ export const slice = createSlice({
   }
 })
 
-export const { listSort } = slice.actions
+export const { listSort, addFeature, removeFeature } = slice.actions
 export default slice.reducer

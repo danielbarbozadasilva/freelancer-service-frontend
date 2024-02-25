@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import {
   ICategory,
   IFormSend,
-  IProduct,
+  IProductById,
   IProps,
   IUser,
   dataServices
@@ -31,8 +31,8 @@ import {
 
 const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
   const [preview, setPreview] = useState(data.images)
-  const [form, setForm] = useState({ ...data } as IProduct)
-  const [formValidate, setFormValidate] = useState({} as IProduct)
+  const [form, setForm] = useState({ ...data } as IProductById)
+  const [formValidate, setFormValidate] = useState({} as IProductById)
 
   const user: IUser = useAppSelector((state) => state.auth.user)
   const categories: ICategory[] = useAppSelector((state) => state.category.all)
@@ -50,7 +50,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
         features: updatedFeatures
       })
     } else {
-      const message = fieldValidate(name, value, form)
+      const message = fieldValidate(name, value)
       setFormValidate({ ...formValidate, [name]: message })
       setForm({
         ...form,
@@ -69,7 +69,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
     const newForm: IFormSend = {
       userId: user.id,
       title: form.title,
-      category: form.category.id || form.category,
+      category: form.category._id,
       description: form.description,
       deliveryTime: form.deliveryTime,
       features: form.features,
@@ -155,7 +155,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <SFormControl error={Number(form.category.id) === 0}>
+          <SFormControl error={form.category._id === '0'}>
               <InputLabel>Categoria</InputLabel>
               <Select
                 name="category"
@@ -164,7 +164,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                   name: 'category',
                   id: 'outlined-native-simple'
                 }}
-                value={form.category.id || '0'}
+                value={form.category._id || '0'}
                 onChange={handleChange}
                 disabled={loading}
               >
@@ -185,6 +185,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
               fullWidth
               multiline
               size="small"
+              maxRows="3"
               error={!!formValidate.description}
               margin="normal"
               name="description"
@@ -202,7 +203,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
               fullWidth
               error={!!formValidate.deliveryTime}
               id="standard-error-helper-text"
-              label="Tempo para entrega"
+              label="Tempo para entrega (dias)"
               name="deliveryTime"
               value={form.deliveryTime || ''}
               onChange={handleChange}

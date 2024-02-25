@@ -48,7 +48,7 @@ const MyProductsTable: React.FC<IProps> = ({ result, modal }) => {
               {result.map((row, i) => (
                 <tr key={i}>
                   <Std>{row.data.title}</Std>
-                  <Std>{row.data.description}</Std>
+                  <Std>{row.data.description.substring(0, 100)}...</Std>
                   <Std>{formatCurrency(row.data.price)}</Std>
                   <td>
                     <IconButton onClick={() => actionEdit(row?.data?.id)}>

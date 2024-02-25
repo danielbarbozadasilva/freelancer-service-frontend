@@ -43,14 +43,14 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: any) => {
     const { value, name } = event.target
     if (!isNaN(index)) {
-      const updatedFeatures = Array.isArray(form.features) ? [...form.features] : [];
-      updatedFeatures[index] = value;
+      const updatedFeatures = Array.isArray(form.features) ? [...form.features] : []
+      updatedFeatures[index] = value
       setForm({
         ...form,
         features: updatedFeatures
       })
     } else {
-      const message = fieldValidate(name, value, form)
+      const message = fieldValidate(name, value)
       setFormValidate({ ...formValidate, [name]: message })
       setForm({
         ...form,
@@ -106,11 +106,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
                   return (
                     <SPreview>
                       <Image src={formatObjectURL(item)} />
-                      <Button
-                        onClick={() => removeImage(item)}
-                      >
-                        Remover
-                      </Button>
+                      <Button onClick={() => removeImage(item)}>Remover</Button>
                     </SPreview>
                   )
                 })}
@@ -125,6 +121,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
               variant="contained"
               color="primary"
               size="small"
+              component="label"
             >
               Upload Foto
               <input
@@ -154,7 +151,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <SFormControl error={form.category === 0}>
+            <SFormControl error={form.category === '0'}>
               <InputLabel>Categoria</InputLabel>
               <Select
                 name="category"
@@ -184,6 +181,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
               fullWidth
               multiline
               size="small"
+              maxRows="3"
               error={!!formValidate.description}
               margin="normal"
               name="description"
@@ -201,7 +199,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
               fullWidth
               error={!!formValidate.deliveryTime}
               id="standard-error-helper-text"
-              label="Tempo para entrega"
+              label="Tempo para entrega (dias)"
               name="deliveryTime"
               value={form.deliveryTime || ''}
               onChange={handleChange}

@@ -39,7 +39,6 @@ export interface IUser {
   id: string
   name: string
   username: string
-  id?: string
   email: string
   cpf: string
   Date: string
@@ -55,7 +54,7 @@ export interface ICategory {
   id: string
   name: string
   description: string
-  picture: string[]
+  picture: string
 }
 
 export interface IProductById {

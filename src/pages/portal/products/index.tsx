@@ -39,7 +39,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
   
   const pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
 
-  const ProductList = (product: Product[]) => {
+  const ProductList = (product: Product[]) => {    
     return product.map((item: Product, i: number) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>

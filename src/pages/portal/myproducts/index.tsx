@@ -11,7 +11,6 @@ import DialogModal from '../../../components/dialog/index'
 import FormCreateProduct from '../../../components/modal/product/create'
 import FormUpdateProduct from '../../../components/modal/product/update'
 import FormUpdateRemove from '../../../components/modal/product/remove'
-import { navigate } from '@reach/router'
 
 const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
   const [modal, setModal] = useState<IModal>({ status: false, id: null, type: 1 })
@@ -48,22 +47,26 @@ const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
   const submitForm = (form: IProductSend) => {
     switch (modal.type) {
       case 1:
-        dispatch(createProductAction(form))
-        setModal({ status: false })
+        dispatch(createProductAction(form)).then(()=>{
+          dispatch(listAllProductsAction(filters))
+          setModal({ status: false })
+        })
         return
 
       case 2:
-        dispatch(updateProductAction({ id: modal.id, data: form }))
-        setModal({ status: false })
-        navigate(0)
+        dispatch(updateProductAction({ id: modal.id, data: form })).then(()=>{
+          dispatch(listAllProductsAction(filters))
+          setModal({ status: false })
+        })
         return
 
       case 3:
         if (modal?.id) {
-          dispatch(removeProductAction(modal.id))
+          dispatch(removeProductAction(modal.id)).then(()=>{
+            dispatch(listAllProductsAction(filters))
+            setModal({ status: false })
+          })
         }
-        setModal({ status: false })
-        navigate(0)
         return
 
       default:

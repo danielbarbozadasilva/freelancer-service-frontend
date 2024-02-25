@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import './styled.scss'
 import { removeToken } from '../../../config/auth'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { listAllCategoryAction } from '../../../store/category/category.action'
 import { ICategory, IUser } from './types'
-import { navigate } from '@reach/router'
 import noAvatar from '../../../assets/img/noavatar.jpg'
 
-const Header: React.FC = () => { 
+const Header: React.FC = () => {
   const user: IUser = useAppSelector((state) => state.auth.user)
   const category: ICategory[] = useAppSelector((state) => state.category.all)
   const [active, setActive] = useState(false)
@@ -24,81 +24,90 @@ const Header: React.FC = () => {
   }
 
   useEffect(() => {
-    window.addEventListener("scroll", isActive);
+    window.addEventListener('scroll', isActive)
     return () => {
-      window.removeEventListener("scroll", isActive);
-    };
+      window.removeEventListener('scroll', isActive)
+    }
   }, [])
 
-  const handleLogout = () => {
-    removeToken()
-    navigate("/signin")
-    navigate(0)
-  }
-
   return (
-    <div className={active? 'navbar active' : 'navbar'}>
-      <div className="container">
-        <div className="logo">
-          <Link className="link" to="/">
-            <span className="text">Freelancer</span>
-          </Link>
-          <span className="dot">.</span>
-        </div>
-        <div className="links">
-          {user ? (
-            <div className="user" onClick={() => setOpen(!open)}>
-              <img src={user.picture || noAvatar} alt="" />
-              <span>{user?.username}</span>
-              {open && (
-                <div className="options">
+    <Navbar className={active ? 'navbar active' : 'navbar'} expand="lg">
+      <div className="container d-flex justify-content-between align-items-center">
+        <Navbar.Brand>
+          <div className="logo">
+            <Link className="link" to="/">
+              <span className="text">Freelancer</span>
+            </Link>
+          </div>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            {user ? (
+              <div className='avatarUser'>
+                <img className="avatar" src={user.picture || noAvatar} alt="" />
+                <NavDropdown
+                  title={user?.username}
+                  id="basic-nav-dropdown"
+                  show={open}
+                  onClick={() => setOpen(!open)}
+                >
                   {user.isSeller && (
-                    <>
-                      <Link className="link" to="/myproducts">
-                        Serviços
-                      </Link>
-                    </>
+                    <NavDropdown.Item as={Link} to="/myproducts" reloadDocument>
+                      Serviços
+                    </NavDropdown.Item>
                   )}
-                  <Link className="link" to="/orders">
+                  <NavDropdown.Item as={Link} to="/orders" reloadDocument>
                     Pedidos
-                  </Link>
-                  <Link className="link" to="/messages">
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/messages" reloadDocument>
                     Mensagens
-                  </Link>
-                  <Link className="link" to="/signin" onClick={handleLogout}>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    as={Link}
+                    to="/signin"
+                    onClick={removeToken}
+                    reloadDocument
+                  >
                     Logout
-                  </Link>
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              <Link to="/signin" className="link">
-                Login
-              </Link>
-              <Link className="link" to="/SignUp">
-                <button>Cadastrar</button>
-              </Link>
-            </>
-          )}
-        </div>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </div>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/signin" className="link">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/SignUp" className="link">
+                  <button>Cadastrar</button>
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
       </div>
       {active && (
         <>
           <hr />
-          <div className="menu">
-            {category?.length && category?.length <= 7 ? category?.map((item: ICategory)=>(
-              <>
-                <Link className="link menuLink" to={`/category/${item.id}`} reloadDocument>
+          <Nav className="ml-auto categories">
+            {category?.length &&
+              category?.length <= 7 &&
+              category?.map((item: ICategory, index: number) => (
+                <Nav.Link
+                  as={Link}
+                  to={`/category/${item.id}`}
+                  key={item.id}
+                  reloadDocument
+                  className="m-4"
+                >
                   {item.name}
-                </Link>
-              </>
-            )): <></>}
-          </div>
+                </Nav.Link>
+              ))}
+          </Nav>
           <hr />
         </>
       )}
-    </div>
+    </Navbar>
   )
 }
 

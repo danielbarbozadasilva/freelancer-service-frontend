@@ -7,7 +7,7 @@ export const SCard = styled.div`
   position: relative;
   background-color: #fff;
   box-shadow: -1px 1px 0 #dcdcdc;
-  height: 430px;
+  height: 460px;
   width: 310px;
   margin: 50px auto;
   :hover {
@@ -20,7 +20,7 @@ export const SCard = styled.div`
 export const SCardTitle = styled.div`
   font-size: 18px;
   width: 280px;
-  height: 40px;
+  height: 55px;
   overflow: hidden;
   text-overflow: ellipsis;
 `
@@ -29,6 +29,8 @@ export const SCardDescription = styled.div`
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 65px;
+
 `
 
 export const SCardFeatures = styled.div`
@@ -70,8 +72,6 @@ export const SButton = styled.button`
 export const SCardPrice = styled.h6`
   padding-top: 7%;
 `
-
-export const SCardPromotion = styled.h5``
 
 export const SCardInstallments = styled.h6`
   padding-top: 2%;

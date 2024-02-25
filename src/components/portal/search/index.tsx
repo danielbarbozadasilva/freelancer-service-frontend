@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './styled.scss';
-import imgMan from '../../../assets/img/man.png';
-import imgSearch from '../../../assets/img/search.png';
-import { navigate } from '@reach/router';
+import React, { useState } from 'react'
+import imgMan from '../../../assets/img/man.png'
+import imgSearch from '../../../assets/img/search.png'
+import { navigate } from '@reach/router'
+import { StyledSearch } from './styled'
 
 const Search: React.FC = () => {
   const [search, setSearch] = useState<string>('');
@@ -17,12 +17,11 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div className="featured">
+    <StyledSearch>
       <div className="container">
         <div className="left">
           <h1>
-            Encontre os serviços <span>freelance</span> perfeitos para o seu
-            negócio
+            Encontre os serviços <span>freelance</span> perfeitos para o seu negócio
           </h1>
           <div className="search">
             <div className="searchInput">
@@ -43,14 +42,14 @@ const Search: React.FC = () => {
             <button>Web Design</button>
             <button>WordPress</button>
             <button>Logo Design</button>
-            <button>AI Services</button>
+            <button>Edição de vídeo</button>
           </div>
         </div>
         <div className="right">
           <img src={imgMan} alt="" />
         </div>
       </div>
-    </div>
+    </StyledSearch>
   );
 };
 
