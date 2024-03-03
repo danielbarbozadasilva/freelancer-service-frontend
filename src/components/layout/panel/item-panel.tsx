@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import { Menu } from '../../../routers';
 import { useAppSelector } from '../../../hooks';
+import { SListItemIcon, SListItemText } from './styled'
 
 
 const ListMenu: React.FC = () => {
@@ -28,8 +27,8 @@ const ListMenu: React.FC = () => {
           selected={selectedIndex === i}
           onClick={(event) => handleListItemClick(event, i)}
         >
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText primary={title} />
+          <SListItemIcon>{icon}</SListItemIcon>
+          <SListItemText primary={title} />
         </ListItem>
       ))}
     </div>
