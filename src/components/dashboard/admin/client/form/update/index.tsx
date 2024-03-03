@@ -1,10 +1,10 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { TextField, Grid, LinearProgress, Select, Container, Button } from '@material-ui/core'
-import { Submit, SignBox, FormStyle, SInputLabel, SButton } from './styled'
+import { Submit, SignBox, FormStyle, SInputLabel, SButton, SButtonUpload } from './styled'
 import moment from 'moment'
 import InputMask from 'react-input-mask'
 import { fieldValidate, isNotValid } from '../../../../../../util/validations/form-client'
-import { Image, SPreview } from '../styled';
+import { SImage, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormClientUpdateProps, IUser } from './types';
 import ufCountryFile from '../../../../../../util/country.json'
@@ -68,9 +68,9 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
           <Grid container direction="row">
             <SPreview>
               {preview?.length === 1 ? (
-                <Image src={URL.createObjectURL(preview[0])} />
+                <SImage src={URL.createObjectURL(preview[0])} />
               ) : (
-                <Image src={preview || data.picture} />
+                <SImage src={preview || data.picture} />
               )}
 
               <Button onClick={removeImage} component="label">
@@ -83,7 +83,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
         )}
 
         <Grid container direction="column">
-          <SButton
+          <SButtonUpload
             variant="contained"
             color="primary"
             size="small"
@@ -98,7 +98,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               onChange={previewImg}
               disabled={loading}
             />
-          </SButton>
+          </SButtonUpload>
         </Grid>
         <FormStyle>
           <div>

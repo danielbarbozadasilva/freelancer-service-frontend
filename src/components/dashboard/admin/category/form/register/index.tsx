@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
-import { SBox, Image, SButton, SPreview } from '../styled';
+import { SBox, SImage, SButton, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormCategoryRegisterProps } from './types';
 
@@ -47,7 +47,7 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
         {preview.length ? (
           <Grid container direction="row">
             <SPreview>
-              <Image src={URL.createObjectURL(preview[0])} />
+              <SImage src={URL.createObjectURL(preview[0])} />
               <Button onClick={removeImage} component="label">
                 Remover
               </Button>

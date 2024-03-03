@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { TextField, Button, Grid } from '@material-ui/core';
-import { SBox, Image, SButton, SPreview } from '../styled';
+import { SBox, SImage, SButton, SButtonUpload, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormCategoryUpdateProps } from './types';
 
@@ -46,9 +46,9 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
           <Grid container direction="row">
             <SPreview>
               {preview?.length === 1 ? (
-                <Image src={URL.createObjectURL(preview[0])} />
+                <SImage src={URL.createObjectURL(preview[0])} />
               ) : (
-                <Image src={preview || data.picture} />
+                <SImage src={preview || data.picture} />
               )}
 
               <Button onClick={removeImage} component="label">
@@ -61,7 +61,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
         )}
 
         <Grid container direction="column">
-          <SButton
+          <SButtonUpload
             variant="contained"
             color="primary"
             size="small"
@@ -76,7 +76,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
               onChange={previewImg}
               disabled={loading}
             />
-          </SButton>
+          </SButtonUpload>
         </Grid>
 
         <TextField

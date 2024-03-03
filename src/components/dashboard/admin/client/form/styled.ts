@@ -13,10 +13,10 @@ export const SBox = styled.div`
   width: 550px;
   padding: 20px 100px;
 `
-export const Image = styled.img`
-  width: 120px;
-  height: 70px;
-  border-radius: 5%;
+export const SImage = styled.img`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   object-fit: cover;
 `
 export const SButton = styled(Button)`
@@ -33,5 +33,5 @@ export const SButton = styled(Button)`
 export const SPreview = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 130px;
+  padding: 0px 120px;
 `
