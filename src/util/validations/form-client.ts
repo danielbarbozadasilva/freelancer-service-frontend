@@ -36,10 +36,7 @@ export function fieldValidate(name: string, value: string): string {
   switch (name) {
     case 'name':
     case 'username':
-      regex = /\d/g;
-      if (regex.test(value)) {
-        message += 'Não pode conter números!';
-      } else if (value.trim() === '') {
+      if (value.trim() === '') {
         message += 'Não pode ser vazio!';
       } else if (value.length <= 4) {
         message += 'Acima de 4 caracteres!';

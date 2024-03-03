@@ -10,3 +10,8 @@ export const SLink = styled(Link)`
         text-decoration: underline;
     }
 `
+
+export const SContainerRating = styled.div`
+    margin-left: 38px;
+    margin-top: -20px;
+`

@@ -87,5 +87,5 @@ export const slice = createSlice({
   }
 })
 
-export const { listSort, addFeature, removeFeature } = slice.actions
+export const { listSort } = slice.actions
 export default slice.reducer

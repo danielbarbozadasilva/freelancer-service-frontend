@@ -109,7 +109,7 @@ export interface IProduct {
   userId: string
 }
 
-export interface IProductCreate{
+export interface IProductCreate {
   title: string
   description: string
   category: string
@@ -120,13 +120,12 @@ export interface IProductCreate{
 }
 
 export interface ICategory {
-  id: string
   name: string
   description: string
   picture: string
 }
 
-export interface IClient {
+export interface IUserSendDataInterface {
   name: string
   username: string
   email: string
@@ -136,6 +135,7 @@ export interface IClient {
   country: string
   phone: string
   description: string
+  permissions: string[]
   isSeller: boolean
 }
 

@@ -4,12 +4,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DataList from '../../../../../dashboard/datagrid/index';
+import DataListComponent from '../../../../../dashboard/datalist/index';
 import { ListProductProps } from './types';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColumns } from '@mui/x-data-grid';
 
 const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
-  const columnProduct: GridColDef[] = [
+  const columns: GridColumns = [
     {
       field: 'title',
       headerName: 'Nome',
@@ -48,7 +48,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
     >
       <DialogTitle id="alert-dialog-title">Serviço</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
-        <DataList data={products} columns={columnProduct} loading={false} />
+        <DataListComponent data={products} columns={columns} loading={false} />
       </DialogContent>
       <DialogActions>
         <Button onClick={close} color="primary" autoFocus>

@@ -21,7 +21,7 @@ import {
 import { listAllCategoryAction } from '../../../../store/category/category.action'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import {
-  ICategory,
+  ICategoryAll,
   IFormSend,
   IProductById,
   IProps,
@@ -35,7 +35,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
   const [formValidate, setFormValidate] = useState({} as IProductById)
 
   const user: IUser = useAppSelector((state) => state.auth.user)
-  const categories: ICategory[] = useAppSelector((state) => state.category.all)
+  const categories: ICategoryAll[] = useAppSelector((state) => state.category.all)
   const loading: boolean = useAppSelector((state) => state.product.loading)
 
   const dispatch = useAppDispatch()
@@ -69,7 +69,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
     const newForm: IFormSend = {
       userId: user.id,
       title: form.title,
-      category: form.category._id,
+      category: form?.categorySelected || form.category._id,
       description: form.description,
       deliveryTime: form.deliveryTime,
       features: form.features,
@@ -77,6 +77,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
+    
     submit(formData)
   }
 
@@ -97,7 +98,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
 
   return (
     <SBox>
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete='off'>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {preview?.length > 0 ? (
@@ -122,16 +123,16 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
           <Grid item xs={12}>
             <SButton
               fullWidth
-              variant="contained"
-              color="primary"
-              size="small"
-              component="label"
+              variant='contained'
+              color='primary'
+              size='small'
+              component='label'
             >
               Upload Foto
               <input
-                accept="image/*"
-                type="file"
-                name="image"
+                accept='image/*'
+                type='file'
+                name='image'
                 hidden
                 onChange={previewImg}
                 disabled={loading}
@@ -142,12 +143,12 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             <TextField
               autoFocus
               fullWidth
-              size="small"
+              size='small'
               error={!!formValidate.title}
-              margin="normal"
-              id="standard-error-helper-text"
-              label="Nome"
-              name="title"
+              margin='normal'
+              id='standard-error-helper-text'
+              label='Nome'
+              name='title'
               value={form.title || ''}
               onChange={handleChange}
               helperText={formValidate.title || ''}
@@ -155,20 +156,20 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             />
           </Grid>
           <Grid item xs={12}>
-          <SFormControl error={form.category._id === '0'}>
+          <SFormControl error={form?.categorySelected ==='0'}>
               <InputLabel>Categoria</InputLabel>
               <Select
-                name="category"
-                label="Categoria"
+                name='categorySelected'
+                label='Categoria'
                 inputProps={{
-                  name: 'category',
+                  name: 'categorySelected',
                   id: 'outlined-native-simple'
                 }}
-                value={form.category._id || '0'}
+                value={form?.categorySelected || form.category._id }
                 onChange={handleChange}
                 disabled={loading}
               >
-                <MenuItem value="0">selecione</MenuItem>
+                <MenuItem value='0'>selecione</MenuItem>
                 {categories?.map(({ id, name }, i) => (
                   <MenuItem key={i} value={id}>
                     {name}
@@ -176,7 +177,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                 ))}
               </Select>
               <FormHelperText error>
-                <>{formValidate.category || ''}</>
+                <>{formValidate.categorySelected || ''}</>
               </FormHelperText>
             </SFormControl>
           </Grid>
@@ -184,14 +185,14 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             <TextField
               fullWidth
               multiline
-              size="small"
-              maxRows="3"
+              size='small'
+              maxRows='3'
               error={!!formValidate.description}
-              margin="normal"
-              name="description"
-              label="Descrição"
-              type="text"
-              id="standard-error-helper-text"
+              margin='normal'
+              name='description'
+              label='Descrição'
+              type='text'
+              id='standard-error-helper-text'
               value={form.description || ''}
               onChange={handleChange}
               helperText={formValidate.description || ''}
@@ -202,21 +203,21 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
             <TextField
               fullWidth
               error={!!formValidate.deliveryTime}
-              id="standard-error-helper-text"
-              label="Tempo para entrega (dias)"
-              name="deliveryTime"
+              id='standard-error-helper-text'
+              label='Tempo para entrega (dias)'
+              name='deliveryTime'
               value={form.deliveryTime || ''}
               onChange={handleChange}
               helperText={formValidate.deliveryTime || ''}
               disabled={loading}
-              type="text"
+              type='text'
             />
           </Grid>
           {dataServices.map((data, index) => (
             <Grid item xs={12} key={index}>
               <TextField
                 fullWidth
-                type="text"
+                type='text'
                 label={`Ferramenta ${index + 1}`}
                 name={`feature${index}`}
                 placeholder={data}
@@ -232,13 +233,13 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              size="small"
+              size='small'
               error={!!formValidate.price}
-              margin="normal"
-              name="price"
-              label="Preço"
-              type="text"
-              id="standard-error-helper-text"
+              margin='normal'
+              name='price'
+              label='Preço'
+              type='text'
+              id='standard-error-helper-text'
               inputProps={{ maxLength: 9 }}
               value={form.price || ''}
               onChange={handleChange}
@@ -250,7 +251,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
           <Grid item xs={12}>
             <SButton
               fullWidth
-              type="submit"
+              type='submit'
               disabled={isNotValid(form, formValidate)}
               onClick={submitForm}
             >

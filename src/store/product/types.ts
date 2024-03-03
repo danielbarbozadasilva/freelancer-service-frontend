@@ -103,7 +103,7 @@ interface IUser {
 }
 
 export interface ICategory {
-  id: string
+  _id: string
   name: string
   description: string
   picture: string

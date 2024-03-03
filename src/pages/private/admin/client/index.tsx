@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
 import {
   listAllClientAction,
   listClientByIdAction,
@@ -7,7 +6,7 @@ import {
   updateClientAction
 } from '../../../../store/client/client.action'
 import Title from '../../../../components/dashboard/title/index'
-import DataList from '../../../../components/dashboard/admin/client/index'
+import DataListComponent from '../../../../components/dashboard/admin/client/index'
 import DialogModal from '../../../../components/dialog/index'
 import FormClientUpdate from '../../../../components/dashboard/admin/client/form/update/index'
 import Remove from '../../../../components/dashboard/admin/client/form/remove/index'
@@ -19,7 +18,9 @@ const Client: React.FC<ClientProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
   const client: UserInterface[] = useAppSelector((state) => state.client.all)
-  const clientById: UserInterface = useAppSelector((state) => state.client.clientid)
+  const clientById: UserInterface = useAppSelector(
+    (state) => state.client.clientid
+  )
   const loading: boolean = useAppSelector((state) => state.client.loading)
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const Client: React.FC<ClientProps> = (props) => {
 
   const toggleModal = (type = 1, id: string): void => {
     if (id) {
-      dispatch(listClientByIdAction(id)).then(()=>
+      dispatch(listClientByIdAction(id)).then(() =>
         setModal({ type, id, status: true })
       )
     } else {
@@ -40,14 +41,18 @@ const Client: React.FC<ClientProps> = (props) => {
 
   const deleteClient = (): void => {
     if (modal?.id) {
-      dispatch(removeClientAction(modal?.id))
-      setModal({ status: false })
+      dispatch(removeClientAction(modal?.id)).then(() => {
+        setModal({ status: false })
+        dispatch(listAllClientAction())
+      })
     }
   }
 
   const updateClient = (form: FormData): void => {
-    dispatch(updateClientAction({ id: modal?.id, form }))
-    setModal({ status: false })
+    dispatch(updateClientAction({ id: modal?.id, data: form })).then(() => {
+      setModal({ status: false })
+      dispatch(listAllClientAction())
+    })
   }
 
   const actions = () => null
@@ -56,15 +61,15 @@ const Client: React.FC<ClientProps> = (props) => {
     <>
       <Helmet title={props.title} />
       <Title title="Cliente" actions={actions} />
-      <Grid container spacing={2}>
-        <Grid item md={12} xl={12}>
-          {!client?.length ? (
-            <h6>Não há clientes disponiveis</h6>
-          ) : (
-            <DataList data={client} loading={loading} modal={toggleModal} />
-          )}
-        </Grid>
-      </Grid>
+      {!client?.length ? (
+        <h6>Não há clientes disponiveis</h6>
+      ) : (
+        <DataListComponent
+          data={client}
+          loading={loading}
+          modal={toggleModal}
+        />
+      )}
       <DialogModal
         title="Cliente"
         open={modal.status || false}

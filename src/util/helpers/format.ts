@@ -90,3 +90,8 @@ export function formatCurrency(value: number): string {
   return formattedValue
 }
 
+export function convertDateToTimestamp(dateString: string): string {
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return String(date.getTime());
+}

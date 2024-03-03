@@ -7,7 +7,7 @@ import {
   removeCategoryService
 } from '../../services/category.service'
 import { toast } from 'react-toastify'
-import { ICategory } from './types'
+import { ICategorySendData } from './types'
 
 export const listAllCategoryAction = createAsyncThunk(
   'category/listAll',
@@ -50,14 +50,14 @@ export const createCategoryAction = createAsyncThunk(
 
 export const updateCategoryAction = createAsyncThunk(
   'category/update',
-  async (data: ICategory) => {
+  async (result: ICategorySendData) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      await updateCategoryService(data.id, data, config)
+      await updateCategoryService(result.id, result.data, config)
       toast.success('Categoria atualizada com sucesso!')
       return true
     } catch (error: any) {

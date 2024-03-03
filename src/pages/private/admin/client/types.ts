@@ -20,11 +20,5 @@ export interface UserInterface {
   phone: string
   description: string
   permissions: string[]
-  hash: string
-  salt: string
-  recovery: {
-    token: string
-    date: Date
-  }
   isSeller: boolean
 }

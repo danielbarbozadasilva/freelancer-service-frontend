@@ -4,12 +4,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DataList from '../../../../../dashboard/datagrid/index';
+import DataListComponent from '../../../../../dashboard/datalist/index';
 import { ListBuyerProps } from './types';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColumns } from '@mui/x-data-grid';
 
 const ListBuyer: React.FC<ListBuyerProps> = ({ open, close, buyer }) => {
-  const columnBuyer: GridColDef[] = [
+  const columns: GridColumns = [
     {
       field: 'name',
       headerName: 'Nome',
@@ -45,7 +45,7 @@ const ListBuyer: React.FC<ListBuyerProps> = ({ open, close, buyer }) => {
     >
       <DialogTitle id="alert-dialog-title">Freelancer</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
-        <DataList data={buyer} columns={columnBuyer} loading={false} />
+        <DataListComponent data={buyer} columns={columns} loading={false} />
       </DialogContent>
       <DialogActions>
         <Button onClick={close} color="primary" autoFocus>

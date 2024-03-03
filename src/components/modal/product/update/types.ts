@@ -18,7 +18,7 @@ export interface IUser {
   isSeller: boolean
 }
 
-export interface ICategory {
+export interface ICategoryAll {
   id: string
   name: string
   description: string
@@ -37,11 +37,11 @@ export interface IProductById {
   features: string[]
   sales: number
   userId?: IUser
+  categorySelected?: string
 }
 
 export interface ICategory {
-  _id?: string
-  id: string
+  _id: string
   name: string
   description: string
   picture: string

@@ -4,12 +4,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DataList from '../../../../../dashboard/datagrid/index';
+import DataListComponent from '../../../../../dashboard/datalist/index';
 import { ListUserProps } from './types';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColumns } from '@mui/x-data-grid';
 
 const ListUser: React.FC<ListUserProps> = ({ open, close, user }) => {
-  const columnUser: GridColDef[] = [
+  const columns: GridColumns = [
     {
       field: 'name',
       headerName: 'Nome',
@@ -45,7 +45,7 @@ const ListUser: React.FC<ListUserProps> = ({ open, close, user }) => {
     >
       <DialogTitle id="alert-dialog-title">Freelancer</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
-        <DataList data={user} columns={columnUser} loading={false} />
+        <DataListComponent data={user} columns={columns} loading={false} />
       </DialogContent>
       <DialogActions>
         <Button onClick={close} color="primary" autoFocus>

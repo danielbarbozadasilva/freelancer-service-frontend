@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import { BoxTable } from '../../datalist/styled'
 import Loading from '../../../../components/loading/page/index'
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
 import { IconButton, Tooltip } from '@mui/material'
 import { More as MoreIcon } from '@mui/icons-material'
-import { IProductModal, IUserModal, IBuyerModal, DataListProps, IProduct, IBuyer, IUser } from './types'
+import {
+  IProductModal,
+  IUserModal,
+  IBuyerModal,
+  DataListProps,
+  IProduct,
+  IBuyer,
+  IUser
+} from './types'
 import ListProduct from './form/product'
 import ListUser from './form/user'
 import ListBuyer from './form/buyer'
+import DataListComponent from '../../datalist'
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
-  const [modalProduct, setModalProduct] = useState<IProductModal>();
-  const [modalUser, setModalUser] = useState<IUserModal>();
-  const [modalBuyer, setModalBuyer] = useState<IBuyerModal>();
+  const [modalProduct, setModalProduct] = useState<IProductModal>()
+  const [modalUser, setModalUser] = useState<IUserModal>()
+  const [modalBuyer, setModalBuyer] = useState<IBuyerModal>()
 
   function openProduct(row: IProduct[]) {
     setModalProduct({ open: true, data: row })
@@ -86,7 +95,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
     )
   }
 
-  const columns: GridColDef[] = [
+  const columns: GridColumns = [
     {
       field: 'title',
       headerName: 'Título',
@@ -146,19 +155,13 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
 
   return (
     <>
-      <BoxTable>
-        <DataGrid
-          rows={data}
-          autoHeight
-          columns={columns}
-          loading={loading}
-          pageSize={10}
-        />
-      </BoxTable>
+      <DataListComponent data={data} columns={columns} loading={loading} />
       <ListProduct
         open={modalProduct?.open || false}
         products={modalProduct?.data as IProduct[]}
-        close={() => setModalProduct({ ...modalProduct, open: false } as IProductModal)}
+        close={() =>
+          setModalProduct({ ...modalProduct, open: false } as IProductModal)
+        }
       />
       <ListUser
         open={modalUser?.open || false}
@@ -168,7 +171,9 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       <ListBuyer
         open={modalBuyer?.open || false}
         buyer={modalBuyer?.data as IBuyer[]}
-        close={() => setModalBuyer({ ...modalBuyer, open: false } as IUserModal)}
+        close={() =>
+          setModalBuyer({ ...modalBuyer, open: false } as IUserModal)
+        }
       />
     </>
   )

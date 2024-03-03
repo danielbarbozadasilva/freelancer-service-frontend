@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
 import Title from '../../../../components/dashboard/title/index'
-import DataList from '../../../../components/dashboard/admin/orders/index'
+import DataListComponent from '../../../../components/dashboard/admin/orders/index'
 import { Helmet } from 'react-helmet'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { OrdersProps, IModal, IOrder } from './types'
@@ -27,15 +26,15 @@ const Orders: React.FC<OrdersProps> = (props) => {
     <>
       <Helmet title={props.title} />
       <Title title="Pedidos" actions={actions} />
-      <Grid container spacing={2}>
-        <Grid item md={12} xl={12}>
-          {!orders?.length ? (
-            <h6>Não há pedidos disponiveis</h6>
-          ) : (
-            <DataList data={orders} loading={loading} modal={toggleModal} />
-          )}
-        </Grid>
-      </Grid>
+      {!orders?.length ? (
+        <h6>Não há pedidos disponiveis</h6>
+      ) : (
+        <DataListComponent
+          data={orders}
+          loading={loading}
+          modal={toggleModal}
+        />
+      )}
     </>
   )
 }

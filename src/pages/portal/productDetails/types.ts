@@ -25,13 +25,6 @@ export interface User {
   isSeller: boolean;
 }
 
-export interface ICategory {
-  id: string
-  name: string
-  description: string
-  picture: string
-}
-
 interface IUser {
   id: string
   name: string
@@ -47,7 +40,14 @@ interface IUser {
   isSeller: boolean
 }
 
-export interface IProduct {
+export interface ICategory {
+  _id: string
+  name: string
+  description: string
+  picture: string
+}
+
+export interface IProductById {
   id: string
   title: string
   description: string

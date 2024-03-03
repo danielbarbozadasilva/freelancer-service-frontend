@@ -29,8 +29,8 @@ export function fieldValidate(name: string, value: string) {
       }
       break
 
-    case 'category':
-      if (value === 'selecione') {
+    case 'categorySelected':
+      if (value === '0') {
         message += 'Selecione uma categoria!'
       }
       break

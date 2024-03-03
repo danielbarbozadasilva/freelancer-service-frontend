@@ -76,3 +76,9 @@ export interface IMessage {
   description: string
   isSeller: boolean
 }
+
+export interface IDataConversation {
+  isSeller: boolean
+  userId: string
+  to: string
+}

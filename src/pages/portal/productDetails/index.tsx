@@ -7,7 +7,7 @@ import {
   createRatingAction,
   findByIdRatingAction
 } from '../../../store/rating/rating.action'
-import { IProduct, IRating, IResultRating, User, PageTitle } from './types'
+import { IProductById, IRating, IResultRating, User, PageTitle } from './types'
 import Reviews from '../../../components/portal/rating/index'
 import { FaCheck, FaRegClock } from 'react-icons/fa'
 import ContainerHero from '../../../components/portal/hero'
@@ -15,9 +15,10 @@ import { isAuthenticated } from '../../../config/auth'
 import ContainerForm from '../../../components/portal/rating/form'
 import Rating from '@mui/material/Rating'
 import Loading from '../../../components/loading/page'
-import { SLink } from './styled'
+import { SLink, SContainerRating } from './styled'
 import { Helmet } from 'react-helmet'
 import { FormDialog } from '../../../components/modal/description'
+import { toast } from 'react-toastify'
 
 const ProductDetails: React.FC<PageTitle> = ({ title }) => {
   const { id } = useParams<string>()
@@ -25,7 +26,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
   const navigate = useNavigate()
 
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const product: IProduct = useAppSelector((state) => state.product.productid)
+  const product: IProductById = useAppSelector((state) => state.product.productid)
   const rating: IResultRating = useAppSelector((state) => state.rating.ratingid)
   const user: User = useAppSelector((state) => state.auth.user)
   const loading: boolean = useAppSelector((state) => state.product.loading)
@@ -49,13 +50,23 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
   }
 
   const handleSubmit = (description: string): void => {
-    const data = { description };
-    navigate(`/pay/${id}/buyerid/${user?.id}`, { state: { data } });
-    navigate(0);
+    const data = { description }
+    navigate(`/pay/${id}/buyerid/${user?.id}`, { state: { data } })
+    navigate(0)
   }
 
   const handleCloseModal = (): void => {
     setOpenModal(false)
+  }
+
+  const handlerConfirm = (): void => {    
+    if (user?.id && !user?.isSeller) {
+      setOpenModal(true)
+    } else if (user?.isSeller){
+      toast.warning('Apenas clientes podem solicitar os serviços!')
+    } else {
+      navigate('/signin')
+    }
   }
 
   return (
@@ -74,20 +85,16 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
           </span>
           <h1>{product?.title}</h1>
           <div className="user">
-            <img className="picture" src={product?.userId?.picture[0]} alt="" />
+            <img className="picture" src={product?.userId?.picture} alt="" />
             <span>{product?.userId?.username}</span>
           </div>
-          {rating?.averageScore ? (
-            <div>
-              <Rating
-                className="stars"
-                readOnly={true}
-                value={rating.averageScore}
-              />
-            </div>
-          ) : (
-            <></>
-          )}
+          <SContainerRating>
+            <Rating
+              className="stars"
+              readOnly={true}
+              value={rating.averageScore}
+            />
+          </SContainerRating>
 
           <ContainerHero data={product} />
 
@@ -96,7 +103,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
           <div className="seller">
             <h2>Informações</h2>
             <div className="user">
-              <img src={product?.userId?.picture[0]} alt="" />
+              <img src={product?.userId?.picture} alt="" />
               <div className="info">
                 <span>{product?.userId?.username}</span>
                 <Rating readOnly={true} value={rating.averageScore} />
@@ -131,7 +138,7 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
             {isAuthenticated() ? (
               <>
                 <h2 className="avaliacoes">Deixe sua avaliação</h2>
-                <ContainerForm id={product.id} submit={submitRating} />
+                <ContainerForm id={product?.id} submit={submitRating} />
               </>
             ) : (
               ''
@@ -161,10 +168,14 @@ const ProductDetails: React.FC<PageTitle> = ({ title }) => {
                 </div>
               ))}
           </div>
-          <button onClick={() => setOpenModal(true)}>Confirmar</button>
+          <button onClick={() => handlerConfirm()}>Confirmar</button>
         </div>
       </div>
-      <FormDialog open={openModal} close={handleCloseModal} submit={handleSubmit} />
+      <FormDialog
+        open={openModal}
+        close={handleCloseModal}
+        submit={handleSubmit}
+      />
     </div>
   )
 }

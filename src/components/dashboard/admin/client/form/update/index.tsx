@@ -8,9 +8,10 @@ import { Image, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormClientUpdateProps, IUser } from './types';
 import ufCountryFile from '../../../../../../util/country.json'
+import { convertDateToTimestamp } from '../../../../../../util/helpers/format'
 
 const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => {
-  const [preview, setPreview] = useState(data.picture);
+  const [preview, setPreview] = useState(data?.picture);
   const [button, setButton] = useState<boolean>(false)
   const loading: boolean = useAppSelector((state) => state.client.loading)
   const [form, setForm] = useState({ ...data })
@@ -41,22 +42,23 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
       username: form.username,
       email: form.email,
       cpf: form.cpf,
-      birthDate: form.birthDate,
+      birthDate: convertDateToTimestamp(form.birthDate),
       country: form.country,
       phone: form.phone,
       description: form.description,
-      password: form.password
+      password: form.password,
+      isSeller: form.isSeller
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
-    submit(formData)
+    submit(formData)    
   }
 
   const removeImage = () => setPreview([]);
 
   const previewImg = (event: ChangeEvent<HTMLInputElement>) => {
     const image = event.target.files && event.target.files[0];
-    setPreview([image]);
+    setPreview(Array(image));
   };
 
   return (
@@ -68,7 +70,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               {preview?.length === 1 ? (
                 <Image src={URL.createObjectURL(preview[0])} />
               ) : (
-                <Image src={preview} />
+                <Image src={preview || data.picture} />
               )}
 
               <Button onClick={removeImage} component="label">
@@ -106,9 +108,9 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               size="small"
               id="standard-error-helper-text"
               name="name"
-              value={form.name || ''}
+              value={form.name}
               onChange={handleChange}
-              helperText={formValidate.name || ''}
+              helperText={formValidate.name}
               disabled={loading}
               variant="outlined"
               error={!!formValidate.name}
@@ -122,9 +124,9 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               size="small"
               id="standard-error-helper-text"
               name="username"
-              value={form.username || ''}
+              value={form.username}
               onChange={handleChange}
-              helperText={formValidate.username || ''}
+              helperText={formValidate.username}
               disabled={loading}
               variant="outlined"
               error={!!formValidate.username}
@@ -138,9 +140,9 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               size="small"
               id="standard-error-helper-text"
               name="email"
-              value={form.email || ''}
+              value={form.email}
               onChange={handleChange}
-              helperText={formValidate.email || ''}
+              helperText={formValidate.email}
               disabled={loading}
               variant="outlined"
               error={!!formValidate.email}
@@ -153,7 +155,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               mask="999.999.999-99"
               className="form-control"
               name="cpf"
-              value={form.cpf || ''}
+              value={form.cpf}
               onChange={handleChange}
               disabled={loading}
             />
@@ -192,7 +194,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               id="standard-error-helper-text"
               variant="outlined"
               size="small"
-              value={form.country || ''}
+              value={form.country}
               onChange={handleChange}
               inputProps={{
                 name: 'country',
@@ -217,7 +219,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               mask="(99)9999-9999"
               className="form-control"
               name="phone"
-              value={form.phone || ''}
+              value={form.phone}
               onChange={handleChange}
               disabled={loading}
             />
@@ -235,9 +237,9 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               size="small"
               id="standard-error-helper-text"
               name="description"
-              value={form.description || ''}
+              value={form.description}
               onChange={handleChange}
-              helperText={formValidate.description || ''}
+              helperText={formValidate.description}
               disabled={loading}
               variant="outlined"
               error={!!formValidate.description}

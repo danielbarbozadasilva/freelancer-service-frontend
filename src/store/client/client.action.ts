@@ -7,7 +7,7 @@ import {
   updateClientSellerService
 } from '../../services/client.service'
 import { toast } from 'react-toastify'
-import { ISeller } from './types'
+import { ISeller, UserSendDataInterface } from './types'
 
 export const listAllClientAction = createAsyncThunk(
   'client/listAll',
@@ -31,14 +31,14 @@ export const listClientByIdAction = createAsyncThunk(
 
 export const updateClientAction = createAsyncThunk(
   'client/update',
-  async (data: FormData) => {
+  async (result: UserSendDataInterface) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      await updateClientService(data.id, data, config)
+      await updateClientService(result.id, result.data, config)
       toast.success('Cliente atualizado com sucesso!')
       return true
     } catch (error: any) {
