@@ -61,7 +61,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
         )}
 
         <Grid container direction="column">
-          <Button
+          <SButton
             variant="contained"
             color="primary"
             size="small"
@@ -76,7 +76,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
               onChange={previewImg}
               disabled={loading}
             />
-          </Button>
+          </SButton>
         </Grid>
 
         <TextField

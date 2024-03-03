@@ -83,7 +83,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
         )}
 
         <Grid container direction="column">
-          <Button
+          <SButton
             variant="contained"
             color="primary"
             size="small"
@@ -98,7 +98,7 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
               onChange={previewImg}
               disabled={loading}
             />
-          </Button>
+          </SButton>
         </Grid>
         <FormStyle>
           <div>

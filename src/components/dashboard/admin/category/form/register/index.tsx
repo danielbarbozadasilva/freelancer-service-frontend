@@ -58,7 +58,7 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
         )}
 
         <Grid container direction="column">
-          <Button
+          <SButton
             variant="contained"
             color="primary"
             size="small"
@@ -73,7 +73,7 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
               onChange={previewImg}
               disabled={loading}
             />
-          </Button>
+          </SButton>
         </Grid>
 
         <TextField

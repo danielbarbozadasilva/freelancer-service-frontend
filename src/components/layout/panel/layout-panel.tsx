@@ -132,13 +132,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     color: '#9da5b1',
     '@media (max-width: 1900px)': {
-      marginLeft: `calc(100% - 30%)`
+      marginLeft: `calc(100% - 38%)`
     },
     '@media (max-width: 1500px)': {
-      marginLeft: '60%'
+      marginLeft: '55%'
     },
     '@media (max-width: 1330px)': {
-      marginLeft: '55%'
+      marginLeft: '45%'
     },
     '@media (max-width: 1090px)': {
       marginLeft: '0%'
@@ -197,7 +197,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             <h6> E-mail: {email}</h6>
           </div>
           <Button onClick={handleLogout}>
-            <PowerSettingsNew className={classes.userIcon} />
+            <PowerSettingsNew className={classes.userInfo} />
           </Button>
         </Toolbar>
       </AppBar>
