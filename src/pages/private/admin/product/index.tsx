@@ -18,7 +18,8 @@ const Products: React.FC<OrdersProps> = (props) => {
       offset: 0,
       limit: 1000,
       search: '',
-      order: ''
+      order: '',
+      userId: ''
     }
     dispatch(listAllProductsAction(filters))
   }, [dispatch])

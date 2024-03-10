@@ -1,76 +1,81 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { listAllClientAction, listClientByIdAction, removeClientAction, updateClientAction, updateClientSellerAction } from './client.action'
+import {
+  listAllUsersAction,
+  listUserByIdAction,
+  removeUserAction,
+  updateUserAction,
+  updateUserSellerAction
+} from './user.action'
 import { UserInterface } from './types'
 
 export const slice = createSlice({
-  name: 'client',
+  name: 'user',
   initialState: {
     loading: false,
     all: [] as UserInterface[],
-    clientid: {} as UserInterface,
-    error: '',
+    userid: {} as UserInterface,
+    error: ''
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(listAllClientAction.pending, (state) => {
+      .addCase(listAllUsersAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(listAllClientAction.fulfilled, (state, action) => {
+      .addCase(listAllUsersAction.fulfilled, (state, action) => {
         state.loading = false
         state.all = action.payload
       })
-      .addCase(listAllClientAction.rejected, (state, action) => {
+      .addCase(listAllUsersAction.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch'
       })
 
-      .addCase(listClientByIdAction.pending, (state) => {
+      .addCase(listUserByIdAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(listClientByIdAction.fulfilled, (state, action) => {
+      .addCase(listUserByIdAction.fulfilled, (state, action) => {
         state.loading = false
-        state.clientid = action.payload
+        state.userid = action.payload
       })
-      .addCase(listClientByIdAction.rejected, (state, action) => {
+      .addCase(listUserByIdAction.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch'
       })
 
-      .addCase(updateClientAction.pending, (state) => {
+      .addCase(updateUserAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(updateClientAction.fulfilled, (state) => {
+      .addCase(updateUserAction.fulfilled, (state) => {
         state.loading = false
       })
-      .addCase(updateClientAction.rejected, (state, action) => {
+      .addCase(updateUserAction.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch'
       })
 
-      .addCase(updateClientSellerAction.pending, (state) => {
+      .addCase(updateUserSellerAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(updateClientSellerAction.fulfilled, (state) => {
+      .addCase(updateUserSellerAction.fulfilled, (state) => {
         state.loading = false
       })
-      .addCase(updateClientSellerAction.rejected, (state, action) => {
+      .addCase(updateUserSellerAction.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch'
       })
 
-      .addCase(removeClientAction.pending, (state) => {
+      .addCase(removeUserAction.pending, (state) => {
         state.loading = true
       })
-      .addCase(removeClientAction.fulfilled, (state) => {
+      .addCase(removeUserAction.fulfilled, (state) => {
         state.loading = false
       })
-      .addCase(removeClientAction.rejected, (state, action) => {
+      .addCase(removeUserAction.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch'
       })
-  }  
+  }
 })
-
 
 export default slice.reducer

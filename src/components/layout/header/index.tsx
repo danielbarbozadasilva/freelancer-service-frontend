@@ -35,7 +35,7 @@ const Header: React.FC = () => {
       <div className="container d-flex justify-content-between align-items-center">
         <Navbar.Brand>
           <div className="logo">
-            <Link className="link" to="/">
+            <Link className="link" to="/" reloadDocument>
               <span className="text">Freelancer</span>
             </Link>
           </div>
@@ -44,8 +44,12 @@ const Header: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             {user ? (
-              <div className='avatarUser'>
-                <img className="avatar" src={user?.picture || noAvatar} alt="" />
+              <div className="avatarUser">
+                <img
+                  className="avatar"
+                  src={user?.picture || noAvatar}
+                  alt=""
+                />
                 <NavDropdown
                   title={user?.username}
                   id="basic-nav-dropdown"
@@ -79,7 +83,7 @@ const Header: React.FC = () => {
                   Login
                 </Nav.Link>
                 <Nav.Link as={Link} to="/SignUp" className="link">
-                  <button className='signupButton'>Cadastrar</button>
+                  <button className="signupButton">Cadastrar</button>
                 </Nav.Link>
               </>
             )}

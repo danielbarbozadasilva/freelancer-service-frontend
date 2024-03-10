@@ -8,12 +8,12 @@ import { SImage, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormClientUpdateProps, IUser } from './types';
 import ufCountryFile from '../../../../../../util/country.json'
-import { convertDateToTimestamp } from '../../../../../../util/helpers/format'
+import { convertDateToTimestamp, isTimestamp } from '../../../../../../util/helpers/format'
 
 const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => {
   const [preview, setPreview] = useState(data?.picture);
   const [button, setButton] = useState<boolean>(false)
-  const loading: boolean = useAppSelector((state) => state.client.loading)
+  const loading: boolean = useAppSelector((state) => state.user.loading)
   const [form, setForm] = useState({ ...data })
   const [formValidate, setFormValidate] = useState({} as IUser)
   const [country, setCountry] = useState([{}])
@@ -42,11 +42,11 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
       username: form.username,
       email: form.email,
       cpf: form.cpf,
-      birthDate: convertDateToTimestamp(form.birthDate),
+      birthDate: isTimestamp(form?.birthDate)? form?.birthDate : convertDateToTimestamp(form?.birthDate),
       country: form.country,
       phone: form.phone,
       description: form.description,
-      password: form.password,
+      password: form?.password || null,
       isSeller: form.isSeller
     }
 

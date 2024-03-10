@@ -36,8 +36,8 @@ const TableOrdersClient: React.FC = () => {
         to: order.buyer._id
       }      
       dispatch(listByIdConversationAction({ userId: dataConversation.userId, buyerId: dataConversation.to })).then((resp) => {
-        if (resp.payload.data[0]._id) {
-          navigate(`message/${dataMessage.conversationId}`)
+        if (resp.payload?.data?.length) {
+          navigate(`message/${resp.payload.data[0]._id}`)
           navigate(0)
         } else {
           dispatch(createConversationAction(dataConversation)).then((item) => {

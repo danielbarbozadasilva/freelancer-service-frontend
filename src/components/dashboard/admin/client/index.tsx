@@ -7,7 +7,7 @@ import { IconButton, Tooltip } from '@mui/material'
 import { DataListProps } from './form/types'
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs'
 import { useAppDispatch } from '../../../../hooks'
-import { updateClientSellerAction } from '../../../../store/client/client.action'
+import { updateUserSellerAction } from '../../../../store/user/user.action'
 import { navigate } from '@reach/router'
 import DataListComponent from '../../datalist'
 
@@ -15,7 +15,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   const dispatch = useAppDispatch()
 
   const toggleActive = (id: string, status: boolean) => {
-    dispatch(updateClientSellerAction({ id, isSeller: !status })).then(() => {
+    dispatch(updateUserSellerAction({ id, isSeller: !status })).then(() => {
       navigate(0)
     })
   }

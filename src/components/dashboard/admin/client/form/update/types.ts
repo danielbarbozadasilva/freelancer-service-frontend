@@ -22,5 +22,5 @@ export interface IUser {
     },
     isSeller: boolean
     files?: {},
-    password?: string
+    password?: string | null
   }

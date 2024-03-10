@@ -20,9 +20,7 @@ import { navigate } from '@reach/router'
 import { IDataConversation } from '../types'
 
 const TableOrdersBuyer: React.FC = () => {
-  const orderByUser: IOrder[] = useAppSelector(
-    (state) => state.order.orderByUser
-  )
+  const orderByUser: IOrder[] = useAppSelector((state) => state.order.orderByUser)
   const [modal, setModal] = useState<boolean>(false)
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null)
   const dispatch = useAppDispatch()
@@ -40,9 +38,10 @@ const TableOrdersBuyer: React.FC = () => {
         userId: order.user._id,
         to: order.buyer._id
       }
+      
       dispatch(listByIdConversationAction({ userId: dataConversation.userId, buyerId: dataConversation.to })).then((resp) => {
-        if (resp.payload.data[0]._id) {
-          navigate(`message/${dataMessage.conversationId}`)
+        if (resp.payload?.data?.length) {
+          navigate(`message/${resp.payload.data[0]._id}`)
           navigate(0)
         } else {
           dispatch(createConversationAction(dataConversation)).then((item) => {
@@ -61,7 +60,7 @@ const TableOrdersBuyer: React.FC = () => {
           })
         }
       })
-    }
+     }
   }
 
   return (

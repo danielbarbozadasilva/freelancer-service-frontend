@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent } from 'react'
 
 export function formatPhone(phone: string) {
   return phone
@@ -21,14 +21,14 @@ export function formatPriceField(data: any) {
   return data?.replace('R$', '').replace('.', '').replace(',', '.').trim()
 }
 
-export function formatPriceBr(data: number) : string{
+export function formatPriceBr(data: number): string {
   return Number(data).toLocaleString('pt-br', {
     style: 'currency',
     currency: 'BRL'
   })
 }
 
-export function formatMoney(data: string) : number{
+export function formatMoney(data: string): number {
   return Number(
     data.trim().replace('R$', '').replace('.', '').replace(',', '.')
   )
@@ -41,13 +41,15 @@ export function formatObjectURL(data: any) {
   return URL.createObjectURL(data)
 }
 
-export function getMoney(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+export function getMoney(
+  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) {
   const money = event?.target?.value
   const result = money?.replace('R$', '')
   return formatReal(parseInt(result?.replace(/[\D]+/g, '')))
 }
 
-export function formatReal(int: Number) : string{
+export function formatReal(int: Number): string {
   let result = int + ''
   let negative = false
   if (result.indexOf('-') == 0) {
@@ -91,7 +93,12 @@ export function formatCurrency(value: number): string {
 }
 
 export function convertDateToTimestamp(dateString: string): string {
-  const [year, month, day] = dateString.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
-  return String(date.getTime());
+  const [year, month, day] = dateString.split('-').map(Number)
+  const date = new Date(year, month - 1, day)
+  date.setDate(date.getDate() + 1)
+  return String(date.getTime())
+}
+
+export function isTimestamp(date: any): boolean {
+  return !isNaN(Date.parse(date))
 }

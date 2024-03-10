@@ -1,27 +1,28 @@
-import React from 'react';
-import { listAllProductsAction } from '../../../store/product/product.action';
-import { Select } from '@material-ui/core';
-import { SBox, STitle } from './styled';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Filters, IProductFilter } from './types';
-import { listSort } from '../../../store/product/product.reducer';
+import React from 'react'
+import { listAllProductsAction } from '../../../store/product/product.action'
+import { Select } from '@material-ui/core'
+import { SBox, STitle } from './styled'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { Filters, IProductFilter } from './types'
+import { listSort } from '../../../store/product/product.reducer'
 
 const FilterProduct: React.FC<IProductFilter> = ({ id }) => {
   const sort = useAppSelector((state) => state.product.sort)
   const dispatch = useAppDispatch()
 
   const handleChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
-    const { value } = event.target;
-      const filters: Filters = {
-        category: id,
-        offset: 0,
-        limit: 10,
-        search: '',
-        order: String(value)
-      }
-      dispatch(listAllProductsAction(filters))
-      dispatch(listSort(value))
-  };
+    const { value } = event.target
+    const filters: Filters = {
+      category: String(id),
+      offset: 0,
+      limit: 10,
+      search: '',
+      order: String(value),
+      userId: ''
+    }
+    dispatch(listAllProductsAction(filters))
+    dispatch(listSort(value))
+  }
 
   return (
     <SBox>
@@ -36,7 +37,7 @@ const FilterProduct: React.FC<IProductFilter> = ({ id }) => {
         </Select>
       </div>
     </SBox>
-  );
-};
+  )
+}
 
-export default FilterProduct;
+export default FilterProduct

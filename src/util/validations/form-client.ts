@@ -35,6 +35,12 @@ export function fieldValidate(name: string, value: string): string {
 
   switch (name) {
     case 'name':
+      if (value.trim() === '') {
+        message += 'Não pode ser vazio!';
+      } else if (value.length <= 4) {
+        message += 'Acima de 4 caracteres!';
+      }
+      break;
     case 'username':
       if (value.trim() === '') {
         message += 'Não pode ser vazio!';

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { CatCardProps } from './types';
 
 const CardCategory: React.FC<CatCardProps> = ({ item }) => {
-  const { id, name, description, picture } = item
+  const { id, name, picture } = item
   const navigate = useNavigate()
   return (
     <div>

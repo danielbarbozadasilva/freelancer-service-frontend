@@ -4,7 +4,7 @@ import CategoryReducer from './category/category.reducer'
 import ProductReducer from './product/product.reducer'
 import messageReducer from './message/message.reducer'
 import conversationReducer from './conversation/conversation.reducer'
-import clientReducer from './client/client.reducer'
+import userReducer from './user/user.reducer'
 import ratingReducer from './rating/rating.reducer'
 import orderReducer from './order/order.reducer'
 
@@ -15,7 +15,7 @@ const store = configureStore({
     product: ProductReducer,
     message: messageReducer,
     conversation: conversationReducer,
-    client: clientReducer,
+    user: userReducer,
     rating: ratingReducer,
     order: orderReducer,
   }

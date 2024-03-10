@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { Button, FormControl } from '@material-ui/core'
 
-export const Image = styled.img`
-  width: 120px;
-  height: 70px;
+export const SImage = styled.img`
+  width: 180px;
+  height: 130px;
   border-radius: 5%;
   object-fit: cover;
 `
@@ -11,7 +11,7 @@ export const Image = styled.img`
 export const SPreview = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 25px;
+  margin: 0px auto;
 `
 
 export const Submit = styled.div`

@@ -32,7 +32,7 @@ export interface IProductById {
   title: string
   description: string
   category: string
-  price: number
+  price: string
   images: string[]
   deliveryTime: number
   features: string[]

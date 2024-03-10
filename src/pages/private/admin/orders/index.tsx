@@ -10,7 +10,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
   const orders: IOrder[] = useAppSelector((state) => state.order.all)
-  const loading: boolean = useAppSelector((state) => state.client.loading)
+  const loading: boolean = useAppSelector((state) => state.user.loading)
 
   useEffect(() => {
     dispatch(listAllOrdersAction())

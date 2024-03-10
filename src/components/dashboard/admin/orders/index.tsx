@@ -97,6 +97,14 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
 
   const columns: GridColumns = [
     {
+      field: 'id',
+      headerName: 'ID',
+      align: 'center',
+      headerAlign: 'center',
+      flex: 1,
+      disableColumnMenu: true
+    },
+    {
       field: 'title',
       headerName: 'Título',
       align: 'center',
@@ -105,8 +113,8 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       disableColumnMenu: true
     },
     {
-      field: 'description',
-      headerName: 'Descrição',
+      field: 'status',
+      headerName: 'Status',
       align: 'center',
       headerAlign: 'center',
       flex: 1,

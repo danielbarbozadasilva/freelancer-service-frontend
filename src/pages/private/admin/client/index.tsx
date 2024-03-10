@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
-  listAllClientAction,
-  listClientByIdAction,
-  removeClientAction,
-  updateClientAction
-} from '../../../../store/client/client.action'
+  listAllUsersAction,
+  listUserByIdAction,
+  removeUserAction,
+  updateUserAction
+} from '../../../../store/user/user.action'
 import Title from '../../../../components/dashboard/title/index'
 import DataListComponent from '../../../../components/dashboard/admin/client/index'
 import DialogModal from '../../../../components/dialog/index'
@@ -17,19 +17,17 @@ import { ClientProps, IModal, UserInterface } from './types'
 const Client: React.FC<ClientProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
-  const client: UserInterface[] = useAppSelector((state) => state.client.all)
-  const clientById: UserInterface = useAppSelector(
-    (state) => state.client.clientid
-  )
-  const loading: boolean = useAppSelector((state) => state.client.loading)
+  const client: UserInterface[] = useAppSelector((state) => state.user.all)
+  const clientById: UserInterface = useAppSelector((state) => state.user.userid)
+  const loading: boolean = useAppSelector((state) => state.user.loading)
 
   useEffect(() => {
-    dispatch(listAllClientAction())
+    dispatch(listAllUsersAction())
   }, [dispatch])
 
   const toggleModal = (type = 1, id: string): void => {
     if (id) {
-      dispatch(listClientByIdAction(id)).then(() =>
+      dispatch(listUserByIdAction(id)).then(() =>
         setModal({ type, id, status: true })
       )
     } else {
@@ -41,17 +39,17 @@ const Client: React.FC<ClientProps> = (props) => {
 
   const deleteClient = (): void => {
     if (modal?.id) {
-      dispatch(removeClientAction(modal?.id)).then(() => {
+      dispatch(removeUserAction(modal?.id)).then(() => {
         setModal({ status: false })
-        dispatch(listAllClientAction())
+        dispatch(listAllUsersAction())
       })
     }
   }
 
   const updateClient = (form: FormData): void => {
-    dispatch(updateClientAction({ id: modal?.id, data: form })).then(() => {
+    dispatch(updateUserAction({ id: modal?.id, data: form })).then(() => {
       setModal({ status: false })
-      dispatch(listAllClientAction())
+      dispatch(listAllUsersAction())
     })
   }
 

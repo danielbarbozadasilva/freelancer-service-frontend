@@ -1,27 +1,24 @@
 import React, { useState } from 'react'
 import imgMan from '../../../assets/img/man.png'
 import imgSearch from '../../../assets/img/search.png'
-import { navigate } from '@reach/router'
 import { StyledSearch } from './styled'
+import { Link } from 'react-router-dom'
 
 const Search: React.FC = () => {
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>('')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setSearch(value);
-  };
-
-  const handleSearch = () => {
-    navigate(`/product/search/${search}`).then(() => navigate(0));
-  };
+    const { value } = event.target
+    setSearch(value)
+  }
 
   return (
     <StyledSearch>
       <div className="container">
         <div className="left">
           <h1>
-            Encontre os serviços <span>freelance</span> perfeitos para o seu negócio
+            Encontre os serviços <span>freelance</span> perfeitos para o seu
+            negócio
           </h1>
           <div className="search">
             <div className="searchInput">
@@ -33,9 +30,9 @@ const Search: React.FC = () => {
                 value={search}
               />
             </div>
-            <button onClick={handleSearch} disabled={!search}>
-              Search
-            </button>
+            <Link to={`/product/search/${search}`} reloadDocument>
+              <button>Search</button>
+            </Link>
           </div>
           <div className="popular">
             <span>Popular:</span>
@@ -50,7 +47,7 @@ const Search: React.FC = () => {
         </div>
       </div>
     </StyledSearch>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

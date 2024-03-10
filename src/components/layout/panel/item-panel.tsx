@@ -5,7 +5,6 @@ import { Menu } from '../../../routers';
 import { useAppSelector } from '../../../hooks';
 import { SListItemIcon, SListItemText } from './styled'
 
-
 const ListMenu: React.FC = () => {
   const typeUser = useAppSelector((state) => state.auth.user.permissions);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);

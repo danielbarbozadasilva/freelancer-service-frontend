@@ -8,7 +8,7 @@ import {
   InputLabel,
   MenuItem
 } from '@material-ui/core'
-import { SBox, Image, SButton, SPreview, SFormControl } from '../styled'
+import { SBox, SImage, SButton, SPreview, SFormControl } from '../styled'
 import {
   fieldValidate,
   isNotValid
@@ -106,7 +106,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
                 {preview?.map((item) => {
                   return (
                     <SPreview>
-                      <Image src={formatObjectURL(item)} />
+                      <SImage src={formatObjectURL(item)} />
                       <Button
                         onClick={() => removeImage(item)}
                       >

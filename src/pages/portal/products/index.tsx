@@ -5,14 +5,19 @@ import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { useParams } from 'react-router-dom'
 import { Filters, PageTitle, Product } from './types'
 import Loading from '../../../components/loading/page'
-import { ContainerCards, STextFormated, SContainerFilter, TitleService } from './styled'
+import {
+  ContainerCards,
+  STextFormated,
+  SContainerFilter,
+  TitleService
+} from './styled'
 import { Col } from 'react-bootstrap'
 import FilterProduct from '../../../components/portal/filter'
 import PaginationSelector from '../../../components/paginate/selector/index.tsx'
 import PaginationComponent from '../../../components/paginate/index'
 import { Helmet } from 'react-helmet'
 
-const CategoryProducts: React.FC<PageTitle> = ({ title }) => {  
+const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
   const { id } = useParams<string>()
 
@@ -27,38 +32,43 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
       offset: currentPage,
       limit: itensPerPage,
       search: '',
-      order: ''
+      order: '',
+      userId: ''
     }
     dispatch(listAllProductsAction(filters))
   }, [itensPerPage, currentPage])
 
-
   if (loading) {
     return <Loading />
   }
-  
-  const pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
 
-  const ProductList = (product: Product[]) => {    
-    return product.map((item: Product, i: number) => {
-      return (
-        <Col md="6" xl="4" sm="12" xs="12" key={i}>
-          <ProductCard item={{ ...item }} />
-        </Col>
-      )
-    })
+  let pages: number = 0
+  if (product?.length) {
+    pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
+  }
+
+  const ProductList = (product: Product[]) => {
+    return (
+      product?.length && product.map((item: Product, i: number) => {
+        return (
+          <Col md="6" xl="4" sm="12" xs="12" key={i}>
+            <ProductCard item={{ ...item }} />
+          </Col>
+        )
+      })
+    )
   }
 
   return (
     <>
-     <Helmet title={title} />
+      <Helmet title={title} />
       <div className="container">
         <TitleService>Serviços</TitleService>
         <SContainerFilter>
           <FilterProduct id={id} />
         </SContainerFilter>
         <ContainerCards>
-          {!loading && product?.length === 0 ? (
+          {loading && product?.length === 0 ? (
             <STextFormated>
               <h6>Não há serviços disponiveis</h6>
             </STextFormated>
@@ -66,16 +76,16 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
             ProductList(product)
           )}
         </ContainerCards>
-         <PaginationSelector
+        <PaginationSelector
           itensPerPage={itensPerPage}
           setItensPerPage={setItensPerPage}
-        /> 
+        />
         <PaginationComponent
           pages={pages}
           currentPage={currentPage}
           itensPerPage={itensPerPage}
           setCurrentPage={setCurrentPage}
-        /> 
+        />
       </div>
     </>
   )
