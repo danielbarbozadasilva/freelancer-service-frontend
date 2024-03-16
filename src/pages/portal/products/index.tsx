@@ -48,15 +48,13 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
   }
 
   const ProductList = (product: Product[]) => {
-    return (
-      product?.length && product.map((item: Product, i: number) => {
+    return product.map((item: Product, i: number) => {
         return (
           <Col md="6" xl="4" sm="12" xs="12" key={i}>
             <ProductCard item={{ ...item }} />
           </Col>
         )
       })
-    )
   }
 
   return (
@@ -68,7 +66,7 @@ const CategoryProducts: React.FC<PageTitle> = ({ title }) => {
           <FilterProduct id={id} />
         </SContainerFilter>
         <ContainerCards>
-          {loading && product?.length === 0 ? (
+          {!loading && product?.length === 0 ? (
             <STextFormated>
               <h6>Não há serviços disponiveis</h6>
             </STextFormated>

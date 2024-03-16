@@ -3,7 +3,7 @@ import { TextField, Grid, LinearProgress, Select, Container, Button } from '@mat
 import { Submit, SignBox, FormStyle, SInputLabel, SButton, SButtonUpload } from './styled'
 import moment from 'moment'
 import InputMask from 'react-input-mask'
-import { fieldValidate, isNotValid } from '../../../../../../util/validations/form-client'
+import { fieldValidate, isNotValid } from '../../../../../../util/validations/form-user'
 import { SImage, SPreview } from '../styled';
 import { useAppSelector } from '../../../../../../hooks';
 import { FormClientUpdateProps, IUser } from './types';

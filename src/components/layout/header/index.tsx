@@ -94,8 +94,7 @@ const Header: React.FC = () => {
         <>
           <hr />
           <Nav className="ml-auto categories">
-            {category?.length &&
-              category?.length <= 7 &&
+            {category?.length <= 7 &&
               category?.map((item: ICategory, index: number) => (
                 <Nav.Link
                   as={Link}

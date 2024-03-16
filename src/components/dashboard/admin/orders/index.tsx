@@ -121,8 +121,8 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       disableColumnMenu: true
     },
     {
-      field: 'price',
-      headerName: 'Preço',
+      field: 'createdAt',
+      headerName: 'Data',
       align: 'center',
       headerAlign: 'center',
       flex: 1,

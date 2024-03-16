@@ -3,10 +3,7 @@ import { TextField, Button, Grid } from '@material-ui/core'
 import { SBox, SImage, SButton, SPreview } from '../styled'
 import { useAppSelector } from '../../../../../../hooks'
 import { FormCategoryRegisterProps, ICategory } from './types'
-import {
-  fieldValidate,
-  isNotValid
-} from '../../../../../../util/validations/form-category'
+import { fieldValidate, isNotValid } from '../../../../../../util/validations/form-category'
 
 const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) => {
   const [preview, setPreview] = useState<File[]>([])

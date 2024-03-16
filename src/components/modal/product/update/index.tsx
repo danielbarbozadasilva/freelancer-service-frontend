@@ -12,7 +12,7 @@ import { SBox, SImage, SButton, SPreview, SFormControl } from '../styled'
 import {
   fieldValidate,
   isNotValid
-} from '../../../../util/validations/form-service'
+} from '../../../../util/validations/form-product'
 import {
   formatPriceField,
   formatObjectURL,

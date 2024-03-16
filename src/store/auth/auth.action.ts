@@ -16,7 +16,7 @@ export const signInAction = createAsyncThunk(
         saveAuth(data)
         http.defaults.headers.token = data.token
         if (data.data.permissions.includes('admin')) {
-          navigate('/dashboard/clients')
+          navigate('/dashboard/users')
           navigate(0)
         } else {
           navigate('/')

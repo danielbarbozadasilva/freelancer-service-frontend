@@ -14,7 +14,7 @@ import { Helmet } from 'react-helmet'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { ClientProps, IModal, UserInterface } from './types'
 
-const Client: React.FC<ClientProps> = (props) => {
+const Users: React.FC<ClientProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
   const client: UserInterface[] = useAppSelector((state) => state.user.all)
@@ -58,9 +58,9 @@ const Client: React.FC<ClientProps> = (props) => {
   return (
     <>
       <Helmet title={props.title} />
-      <Title title="Cliente" actions={actions} />
+      <Title title="Usuários" actions={actions} />
       {!client?.length ? (
-        <h6>Não há clientes disponiveis</h6>
+        <h6>Não há usuários disponiveis</h6>
       ) : (
         <DataListComponent
           data={client}
@@ -85,4 +85,4 @@ const Client: React.FC<ClientProps> = (props) => {
   )
 }
 
-export default Client
+export default Users

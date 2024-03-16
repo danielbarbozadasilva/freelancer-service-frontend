@@ -39,6 +39,8 @@ export function fieldValidate(name: string, value: string): string {
         message += 'Não pode ser vazio!';
       } else if (value.length <= 4) {
         message += 'Acima de 4 caracteres!';
+      } else if (value.length >= 30) {
+        message += 'Abaixo de 30 caracteres!'
       }
       break;
     case 'username':
@@ -46,6 +48,8 @@ export function fieldValidate(name: string, value: string): string {
         message += 'Não pode ser vazio!';
       } else if (value.length <= 4) {
         message += 'Acima de 4 caracteres!';
+      } else if (value.length >= 30) {
+        message += 'Abaixo de 30 caracteres!'
       }
       break;
 
@@ -100,6 +104,8 @@ export function fieldValidate(name: string, value: string): string {
         message += 'Não pode ser vazio!';
       } else if (value.length <= 4) {
         message += 'Precisa ter mais que 4 caracteres!';
+      } else if (value.length >= 50) {
+        message += 'Abaixo de 50 caracteres!'
       }
       break;
 

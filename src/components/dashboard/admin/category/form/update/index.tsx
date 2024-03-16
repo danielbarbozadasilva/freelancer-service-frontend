@@ -8,10 +8,7 @@ import {
   isNotValid
 } from '../../../../../../util/validations/form-category'
 
-const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({
-  submit,
-  data
-}) => {
+const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data }) => {
   const [preview, setPreview] = useState(data?.picture)
   const [form, setForm] = useState({ ...data })
   const [formValidate, setFormValidate] = useState({} as ICategory)

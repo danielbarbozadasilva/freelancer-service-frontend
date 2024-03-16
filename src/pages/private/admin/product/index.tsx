@@ -40,14 +40,14 @@ const Products: React.FC<OrdersProps> = (props) => {
     <>
       <Helmet title={props.title} />
       <Title title="Serviços" actions={actions} />
-      {!product?.length ? (
-        <h6>Não há serviços disponiveis</h6>
-      ) : (
+      {product?.length > 0 ? (
         <DataListComponent
           data={dataFilter(product)}
           loading={loading}
           modal={toggleModal}
         />
+      ) : (
+        <h6>Não há serviços disponiveis</h6>
       )}
     </>
   )

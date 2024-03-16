@@ -20,16 +20,20 @@ export function isNotValid(form: any, formValidate: any) {
           message += 'Não pode conter números!'
         } else if (value.trim() === '') {
           message += 'Não pode ser vazio!'
-        } else if (value.length <= 4) {
+        } else if (value.length <= 5) {
           message += 'Acima de 4 caracteres!'
+        } else if (value.length >= 20) {
+          message += 'Abaixo de 20 caracteres!'
         }
         break
   
       case 'text':
         if (value.trim() === '') {
           message += 'Não pode ser vazio!'
-        } else if (value.length <= 10) {
-          message += 'Acima de 10 caracteres!'
+        } else if (value.length <= 5) {
+          message += 'Acima de 4 caracteres!'
+        } else if (value.length >= 50) {
+          message += 'Abaixo de 50 caracteres!'
         }
         break
     }
