@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#9da5b1'
   },
   userIcon: {
-    marginLeft: `calc(100% - 29%)`,
+    marginLeft: `calc(100% - 29%)!important`,
     margin: theme.spacing(2),
     color: '#9da5b1',
     '@media (max-width: 1900px)': {
