@@ -11,7 +11,7 @@ import { GridColumns } from '@mui/x-data-grid';
 const ListOrders: React.FC<ListOrdersProps> = ({ open, close, orders }) => {
   const columns: GridColumns = [
     {
-      field: 'payment_intent',
+      field: 'id',
       headerName: 'Código',
       align: 'center',
       headerAlign: 'center',

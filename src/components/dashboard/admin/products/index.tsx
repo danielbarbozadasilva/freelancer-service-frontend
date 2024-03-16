@@ -100,14 +100,13 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   }
 
   const actionModalOrders = (params: GridRenderCellParams) => {
-    const result: IOrders = params.row.orders
     return (
       <>
         <Tooltip title="Pedidos">
           <span>
             <IconButton
-              onClick={() => openOrders(Array(result))}
-              disabled={result?.id ? false : true}
+              onClick={() => openOrders(params.row.orders)}
+              disabled={params.row.orders?.length > 0 ? false : true}
               color="primary"
             >
               <MoreIcon />
