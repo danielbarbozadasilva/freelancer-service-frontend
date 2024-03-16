@@ -6,6 +6,8 @@ O Sistema tem o objetivo de listar os serviços oferecidos pelos profissionais e
 
 Os usuários do sistema são o Profissional Freelancer, o Cliente e o Administrador. Todos possuem acesso ao sistema e a seu respectivo espaço. Além disso, o Sistema conta com uma tela inicial que permite ao público navegar de modo simples através de filtros entre categorias e serviços.
 
+O Front-End foi desenvolvido utilizando o ReactJs em TYPESCRIPT com layout responsivo, Material UI, Styled-components e reduxjs/toolkit.
+
 A API foi desenvolvida utilizando os Principios do SOLID, utilizando TYPESCRIPT com NODEJS, EXPRESSJS e Banco de dados MONGODB. Foi realizada a integração com a plataforma de pagamentos STRIPE, documentação utilizando o SWAGGER e o JEST nos testes unitários. E pode ser consultada no link abaixo:
 ```
 git clone https://github.com/danielbarbozadasilva/freelancer-service-backend-solid
@@ -46,7 +48,7 @@ yarn start
 
 RF001 – O sistema deve controlar a autenticação dos usuários.
 
-RF002 – O sistema deve manter cadastro de clientes.
+RF002 – O sistema deve manter cadastro de usuários.
 
 RF003 – O sistema deve manter solicitações.
 
@@ -60,7 +62,7 @@ RF007 – O sistema deve alterar o status do usuário.
 
 RF008 – O sistema deve filtrar os serviços.
 
-RF009 – O sistema deve manter clientes.
+RF009 – O sistema deve manter usuários.
 
 RF010 – O sistema deve manter serviços.
 
@@ -104,7 +106,7 @@ RF015 – O sistema deve listar os serviços por ordem alfabética ou ordem de p
 |RN004   |Limite de ação     | Somente o Administrador terá permissão para incluir e alterar as categorias no sistema.    |
 |RN005   |Limite de ação     | Somente o Freelancer terá permissão para incluir e alterar os seus serviços no sistema.   |
 |RN006   |Limite de ação     | O Cliente poderá visualizar apenas os dados da sua conta. Tais como: pedidos e mensagens.  |
-|RN007   |Limite de ação     | Apenas o Administrador poderá visualizar informações de todos os clientes, suas respectivas contas, solicitações e histórico de aquisições.    |
+|RN007   |Limite de ação     | Apenas o Administrador poderá visualizar informações, solicitações e histórico de pedidos de todos os usuários    |
 |  |  |  |
 
 <br/>
@@ -124,7 +126,7 @@ RF015 – O sistema deve listar os serviços por ordem alfabética ou ordem de p
 <br/>
 
 > ## Bibliotecas e Ferramentas
-* React
+* React 18
 * Stripe
 * Reach Router
 * Styled-components
