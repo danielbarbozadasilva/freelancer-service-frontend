@@ -1,10 +1,10 @@
 import http from '../../config/http'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { navigate } from '@reach/router'
 import { toast } from 'react-toastify'
 import { removeToken, saveAuth } from '../../config/auth'
 import { authService, registerService } from '../../services/auth.service'
 import { ISignIn, ISignUp } from './types'
+import { navigate } from '@reach/router'
 
 export const signInAction = createAsyncThunk(
   'auth/signin',
@@ -12,21 +12,28 @@ export const signInAction = createAsyncThunk(
     try {
       const result = await authService(data)
       if (result?.data) {
+
         const { data } = result.data
         saveAuth(data)
+
         http.defaults.headers.token = data.token
+      
         if (data.data.permissions.includes('admin')) {
           navigate('/dashboard/users')
-          navigate(0)
         } else {
           navigate('/')
-          navigate(0)
         }
-        toast.success(`Seja Bem-vindo(a)! ${data.data.username}`)
+
+        toast.success(`${result.data.message} ${data.data.username}`)
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+
         return data
       }
     } catch (error: any) {
-      toast.error('E-mail ou senha inválidos!')
+      toast.error(error.response.data.message)
     }
   }
 )
@@ -40,10 +47,15 @@ export const signUpAction = createAsyncThunk(
           'Content-Type': 'multipart/form-data'
         }
       }
-      await registerService(data, config)
-      toast.success('Usuário criado com sucesso!')
+      const result = await registerService(data, config)
+      toast.success(`${result.data.message}`)
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
+
     } catch (error: any) {
-      toast.error('Ocorreu um erro!')
+      toast.error(error.response.data.message)
     }
   }
 )

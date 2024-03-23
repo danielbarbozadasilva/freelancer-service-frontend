@@ -31,18 +31,21 @@ export const listCategoryByIdAction = createAsyncThunk(
 
 export const createCategoryAction = createAsyncThunk(
   'category/create',
-  async (data: FormData) => {
+  async (category: FormData) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      await createCategoryService(data, config)
-      toast.success('Categoria criada com sucesso!')
+      const result = await createCategoryService(category, config)
+      toast.success(`${result.data.message}`)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
       return true
     } catch (error: any) {
-      toast.error(error?.response?.data?.message)
+      toast.error(error.response.data.message)
       return false
     }
   }
@@ -50,18 +53,21 @@ export const createCategoryAction = createAsyncThunk(
 
 export const updateCategoryAction = createAsyncThunk(
   'category/update',
-  async (result: ICategorySendData) => {
+  async (category: ICategorySendData) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      await updateCategoryService(result.id, result.data, config)
-      toast.success('Categoria atualizada com sucesso!')
+      const result = await updateCategoryService(category.id, category.data, config)
+      toast.success(`${result.data.message}`)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)     
       return true
     } catch (error: any) {
-      toast.error(error?.response?.data?.message)
+      toast.error(error.response.data.message)
       return false
     }
   }
@@ -71,10 +77,10 @@ export const removeCategoryAction = createAsyncThunk(
   'category/delete',
   async (id: string) => {
     try {
-      await removeCategoryService(id)
-      toast.success('Categoria excluida com sucesso!')
+      const result = await removeCategoryService(id)
+      toast.success(`${result.data.message}`)
     } catch (error: any) {
-      toast.error(error?.response?.data?.message)
+      toast.error(error.response.data.message)
     }
   }
 )
