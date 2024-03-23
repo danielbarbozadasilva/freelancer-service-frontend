@@ -30,7 +30,8 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
 
     const newForm: ICategory = {
       name: form.name,
-      description: form.description
+      description: form.description,
+      files: true
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
@@ -122,7 +123,7 @@ const FormCategoryUpdate: React.FC<FormCategoryUpdateProps> = ({ submit, data })
         </div>
         <SButton
           fullWidth
-          type="submit"
+          type="button"
           disabled={isNotValid(form, formValidate, preview)}
           onClick={submitForm}
         >

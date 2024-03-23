@@ -43,7 +43,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
   return (
     <SForm>
       <Form.Group className="mb-4">
-        <Form.Label>Nome</Form.Label>
+        <Form.Label>Título</Form.Label>
         <Form.Control
           disabled={loading}
           value={form.name || ''}

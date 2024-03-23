@@ -246,7 +246,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
           <Grid item xs={12}>
             <SButton
               fullWidth
-              type="submit"
+              type="button"
               disabled={isNotValid(form, formValidate)}
               onClick={submitForm}
             >

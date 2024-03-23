@@ -43,7 +43,7 @@ const ListOrders: React.FC<ListOrdersProps> = ({ open, close, orders }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Serviço</DialogTitle>
+      <DialogTitle id="alert-dialog-title">Pedidos</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
         <DataListComponent data={orders} columns={columns} loading={false} />
       </DialogContent>

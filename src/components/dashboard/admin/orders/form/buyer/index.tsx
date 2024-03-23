@@ -43,7 +43,7 @@ const ListBuyer: React.FC<ListBuyerProps> = ({ open, close, buyer }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Freelancer</DialogTitle>
+      <DialogTitle id="alert-dialog-title">Cliente</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
         <DataListComponent data={buyer} columns={columns} loading={false} />
       </DialogContent>

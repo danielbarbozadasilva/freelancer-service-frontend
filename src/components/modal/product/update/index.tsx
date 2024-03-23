@@ -74,6 +74,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
       deliveryTime: form.deliveryTime,
       features: form.features,
       price: formatPriceField(form.price),
+      files: true
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
@@ -251,7 +252,7 @@ const FormUpdateProduct: React.FC<IProps> = ({ data, submit }) => {
           <Grid item xs={12}>
             <SButton
               fullWidth
-              type='submit'
+              type='button'
               disabled={isNotValid(form, formValidate)}
               onClick={submitForm}
             >

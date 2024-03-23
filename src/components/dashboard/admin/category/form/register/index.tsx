@@ -117,10 +117,9 @@ const FormCategoryRegister: React.FC<FormCategoryRegisterProps> = ({ submit }) =
             <p className="text-danger">{formValidate.description}</p>
           </div>
         </div>
-
         <SButton
           fullWidth
-          type="submit"
+          type="button"
           disabled={isNotValid(form, formValidate, preview)}
           onClick={submitForm}
         >

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { BoxTable } from '../../datalist/styled'
 import Loading from '../../../../components/loading/page/index'
 import { GridRenderCellParams, GridColumns } from '@mui/x-data-grid'
 import { FiTrash2, FiEdit } from 'react-icons/fi'
@@ -14,10 +13,10 @@ import DataListComponent from '../../datalist'
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   const [modalProduct, setModalProduct] = useState<IProductModal>()
 
-  const thumb = (params: GridRenderCellParams) => {
+  const thumb: React.FC<GridRenderCellParams> = (params) => {
     return <SImg src={params.value as string} />
   }
-
+  
   function openProduct(row: IProduct[]) {
     setModalProduct({ open: true, data: row })
   }
