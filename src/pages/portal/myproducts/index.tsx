@@ -27,17 +27,11 @@ import FormUpdateProduct from '../../../components/modal/product/update'
 import FormUpdateRemove from '../../../components/modal/product/remove'
 
 const MyProductsPage: React.FC<PageTitle> = ({ title }) => {
-  const [modal, setModal] = useState<IModal>({
-    status: false,
-    id: null,
-    type: 1
-  })
-  const dispatch = useAppDispatch()
+  const [modal, setModal] = useState<IModal>({status: false, id: null, type: 1})
   const user: IUser = useAppSelector((state) => state.auth.user)
   const product: IProduct[] = useAppSelector((state) => state.product.all)
-  const productById: IProductById = useAppSelector(
-    (state) => state.product.productid
-  )
+  const productById: IProductById = useAppSelector((state) => state.product.productid)
+  const dispatch = useAppDispatch()
 
   const filters: Filters = {
     userId: user.id,

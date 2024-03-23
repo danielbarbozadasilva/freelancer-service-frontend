@@ -21,6 +21,6 @@ export interface IUser {
       date: Date
     },
     isSeller: boolean
-    files?: {},
+    files?: boolean,
     password?: string | null
   }

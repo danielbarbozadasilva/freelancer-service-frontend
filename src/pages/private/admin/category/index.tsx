@@ -21,9 +21,7 @@ const Category: React.FC<CategoryProps> = (props) => {
   const dispatch = useAppDispatch()
   const [modal, setModal] = useState<IModal>({})
   const category: ICategory[] = useAppSelector((state) => state.category.all)
-  const categoryById: ICategory = useAppSelector(
-    (state) => state.category.categoryid
-  )
+  const categoryById: ICategory = useAppSelector((state) => state.category.categoryid)
   const loading: boolean = useAppSelector((state) => state.category.loading)
 
   useEffect(() => {
@@ -50,11 +48,11 @@ const Category: React.FC<CategoryProps> = (props) => {
           setModal({ status: false })
           dispatch(listAllCategoryAction())
         })
+
         break
 
       case 2:
-        dispatch(updateCategoryAction({ id: modal.id, data: formData })).then(
-          () => {
+        dispatch(updateCategoryAction({ id: modal.id, data: formData })).then(() => {
             setModal({ status: false })
             dispatch(listAllCategoryAction())
           }

@@ -6,14 +6,14 @@ import {
   updateUserAction,
   updateUserSellerAction
 } from './user.action'
-import { UserInterface } from './types'
+import { IUserInterface } from './types'
 
 export const slice = createSlice({
   name: 'user',
   initialState: {
     loading: false,
-    all: [] as UserInterface[],
-    userid: {} as UserInterface,
+    all: [] as IUserInterface[],
+    userid: {} as IUserInterface,
     error: ''
   },
   reducers: {},

@@ -8,4 +8,5 @@ export type ICategory = {
   name: string
   description: string
   picture?: any
+  files?: boolean
 }

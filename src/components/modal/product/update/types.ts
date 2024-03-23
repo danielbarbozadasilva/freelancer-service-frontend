@@ -55,6 +55,7 @@ export interface IFormSend {
   deliveryTime: number
   features: string[]
   price: string
+  files?: boolean
 }
 
 export interface IProductById {

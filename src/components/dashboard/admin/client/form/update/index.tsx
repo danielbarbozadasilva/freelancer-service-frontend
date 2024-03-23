@@ -47,7 +47,8 @@ const FormClientUpdate: React.FC<FormClientUpdateProps> = ({ submit, data }) => 
       phone: form.phone,
       description: form.description,
       password: form?.password || null,
-      isSeller: form.isSeller
+      isSeller: form.isSeller,
+      files: true
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
