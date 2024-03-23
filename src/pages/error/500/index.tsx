@@ -15,7 +15,7 @@ const Error500: React.FC<PageError> = ({ title }) => {
             <STextForm>Erro 500</STextForm>
             <h5>Ocorreu um erro no servidor interno.</h5>
             <br />
-            <h5>Por favor tente mais tarde!</h5>
+            <h5>Por favor tente novamente mais tarde!</h5>
           </SForm>
         </Col>
       </Row>

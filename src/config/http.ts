@@ -17,26 +17,33 @@ if (getToken()) {
 http.interceptors.response.use(
   (response) => response,
   (error) => {
-    switch (error.response.status) {
+    if (error?.code === 'ERR_NETWORK') {
+      navigate('/error500')
+    }
+
+    switch (error.response?.status) {
       case 401:
         if (getToken()) {
           logoutAction()
           navigate('/signin')
           toast.warning('Token temporário expirado!')
         }
-        return Promise.reject(error)
+        break
       case 403:
         navigate('/error403')
-        return Promise.reject(error)
+        break
       case 404:
         navigate('/error404')
-        return Promise.reject(error)
+        break
       case 500:
         navigate('/error500')
-        return Promise.reject(error)
+        break
       default:
-        return Promise.reject(error)
+        break
     }
+    
+    window.location.reload()
+    return Promise.reject(error)
   }
 )
 
