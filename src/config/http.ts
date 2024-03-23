@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { getToken } from './auth'
-import store from '../store'
 import { logoutAction } from '../store/auth/auth.action'
-import { logoutUser } from '../store/auth/auth.reducer'
-import { useNavigate } from 'react-router-dom'
+import { navigate } from '@reach/router'
+import { toast } from 'react-toastify'
 
 const http = axios.create({
   baseURL: process.env.REACT_APP_API
 })
 
 http.defaults.headers['content-type'] = 'application/json'
+
 if (getToken()) {
   http.defaults.headers.token = getToken()
 }
@@ -17,13 +17,12 @@ if (getToken()) {
 http.interceptors.response.use(
   (response) => response,
   (error) => {
-    const navigate = useNavigate()
     switch (error.response.status) {
-      
       case 401:
-        if (!getToken()) {
+        if (getToken()) {
           logoutAction()
-          store.dispatch(logoutUser())
+          navigate('/signin')
+          toast.warning('Token temporário expirado!')
         }
         return Promise.reject(error)
       case 403:
