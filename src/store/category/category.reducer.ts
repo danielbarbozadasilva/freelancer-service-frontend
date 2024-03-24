@@ -24,7 +24,7 @@ export const slice = createSlice({
       })
       .addCase(listAllCategoryAction.fulfilled, (state, action) => {
         state.loading = false
-        state.all = action.payload.data
+        state.all = action?.payload?.data
       })
       .addCase(listAllCategoryAction.rejected, (state, action) => {
         state.loading = false

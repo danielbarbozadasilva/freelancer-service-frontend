@@ -19,9 +19,6 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
 
   const handleChange = (props: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = props.target
-    console.log(name);
-    console.log(value);
-    
     const message = fieldValidate(name, value, form)
     setFormValidate({ ...formValidate, [name]: message })
     setForm({
@@ -35,8 +32,8 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
     setCountry(localization)
   }, [])
 
-  const previewImg = ({ target }: any) => {
-    const picture = target.files[0]
+  const previewImg = (event: ChangeEvent<HTMLInputElement>) => {
+    const picture = event.target.files?.length? event.target.files[0] : ''
     setFile(picture);
   }
 
@@ -53,9 +50,8 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
       country: form.country,
       phone: form.phone,
       description: form.description,
-      isSeller: form.isSeller,
+      isSeller: Boolean(form.isSeller),
       password: form.password,
-      confirmPassword: form.confirmPassword
     }
 
     Object.keys(newForm).map((k) => formData.append(k, newForm[k]))
@@ -214,8 +210,8 @@ const SignUp: React.FC<PageType> = ({ submit }) => {
                 id: 'outlined-native-simple'
               }}
             >
-              <option value={false}>Cliente</option>
-              <option value={true}>Freelancer</option>
+              <option value="0">Cliente</option>
+              <option value="1">Freelancer</option>
             </Select>
           </div>
         </SFormGroup>

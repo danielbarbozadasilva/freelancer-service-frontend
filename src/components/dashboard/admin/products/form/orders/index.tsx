@@ -4,14 +4,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DataList from '../../../../datagrid/index';
+import DataListComponent from '../../../../datalist/index';
 import { ListOrdersProps } from './types';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColumns } from '@mui/x-data-grid';
 
 const ListOrders: React.FC<ListOrdersProps> = ({ open, close, orders }) => {
-  const columnOrder: GridColDef[] = [
+  const columns: GridColumns = [
     {
-      field: 'payment_intent',
+      field: 'id',
       headerName: 'Código',
       align: 'center',
       headerAlign: 'center',
@@ -43,9 +43,9 @@ const ListOrders: React.FC<ListOrdersProps> = ({ open, close, orders }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Serviço</DialogTitle>
+      <DialogTitle id="alert-dialog-title">Pedidos</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
-        <DataList data={orders} columns={columnOrder} loading={false} />
+        <DataListComponent data={orders} columns={columns} loading={false} />
       </DialogContent>
       <DialogActions>
         <Button onClick={close} color="primary" autoFocus>

@@ -1,4 +1,4 @@
-export interface IProps { 
-    title: string
-    onClick: () => void 
+export interface IProps {
+  title: string
+  onClick: () => void
 }

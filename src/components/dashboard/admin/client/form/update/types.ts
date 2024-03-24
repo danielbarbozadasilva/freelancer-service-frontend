@@ -20,7 +20,7 @@ export interface IUser {
       token: string,
       date: Date
     },
-    isSeller?: boolean
-    files?: {},
-    password?: string
+    isSeller: boolean
+    files?: boolean,
+    password?: string | null
   }

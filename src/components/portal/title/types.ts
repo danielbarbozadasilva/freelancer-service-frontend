@@ -1,4 +1,4 @@
 export interface TitleSectionProps {
-    title: string;
-    actions: any
+  text: string
+  actions: any
 }

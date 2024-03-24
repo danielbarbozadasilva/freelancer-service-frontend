@@ -12,8 +12,9 @@ const SignUp: React.FC<PageTitle> = ({ title }) => {
   const navigate = useNavigate()
 
   const submitForm = async (form: TypeSignUp) => {
-    dispatch(signUpAction(form))
-    navigate('/')
+    dispatch(signUpAction(form)).then(() => {
+      navigate('/signin')
+    })
   }
 
   return (

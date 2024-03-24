@@ -40,7 +40,7 @@ export interface IOrder {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -55,7 +55,7 @@ export interface IOrder {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -86,13 +86,11 @@ export interface ISignUp {
   email: string
   cpf: string
   birthDate: string
-  picture?: string
   country: string
   phone: string
   description: string
   isSeller: boolean
   password: string
-  confirmPassword: string
 }
 
 export interface IMessage {
@@ -111,7 +109,7 @@ export interface IProduct {
   userId: string
 }
 
-export interface IProductCreate{
+export interface IProductCreate {
   title: string
   description: string
   category: string
@@ -122,22 +120,22 @@ export interface IProductCreate{
 }
 
 export interface ICategory {
-  id: string
   name: string
   description: string
   picture: string
 }
 
-export interface IClient {
+export interface IUserSendDataInterface {
   name: string
   username: string
   email: string
   cpf: string
   birthDate: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string
+  permissions: string[]
   isSeller: boolean
 }
 

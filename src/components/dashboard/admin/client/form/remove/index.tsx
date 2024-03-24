@@ -5,14 +5,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { IRemoveProps } from './types';
 
-interface RemoveProps {
-  open: boolean;
-  remove: () => void;
-  close: () => void;
-}
-
-const Remove: React.FC<RemoveProps> = ({ open, remove, close }) => {
+const Remove: React.FC<IRemoveProps> = ({ open, remove, close }) => {
   return (
     <div>
       <Dialog

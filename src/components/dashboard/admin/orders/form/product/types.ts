@@ -21,3 +21,19 @@ interface IProduct {
     rating?: Rating
   }
 }
+
+interface Category {
+  id: string
+  name: string
+  description: string
+  picture: string
+}
+
+interface Rating {
+  id: string
+  name: string
+  text: string
+  score: number
+  productId: string
+  userId: string
+}

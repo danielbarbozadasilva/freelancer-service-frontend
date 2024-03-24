@@ -7,12 +7,13 @@ import {
   removeProductService
 } from '../../services/product.service'
 import { Filters, IProductSend, IProductSendUpdate } from './types'
+import { toast } from 'react-toastify'
 
 export const listAllProductsAction = createAsyncThunk(
   'product/listAll',
   async (filters: Filters) => {
     try {
-      const result = await listAllProductsService(filters)            
+      const result = await listAllProductsService(filters)
       return result.data.data
     } catch (error) {}
   }
@@ -37,21 +38,23 @@ export const createProductAction = createAsyncThunk(
           'Content-Type': 'multipart/form-data'
         }
       }
-      await createProductService(data, config)
+      const result = await createProductService(data, config)
+      toast.success(`${result.data.message}`)
     } catch (error) {}
   }
 )
 
 export const updateProductAction = createAsyncThunk(
   'product/update',
-  async (result: IProductSendUpdate) => {
+  async (product: IProductSendUpdate) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      await updateProductService(result.id, result.data, config)
+      const result = await updateProductService(product.id, product.data, config)
+      toast.success(`${result.data.message}`)
     } catch (error) {}
   }
 )
@@ -60,7 +63,8 @@ export const removeProductAction = createAsyncThunk(
   'product/remove',
   async (id: string) => {
     try {
-      await removeProductService(id)
+      const result = await removeProductService(id)
+      toast.success(`${result.data.message}`)
     } catch (error) {}
   }
 )

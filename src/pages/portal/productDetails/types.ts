@@ -1,6 +1,6 @@
 export interface Filters {
   userId: string
-  category: string 
+  category: string
   offset: number
   limit: number
   search: string
@@ -11,25 +11,18 @@ export type PageTitle = {
 }
 
 export interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  cpf: string;
-  birthDate: Date;
-  picture: string[];
-  country: string;
-  phone: string;
-  description: string;
-  permissions: string[];
-  isSeller: boolean;
-}
-
-export interface ICategory {
   id: string
   name: string
-  description: string
+  username: string
+  email: string
+  cpf: string
+  birthDate: Date
   picture: string
+  country: string
+  phone: string
+  description: string
+  permissions: string[]
+  isSeller: boolean
 }
 
 interface IUser {
@@ -39,7 +32,7 @@ interface IUser {
   email: string
   cpf: string
   Date: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string
@@ -47,7 +40,14 @@ interface IUser {
   isSeller: boolean
 }
 
-export interface IProduct {
+export interface ICategory {
+  _id: string
+  name: string
+  description: string
+  picture: string
+}
+
+export interface IProductById {
   id: string
   title: string
   description: string
@@ -62,14 +62,14 @@ export interface IProduct {
 }
 
 export interface IRating {
-  name: string;
-  text: string;
-  score: number;
-  productId: string;
-  userId: string;
+  name: string
+  text: string
+  score: number
+  productId: string
+  userId: string
 }
 
 export interface IResultRating {
-  result: IRating[];
-  averageScore: number;
+  result: IRating[]
+  averageScore: number
 }

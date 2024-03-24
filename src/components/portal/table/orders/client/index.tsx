@@ -12,8 +12,9 @@ import { IMessage, IOrder } from '../types'
 import TableButton from '../../../button/table'
 import { Std } from './styled'
 import { navigate } from '@reach/router'
-import { createConversationAction } from '../../../../../store/conversation/conversation.action'
+import { createConversationAction, listByIdConversationAction } from '../../../../../store/conversation/conversation.action'
 import { createMessageAction } from '../../../../../store/message/message.action'
+import { IDataConversation } from '../types'
 
 const TableOrdersClient: React.FC = () => {
   const orderByUser: IOrder[] = useAppSelector((state) => state.order.orderByUser)
@@ -29,27 +30,34 @@ const TableOrdersClient: React.FC = () => {
   const handlerChat = (order: IOrder) => {
     if (order.user && order.buyer) {
       let dataMessage: IMessage
-      let dataConversation = {
+      let dataConversation: IDataConversation = {
         isSeller: order.user.isSeller,
         userId: order.user._id,
         to: order.buyer._id
       }      
-      dispatch(createConversationAction(dataConversation)).then((item) => {
-        if (order.user) {
-          dataMessage = {
-            conversationId: item.payload.data._id,
-            userId: order.user._id,
-            description: 'Olá! Bem vindo ao chat, aqui você pode interagir melhor com o Freelancer e tirar todas as suas dúvidas.',
-            isSeller: order.user.isSeller
-          }
-        }
-        dispatch(createMessageAction(dataMessage)).then(() => {
-          navigate(`message/${dataMessage.conversationId}`)
+      dispatch(listByIdConversationAction({ userId: dataConversation.userId, buyerId: dataConversation.to })).then((resp) => {
+        if (resp.payload?.data?.length) {
+          navigate(`message/${resp.payload.data[0]._id}`)
           navigate(0)
-        })
+        } else {
+          dispatch(createConversationAction(dataConversation)).then((item) => {
+            if (order.user) {
+              dataMessage = {
+                conversationId: item.payload.data._id,
+                userId: order.user._id,
+                description: 'Olá! Bem vindo ao chat, aqui você pode interagir melhor com o Freelancer e tirar todas as suas dúvidas.',
+                isSeller: order.user.isSeller
+              }
+            }
+          dispatch(createMessageAction(dataMessage)).then(() => {
+            navigate(`message/${dataMessage.conversationId}`)
+            navigate(0)
+          })
       })
-    }
+      }
+    })
   }
+}
 
   return (
     <>
@@ -103,7 +111,7 @@ const TableOrdersClient: React.FC = () => {
               <p><strong>Data/Hora: </strong>{String(selectedOrder?.createdAt)}</p>
               <p><strong>Transação finalizada: </strong>{selectedOrder?.isCompleted ? 'Sim' : 'Não'}</p>
               <p><strong>Código do Pagamento: </strong>{selectedOrder?.payment_intent}</p>
-              <p><strong>Descrição do Pedido: </strong>{selectedOrder?.description}</p>
+              <p style={{ wordWrap: 'break-word' }}><strong>Descrição do Pedido: </strong>{selectedOrder?.description}</p>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={() => setModal(!modal)}>

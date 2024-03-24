@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { Button, FormControl } from '@material-ui/core'
 
-export const Image = styled.img`
-  width: 120px;
-  height: 70px;
+export const SImage = styled.img`
+  width: 180px;
+  height: 130px;
   border-radius: 5%;
   object-fit: cover;
 `
@@ -11,7 +11,7 @@ export const Image = styled.img`
 export const SPreview = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 25px;
+  margin: 0px auto;
 `
 
 export const Submit = styled.div`
@@ -30,14 +30,27 @@ export const SBox = styled.div`
 `
 
 export const SFormControl = styled(FormControl)`
-  display: flex!important;
-  margin-top: 30px!important;
+  display: flex !important;
+  margin-top: 30px !important;
+`
+
+export const SButtonUpload = styled(Button)`
+  padding: 10px 0px;
+  background-color: #4f5d73 !important;
+  color: white !important;
+  :hover {
+    background-color: #5c6abc;
+  }
+  :disabled {
+    background-color: #dddddd;
+  }
 `
 
 export const SButton = styled(Button)`
-  margin-top: 40px!important;
-  background-color: #303f9f!important;
-  color: white!important;
+  padding: 10px 0px;
+  margin-top: 20px!important;
+  background-color: #4f5d73 !important;
+  color: white !important;
   :hover {
     background-color: #5c6abc;
   }

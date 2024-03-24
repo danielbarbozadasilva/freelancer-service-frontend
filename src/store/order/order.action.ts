@@ -19,7 +19,7 @@ export const listAllOrdersAction = createAsyncThunk(
 
 export const listByIdUserOrdersAction = createAsyncThunk(
   'order/listById',
-  async (data: IUser) => {
+  async (data: IUser) => {    
     try {
       const result = await listByIdUserOrdersService(data.id, data.isSeller)
       return result.data

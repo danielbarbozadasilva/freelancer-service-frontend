@@ -13,7 +13,7 @@ export const ContainerImage = styled.div`
 export const STextFormated = styled.div`
   margin-top: 70px;
   margin-bottom: 30px;
-  margin-left: 180px;
+  margin-left: 70px;
 `
 
 export const ContainerCards = styled.div`

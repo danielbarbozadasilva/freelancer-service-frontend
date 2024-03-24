@@ -5,7 +5,7 @@ import {
   listByIdConversationService,
   updateConversationService
 } from '../../services/conversation.service'
-import { IDataSend, IDataSendUpdate } from './types'
+import { IDataList, IDataSend, IDataSendUpdate } from './types'
 
 export const listAllConversationAction = createAsyncThunk(
   'conversation/listAll',
@@ -19,9 +19,9 @@ export const listAllConversationAction = createAsyncThunk(
 
 export const listByIdConversationAction = createAsyncThunk(
   'conversation/listById',
-  async (id: string) => {
+  async (data: IDataList) => {
     try {
-      const result = await listByIdConversationService(id)
+      const result = await listByIdConversationService(data.userId, data.buyerId)
       return result.data
     } catch (error) {}
   }

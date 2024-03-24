@@ -32,7 +32,7 @@ const Home: React.FC<PageTitle> = ({ title }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const product: IProduct[] =  useAppSelector((state) => state.product.all)
+  const product: IProduct[] = useAppSelector((state) => state.product.all)
   const category: ICategory[] = useAppSelector((state) => state.category.all)
   const loading: boolean = useAppSelector((state) => state.category.loading)
   const [itensPerPage, setItensPerPage] = React.useState<number>(5)
@@ -46,7 +46,8 @@ const Home: React.FC<PageTitle> = ({ title }) => {
         offset: currentPage,
         limit: itensPerPage,
         search: search,
-        order: ''
+        order: '',
+        userId: ''
       }
       dispatch(listAllProductsAction(filters))
     }
@@ -57,7 +58,7 @@ const Home: React.FC<PageTitle> = ({ title }) => {
   }, [dispatch])
 
   const CategoryList: React.FC<ICategory[]> = (category) => {
-    return category?.map((item: ICategory, i: number) => {
+    return category?.length && category.map((item: ICategory, i: number) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>
           <CardCategory item={item} />
@@ -71,7 +72,7 @@ const Home: React.FC<PageTitle> = ({ title }) => {
   }
 
   const ProductList: React.FC<IProduct[]> = (product) => {
-    return product.map((item: any, i: number) => {
+    return product?.length && product.map((item: any, i: number) => {
       return (
         <Col md="6" xl="4" sm="12" xs="12" key={i}>
           <ProductCard item={{ ...item }} />
@@ -80,7 +81,10 @@ const Home: React.FC<PageTitle> = ({ title }) => {
     })
   }
 
-  const pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
+  let pages: number = 0
+  if (product?.length) {
+    pages = Math.ceil(product[0]?.metadata || 0 / itensPerPage)
+  }
 
   return (
     <>
@@ -96,9 +100,8 @@ const Home: React.FC<PageTitle> = ({ title }) => {
         <br />
         <h4>Encontre profissionais talentosos para...</h4>
       </STextInvest>
-      {!loading && product?.length === 0 ? (
-        <></>
-      ) : (
+      
+      {!loading && product?.length !== 0 ? (
         <>
           <ContainerCards>{ProductList(product)}</ContainerCards>
           <SContainerPagination>
@@ -114,13 +117,15 @@ const Home: React.FC<PageTitle> = ({ title }) => {
             />
           </SContainerPagination>
         </>
+      ) : (
+        <></>
       )}
 
       <ContainerAssets>
-        {!loading && category?.length === 0 ? (
-          <h6>Não há categorias disponiveis</h6>
-        ) : (
+        {!loading && category?.length !== 0 ? (
           <Slider {...settings}>{CategoryList(category)}</Slider>
+        ) : (
+          <h6>Não há categorias disponiveis</h6>
         )}
       </ContainerAssets>
 
@@ -149,9 +154,7 @@ const Home: React.FC<PageTitle> = ({ title }) => {
 
       <SContainerAbout>
         <STitleAbout>Opiniões Dos Nossos Clientes</STitleAbout>
-        <SubTitleAbout>
-          O que acham da nossa plataforma...
-        </SubTitleAbout>
+        <SubTitleAbout>O que acham da nossa plataforma...</SubTitleAbout>
         <CardAbout />
       </SContainerAbout>
     </>

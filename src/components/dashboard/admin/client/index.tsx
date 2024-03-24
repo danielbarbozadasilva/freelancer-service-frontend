@@ -1,48 +1,64 @@
-import React from 'react';
-import { BoxTable } from '../../datalist/styled';
-import Loading from '../../../../components/loading/page/index';
-import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
-import { FiTrash2, FiEdit } from 'react-icons/fi';
-import { IconButton, Tooltip } from '@mui/material';
-import { DataListProps } from './form/types';
+import React from 'react'
+import Loading from '../../../../components/loading/page/index'
+import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
+import { FiTrash2, FiEdit } from 'react-icons/fi'
+import { IconButton, Tooltip } from '@mui/material'
+import { DataListProps } from './form/types'
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs'
-import { useAppDispatch } from '../../../../hooks';
-import { updateClientSellerAction } from '../../../../store/client/client.action';
+import { useAppDispatch } from '../../../../hooks'
+import { updateUserSellerAction } from '../../../../store/user/user.action'
+import { navigate } from '@reach/router'
+import DataListComponent from '../../datalist'
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   const dispatch = useAppDispatch()
 
   const toggleActive = (id: string, status: boolean) => {
-      dispatch(updateClientSellerAction({ id, isSeller: !status }))
+    dispatch(updateUserSellerAction({ id, isSeller: !status })).then(() => {
+      navigate(0)
+    })
   }
 
   const actionModal = (params: GridRenderCellParams) => {
     return (
       <>
         <Tooltip title={params.row?.isSeller ? 'Desativar' : 'Ativar'}>
-          <IconButton onClick={() => toggleActive(String(params.id), params.row?.isSeller)} color="primary">
+          <IconButton
+            onClick={() =>
+              toggleActive(String(params.id), params.row?.isSeller)
+            }
+            color="primary"
+          >
             {!params.row?.isSeller ? <BsToggleOff /> : <BsToggleOn />}
           </IconButton>
         </Tooltip>
       </>
-    );
-  };
+    )
+  }
 
   const actionEdit = (params: GridRenderCellParams) => {
     return (
-      <IconButton onClick={() => modal(1, params.row.id)} color="primary" size="small">
+      <IconButton
+        onClick={() => modal(1, params.row.id)}
+        color="primary"
+        size="small"
+      >
         <FiEdit />
       </IconButton>
-    );
-  };
-  
+    )
+  }
+
   const actionRemove = (params: GridRenderCellParams) => {
     return (
-      <IconButton onClick={() => modal(2, params.row.id)} color="primary" size="small">
+      <IconButton
+        onClick={() => modal(2, params.row.id)}
+        color="primary"
+        size="small"
+      >
         <FiTrash2 />
       </IconButton>
-    );
-  };
+    )
+  }
 
   const columns: GridColumns = [
     {
@@ -51,7 +67,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'username',
@@ -59,15 +75,15 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'email',
       headerName: 'E-mail',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
-      disableColumnMenu: true,
+      width: 280,
+      disableColumnMenu: true
     },
     {
       field: 'cpf',
@@ -75,7 +91,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'birthDate',
@@ -83,7 +99,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'phone',
@@ -91,7 +107,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       align: 'center',
       headerAlign: 'center',
       flex: 1,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'actionEdit',
@@ -100,7 +116,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'actionRemove',
@@ -109,7 +125,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       flex: 1,
       align: 'center',
       headerAlign: 'center',
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'actions',
@@ -118,25 +134,17 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       width: 140,
       disableColumnMenu: true
     }
-  ];
+  ]
 
   if (loading) {
-    return <Loading />;
+    return <Loading />
   }
 
   return (
     <>
-      <BoxTable>
-        <DataGrid
-          rows={data}
-          autoHeight
-          columns={columns}
-          loading={loading}
-          pageSize={10}
-        />
-      </BoxTable>
+      <DataListComponent data={data} columns={columns} loading={loading} />
     </>
-  );
-};
+  )
+}
 
-export default DataList;
+export default DataList

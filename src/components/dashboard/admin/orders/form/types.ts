@@ -36,7 +36,7 @@ interface IOrders {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string
@@ -51,7 +51,7 @@ interface IOrders {
     email: string
     cpf: string
     birthDate: Date
-    picture: string[]
+    picture: string
     country: string
     phone: string
     description: string

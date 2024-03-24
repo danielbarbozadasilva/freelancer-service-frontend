@@ -1,5 +1,5 @@
 export interface Props {
-    data: {
-      images: string[];
-    };
+  data: {
+    images: string[]
+  }
 }

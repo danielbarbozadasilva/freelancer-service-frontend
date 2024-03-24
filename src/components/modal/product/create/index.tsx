@@ -8,11 +8,11 @@ import {
   InputLabel,
   MenuItem
 } from '@material-ui/core'
-import { SBox, Image, SButton, SPreview, SFormControl } from '../styled'
+import { SBox, SImage, SButton, SPreview, SFormControl } from '../styled'
 import {
   fieldValidate,
   isNotValid
-} from '../../../../util/validations/form-service'
+} from '../../../../util/validations/form-product'
 import {
   formatPriceField,
   formatObjectURL,
@@ -105,7 +105,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
                 {preview?.map((item) => {
                   return (
                     <SPreview>
-                      <Image src={formatObjectURL(item)} />
+                      <SImage src={formatObjectURL(item)} />
                       <Button onClick={() => removeImage(item)}>Remover</Button>
                     </SPreview>
                   )
@@ -246,7 +246,7 @@ const FormCreateProduct: React.FC<IProps> = ({ submit }) => {
           <Grid item xs={12}>
             <SButton
               fullWidth
-              type="submit"
+              type="button"
               disabled={isNotValid(form, formValidate)}
               onClick={submitForm}
             >

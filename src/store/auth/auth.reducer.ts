@@ -8,7 +8,6 @@ export const slice = createSlice({
     loading: false,
     token: '',
     user: getUser(),
-    clientid: '',
     userid: '',
     error: '',
     registered: false

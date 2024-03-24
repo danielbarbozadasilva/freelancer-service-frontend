@@ -4,6 +4,11 @@ export type IDataSend = {
   to?: string
 }
 
+export type IDataList = {
+  buyerId: string
+  userId: string
+}
+
 export type IDataSendUpdate = {
   isSeller: boolean
   id: string
@@ -16,7 +21,7 @@ export interface User {
   email: string;
   cpf: string;
   birthDate: Date;
-  picture: string[];
+  picture: string;
   country: string;
   phone?: string;
   description?: string;

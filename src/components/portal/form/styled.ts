@@ -30,14 +30,14 @@ export const SBox = styled.div`
 `
 
 export const SFormControl = styled(FormControl)`
-  display: flex!important;
-  margin-top: 30px!important;
+  display: flex !important;
+  margin-top: 30px !important;
 `
 
 export const SButton = styled(Button)`
-  margin-top: 40px!important;
-  background-color: #303f9f!important;
-  color: white!important;
+  margin-top: 40px !important;
+  background-color: #303f9f !important;
+  color: white !important;
   :hover {
     background-color: #5c6abc;
   }

@@ -1,20 +1,30 @@
 import React, { useState } from 'react'
-import { BoxTable } from '../../datalist/styled'
 import Loading from '../../../../components/loading/page/index'
-import { DataGrid, GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
+import DataListComponent from '../../datalist/index'
 import { IconButton, Tooltip } from '@mui/material'
 import { More as MoreIcon } from '@mui/icons-material'
-import { IOrdersModal, IUserModal, IClientModal, IRatingModal, DataListProps, IOrders, IClient, IUser, IRating } from './types'
+import {
+  IOrdersModal,
+  IUserModal,
+  IClientModal,
+  IRatingModal,
+  DataListProps,
+  IOrders,
+  IClient,
+  IUser,
+  IRating
+} from './types'
 import ListOrders from './form/orders'
 import ListFreelancer from './form/freelancer'
 import ListClient from './form/client'
 import ListRating from './form/rating'
+import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
 
 const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
-  const [modalOrders, setModalOrders] = useState<IOrdersModal>();
-  const [modalRating, setModalRating] = useState<IRatingModal>();
-  const [modalFreelancer, setModalFreelancer] = useState<IUserModal>();
-  const [modalClient, setModalClient] = useState<IClientModal>();
+  const [modalOrders, setModalOrders] = useState<IOrdersModal>()
+  const [modalRating, setModalRating] = useState<IRatingModal>()
+  const [modalFreelancer, setModalFreelancer] = useState<IUserModal>()
+  const [modalClient, setModalClient] = useState<IClientModal>()
 
   function openRating(row: IRating[]) {
     setModalRating({ open: true, data: row })
@@ -90,14 +100,13 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
   }
 
   const actionModalOrders = (params: GridRenderCellParams) => {
-    const result: IOrders = params.row.orders
     return (
       <>
         <Tooltip title="Pedidos">
           <span>
             <IconButton
-              onClick={() => openOrders(Array(result))}
-              disabled={result?.id ? false : true}
+              onClick={() => openOrders(params.row.orders)}
+              disabled={params.row.orders?.length > 0 ? false : true}
               color="primary"
             >
               <MoreIcon />
@@ -114,7 +123,7 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
       headerName: 'Título',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
+      width: 300,
       disableColumnMenu: true
     },
     {
@@ -177,34 +186,34 @@ const DataList: React.FC<DataListProps> = ({ data, modal, loading }) => {
 
   return (
     <>
-      <BoxTable>
-        <DataGrid
-          rows={data}
-          autoHeight
-          columns={columns}
-          loading={loading}
-          pageSize={10}
-        />
-      </BoxTable>
+      <DataListComponent data={data} columns={columns} loading={loading} />
       <ListOrders
         open={modalOrders?.open || false}
         orders={modalOrders?.data as IOrders[]}
-        close={() => setModalOrders({ ...modalOrders, open: false } as IOrdersModal)}
+        close={() =>
+          setModalOrders({ ...modalOrders, open: false } as IOrdersModal)
+        }
       />
       <ListFreelancer
         open={modalFreelancer?.open || false}
         user={modalFreelancer?.data as IUser[]}
-        close={() => setModalFreelancer({ ...modalFreelancer, open: false } as IUserModal)}
+        close={() =>
+          setModalFreelancer({ ...modalFreelancer, open: false } as IUserModal)
+        }
       />
       <ListClient
         open={modalClient?.open || false}
         client={modalClient?.data as IClient[]}
-        close={() => setModalClient({ ...modalClient, open: false } as IClientModal)}
+        close={() =>
+          setModalClient({ ...modalClient, open: false } as IClientModal)
+        }
       />
       <ListRating
         open={modalRating?.open || false}
         rating={modalRating?.data as IRating[]}
-        close={() => setModalRating({ ...modalRating, open: false } as IRatingModal)}
+        close={() =>
+          setModalRating({ ...modalRating, open: false } as IRatingModal)
+        }
       />
     </>
   )

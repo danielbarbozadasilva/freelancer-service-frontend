@@ -4,8 +4,9 @@ export interface FormCategoryUpdateProps {
 }
 
 export type ICategory = {
-  id: string
+  id?: string
   name: string
   description: string
-  picture: any
+  picture?: any
+  files?: boolean
 }

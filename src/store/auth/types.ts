@@ -9,11 +9,9 @@ export interface ISignUp {
   email: string
   cpf: string
   birthDate: string
-  picture?: string
   country: string
   phone: string
   description: string
   isSeller: boolean
   password: string
-  confirmPassword: string
 }

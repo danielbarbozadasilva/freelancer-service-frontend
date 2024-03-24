@@ -14,7 +14,7 @@ interface User {
   email: string
   cpf: string
   birthDate: Date
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string
@@ -94,7 +94,7 @@ interface IUser {
   email: string
   cpf: string
   Date: string
-  picture: string[]
+  picture: string
   country: string
   phone: string
   description: string
@@ -103,7 +103,7 @@ interface IUser {
 }
 
 export interface ICategory {
-  id: string
+  _id: string
   name: string
   description: string
   picture: string

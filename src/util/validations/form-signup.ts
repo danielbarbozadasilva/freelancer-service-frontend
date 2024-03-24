@@ -34,8 +34,10 @@ export function fieldValidate(name: any, value: any, form: any) {
         message += 'Não pode conter números!'
       } else if (value.trim() === '') {
         message += 'Não pode ser vazio!'
-      } else if (value.length <= 4) {
+      } else if (value.length <= 5) {
         message += 'Acima de 4 caracteres!'
+      } else if (value.length >= 30) {
+        message += 'Abaixo de 30 caracteres!'
       }
       break
 
@@ -96,8 +98,10 @@ export function fieldValidate(name: any, value: any, form: any) {
       break
 
     case 'password':
-      if (value.length < 6) {
-        message += 'Acima de 6 caracteres!'
+      if (value.length < 4) {
+        message += 'Acima de 4 caracteres!'
+      } else if (value.length >= 20) {
+        message += 'Abaixo de 20 caracteres!'
       }
       break
 

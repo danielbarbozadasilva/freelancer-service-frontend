@@ -14,4 +14,4 @@ export const STextForm = styled.h2`
   padding-left: 10px;
   border-left: 1px solid #484058;
   margin: 30px 0px 50px 0px;
-  `
+`

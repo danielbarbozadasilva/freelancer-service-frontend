@@ -15,21 +15,6 @@ interface Rating {
   userId: string;
 }
 
-interface User {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  cpf: string;
-  birthDate: string;
-  picture: string;
-  country: string;
-  phone: string;
-  description: string;
-  permissions: string[];
-  isSeller: boolean;
-}
-
 interface Category {
   id: string;
   name: string;

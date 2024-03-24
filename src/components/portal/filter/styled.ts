@@ -16,3 +16,7 @@ export const SBox = styled.div`
 export const STitle = styled.h5`
   padding: 10px 0px;
 `
+
+export const SOrderContainer = styled.div`
+  width: 260px;
+`

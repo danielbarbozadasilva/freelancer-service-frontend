@@ -4,19 +4,18 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import DataList from '../../../../../dashboard/datagrid/index'
 import { ListProductProps } from './types'
-import { GridColDef } from '@mui/x-data-grid'
+import { GridColumns } from '@mui/x-data-grid'
+import DataListComponent from '../../../../datalist'
 
 const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
-  const columnProduct: GridColDef[] = [
+  const columns: GridColumns = [
     {
       field: 'title',
       headerName: 'Nome',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
-      width: 500,
+      width: 280,
       disableColumnMenu: true
     },
     {
@@ -24,8 +23,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerName: 'Preço',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
-      width: 340,
+      width: 100,
       disableColumnMenu: true
     },
     {
@@ -33,8 +31,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerName: 'Entrega',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
-      width: 340,
+      width: 80,
       disableColumnMenu: true
     },
     {
@@ -42,8 +39,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
       headerName: 'Vendas',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
-      width: 340,
+      width: 80,
       disableColumnMenu: true
     }
   ]
@@ -57,7 +53,7 @@ const ListProduct: React.FC<ListProductProps> = ({ open, close, products }) => {
     >
       <DialogTitle id="alert-dialog-title">Lista de serviços</DialogTitle>
       <DialogContent style={{ width: '600px' }}>
-        <DataList data={products} columns={columnProduct} loading={false} />
+        <DataListComponent data={products} columns={columns} loading={false} />
       </DialogContent>
       <DialogActions>
         <Button onClick={close} color="primary" autoFocus>

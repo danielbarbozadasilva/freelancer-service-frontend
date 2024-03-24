@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
 import {
   listAllCategoryAction,
   listCategoryByIdAction,
@@ -8,7 +7,7 @@ import {
   removeCategoryAction
 } from '../../../../store/category/category.action'
 import Title from '../../../../components/dashboard/title/index'
-import DataList from '../../../../components/dashboard/admin/category/index'
+import DataListComponent from '../../../../components/dashboard/admin/category/index'
 import DialogModal from '../../../../components/dialog/index'
 import FormCategoryRegister from '../../../../components/dashboard/admin/category/form/register/index'
 import FormCategoryUpdate from '../../../../components/dashboard/admin/category/form/update/index'
@@ -45,19 +44,26 @@ const Category: React.FC<CategoryProps> = (props) => {
   const submitForm = async (formData: FormData): Promise<void> => {
     switch (modal.type) {
       case 1:
-        dispatch(createCategoryAction(formData))
-        setModal({ status: false })
+        dispatch(createCategoryAction(formData)).then(() => {
+          setModal({ status: false })
+          dispatch(listAllCategoryAction())
+        })
+
         break
 
       case 2:
-        dispatch(updateCategoryAction({ id: modal.id, data: formData }))
-        setModal({ status: false })
+        dispatch(updateCategoryAction({ id: modal.id, data: formData })).then(() => {
+            setModal({ status: false })
+            dispatch(listAllCategoryAction())
+          }
+        )
         break
 
       case 3:
-        dispatch(removeCategoryAction(modal.id))
-        setModal({ status: false })
-        dispatch(listAllCategoryAction())
+        dispatch(removeCategoryAction(modal.id)).then(() => {
+          setModal({ status: false })
+          dispatch(listAllCategoryAction())
+        })
         break
 
       default:
@@ -77,15 +83,15 @@ const Category: React.FC<CategoryProps> = (props) => {
     <>
       <Helmet title={props.title} />
       <Title title="Categorias" actions={actions} />
-      <Grid container spacing={2}>
-        <Grid item md={12} xl={12}>
-          {!category?.length ? (
-            <h6>Não há categorias disponiveis</h6>
-          ) : (
-            <DataList data={category} loading={loading} modal={toggleModal} />
-          )}
-        </Grid>
-      </Grid>
+      {!category?.length ? (
+        <h6>Não há categorias disponiveis</h6>
+      ) : (
+        <DataListComponent
+          data={category}
+          loading={loading}
+          modal={toggleModal}
+        />
+      )}
 
       <DialogModal
         title="Categoria"

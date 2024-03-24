@@ -30,7 +30,7 @@ export const slice = createSlice({
       })
       .addCase(listByIdConversationAction.fulfilled, (state, action) => {
         state.loading = false
-        state.single = action.payload.data
+        state.single = action?.payload?.data
       })
       .addCase(listByIdConversationAction.rejected, (state, action) => {
         state.loading = false
@@ -61,7 +61,5 @@ export const slice = createSlice({
       })
   }  
 })
-
-
-  
+ 
 export default slice.reducer
