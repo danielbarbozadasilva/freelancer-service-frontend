@@ -1,32 +1,32 @@
-import React, { ChangeEvent, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
-import { SForm, SButton } from './styled';
+import React, { ChangeEvent, useState } from 'react'
+import Form from 'react-bootstrap/Form'
+import Rating from '@mui/material/Rating'
+import Typography from '@mui/material/Typography'
+import { SForm, SButton } from './styled'
 import {
   fieldValidate,
   isNotValid
-} from '../../../../util/validations/form-rating';
-import Loading from '../../../loading/form/index';
-import { useAppSelector } from '../../../../hooks';
-import { ContainerFormProps, FormData, IUser } from './types';
+} from '../../../../util/validations/form-rating'
+import Loading from '../../../loading/form/index'
+import { useAppSelector } from '../../../../hooks'
+import { ContainerFormProps, FormData, IUser } from './types'
 
 const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
-  const [form, setForm] = useState({} as FormData);
-  const [formValidate, setFormValidate] = useState<Record<string, string>>({});
-  const [score, setScore] = useState<number>(4);
+  const [form, setForm] = useState({} as FormData)
+  const [formValidate, setFormValidate] = useState<Record<string, string>>({})
+  const [score, setScore] = useState<number>(4)
   const user: IUser = useAppSelector((state) => state.auth.user)
-  const loading: boolean = useAppSelector((state) => state.rating.loading);
+  const loading: boolean = useAppSelector((state) => state.rating.loading)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = event.target;
-    const message = fieldValidate(name, value);
-    setFormValidate({ ...formValidate, [name]: message });
+    const { value, name } = event.target
+    const message = fieldValidate(name, value)
+    setFormValidate({ ...formValidate, [name]: message })
     setForm({
       ...form,
       [name]: value
-    });
-  };
+    })
+  }
 
   const handleSubmit = () => {
     const nform: FormData = {
@@ -36,9 +36,8 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
       productId: id,
       userId: user.id
     }
-  
-    submit(nform);
-  };
+    submit(nform)
+  }
 
   return (
     <SForm>
@@ -54,7 +53,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
           placeholder="Insira o seu nome"
           isInvalid={!!formValidate.name}
         />
-        <Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
           {formValidate.name || ''}
         </Form.Control.Feedback>
       </Form.Group>
@@ -72,7 +71,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
           placeholder="Insira o seu comentário"
           isInvalid={!!formValidate.text}
         />
-        <Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
           {formValidate.text || ''}
         </Form.Control.Feedback>
       </Form.Group>
@@ -84,7 +83,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
         name="simple-controlled"
         value={score}
         onChange={(event, newValue) => {
-          newValue && setScore(newValue);
+          newValue && setScore(newValue)
         }}
       />
       {loading ? (
@@ -99,7 +98,7 @@ const ContainerForm: React.FC<ContainerFormProps> = ({ id, submit }) => {
         </SButton>
       )}
     </SForm>
-  );
+  )
 }
 
-export default ContainerForm;
+export default ContainerForm
