@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
   Button,
   DialogTitle,
   Dialog,
   DialogActions,
   DialogContent
-} from '@material-ui/core';
-import { DialogModalProps } from './types';
+} from '@material-ui/core'
+import { DialogModalProps } from './types'
 
 const DialogModal: React.FC<DialogModalProps> = ({ open, close, title, children }) => (
   <Dialog
@@ -23,6 +23,6 @@ const DialogModal: React.FC<DialogModalProps> = ({ open, close, title, children 
       </Button>
     </DialogActions>
   </Dialog>
-);
+)
 
-export default DialogModal;
+export default DialogModal

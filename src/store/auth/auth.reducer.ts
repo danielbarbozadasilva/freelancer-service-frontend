@@ -9,7 +9,6 @@ export const slice = createSlice({
     token: '',
     user: getUser(),
     userid: '',
-    userid: '',
     error: '',
     registered: false
   },

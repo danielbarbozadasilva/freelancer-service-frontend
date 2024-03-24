@@ -2,6 +2,7 @@ export interface IUserModal {
   open: boolean
   data: IUser[]
 }
+
 export interface IBuyerModal {
   open: boolean
   data: IBuyer[]

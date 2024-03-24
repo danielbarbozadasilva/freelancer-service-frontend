@@ -40,9 +40,6 @@ export const createCategoryAction = createAsyncThunk(
       }
       const result = await createCategoryService(category, config)
       toast.success(`${result.data.message}`)
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500)
       return true
     } catch (error: any) {
       toast.error(error.response.data.message)
@@ -61,10 +58,7 @@ export const updateCategoryAction = createAsyncThunk(
         }
       }
       const result = await updateCategoryService(category.id, category.data, config)
-      toast.success(`${result.data.message}`)
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500)     
+      toast.success(`${result.data.message}`)   
       return true
     } catch (error: any) {
       toast.error(error.response.data.message)

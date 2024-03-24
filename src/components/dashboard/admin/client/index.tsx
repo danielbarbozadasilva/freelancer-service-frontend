@@ -1,5 +1,4 @@
 import React from 'react'
-import { BoxTable } from '../../datalist/styled'
 import Loading from '../../../../components/loading/page/index'
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid'
 import { FiTrash2, FiEdit } from 'react-icons/fi'

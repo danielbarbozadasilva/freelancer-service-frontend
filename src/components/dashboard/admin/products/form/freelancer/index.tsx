@@ -1,14 +1,14 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DataListComponent from '../../../../../dashboard/datalist/index';
-import { ListFreelancerProps } from './types';
-import { GridColumns } from '@mui/x-data-grid';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import DataListComponent from '../../../../../dashboard/datalist/index'
+import { ListFreelancerProps } from './types'
+import { GridColumns } from '@mui/x-data-grid'
 
-const ListFreelancer: React.FC<ListFreelancerProps> = ({ open, close, user }) => {
+const ListFreelancer: React.FC<ListFreelancerProps> = ({open, close, user}) => {
   const columns: GridColumns = [
     {
       field: 'name',
@@ -16,7 +16,7 @@ const ListFreelancer: React.FC<ListFreelancerProps> = ({ open, close, user }) =>
       align: 'center',
       headerAlign: 'center',
       width: 150,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'email',
@@ -24,7 +24,7 @@ const ListFreelancer: React.FC<ListFreelancerProps> = ({ open, close, user }) =>
       align: 'center',
       headerAlign: 'center',
       width: 230,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     },
     {
       field: 'phone',
@@ -32,9 +32,9 @@ const ListFreelancer: React.FC<ListFreelancerProps> = ({ open, close, user }) =>
       align: 'center',
       headerAlign: 'center',
       width: 150,
-      disableColumnMenu: true,
+      disableColumnMenu: true
     }
-  ];
+  ]
 
   return (
     <Dialog
@@ -53,7 +53,7 @@ const ListFreelancer: React.FC<ListFreelancerProps> = ({ open, close, user }) =>
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default ListFreelancer;
+export default ListFreelancer

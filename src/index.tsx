@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import MainRoutes from './routers'
 import { ThemeProvider } from 'styled-components'
 import theme from './plugins/theme'
-  
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>

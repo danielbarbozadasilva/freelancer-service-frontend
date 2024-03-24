@@ -23,9 +23,7 @@ const CheckoutForm: React.FC = () => {
       return
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret'
-    )
+    const clientSecret = new URLSearchParams(window.location.search).get('payment_intent_client_secret')
 
     if (!clientSecret) {
       return

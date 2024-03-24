@@ -13,7 +13,7 @@ export type TypeSignUp = {
   email: string
   cpf: string
   birthDate: string
-  picture?: any,
+  picture?: any
   country: string
   phone: string
   description: string

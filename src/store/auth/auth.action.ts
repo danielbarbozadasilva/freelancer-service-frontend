@@ -12,10 +12,8 @@ export const signInAction = createAsyncThunk(
     try {
       const result = await authService(data)
       if (result?.data) {
-
         const { data } = result.data
         saveAuth(data)
-
         http.defaults.headers.token = data.token
       
         if (data.data.permissions.includes('admin')) {
@@ -23,13 +21,7 @@ export const signInAction = createAsyncThunk(
         } else {
           navigate('/')
         }
-
         toast.success(`${result.data.message} ${data.data.username}`)
-
-        setTimeout(() => {
-          window.location.reload()
-        }, 1500)
-
         return data
       }
     } catch (error: any) {
@@ -49,11 +41,6 @@ export const signUpAction = createAsyncThunk(
       }
       const result = await registerService(data, config)
       toast.success(`${result.data.message}`)
-
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500)
-
     } catch (error: any) {
       toast.error(error.response.data.message)
     }

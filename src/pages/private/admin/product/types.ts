@@ -59,7 +59,7 @@ interface Rating {
 
 export interface IFilters {
   userId?: string
-  category: string 
+  category: string
   offset: number
   limit: number
   search: string
